@@ -1,4 +1,15 @@
 <?php
+/*
+|--------------------------------------------------------------------------
+| Scaffolding/Testing
+|--------------------------------------------------------------------------
+|
+| @todo: comment out on production
+|
+*/
+Route::resource('businesses', 'BusinessesController');
+Route::resource('partners', 'PartnersController');
+Route::resource('options', 'OptionsController');
 
 /*
 |--------------------------------------------------------------------------
@@ -17,12 +28,20 @@ Route::get('/', function()
 
 /*
 |--------------------------------------------------------------------------
-| Scaffolding/Testing
+| Incorporation Routes
 |--------------------------------------------------------------------------
 |
-| @todo: remove on production
-|
 */
-Route::resource('businesses', 'BusinessesController');
-Route::resource('partners', 'PartnersController');
-Route::resource('options', 'OptionsController');
+Route::get('options', array('uses' => 'OptionsController@edit', 'as' => 'options.edit'));
+Route::put('options', array('uses' => 'OptionsController@update', 'as' => 'options.update'));
+
+Route::resource('data_entry', 'DataEntryController');
+
+Route::group(array('prefix' => 'results'), function() {
+	Route::get('partnership_tax',	array('uses' => 'PartnershipTaxAndNationalInsuranceController@show',	'as' => 'results.partnership_tax.show'));
+	Route::get('salary',		array('uses' => 'SalaryInLimitedCoController@show',			'as' => 'results.salary.show'));
+	Route::get('dividends',		array('uses' => 'DividendsInLimitedCoController@show',			'as' => 'results.dividends.show'));
+});
+
+Route::get('summary', array('uses' => 'SummaryController@show', 'as' => 'summary.show'));
+Route::get('report', array('uses' => 'ReportController@download', 'as' => 'report.download'));
