@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 
-class CreateOverallTax extends Migration {
+class OverallTax extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -11,18 +11,18 @@ class CreateOverallTax extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('overall_tax', function($table){
-			$table->increments('overall_tax_id');
+		Schema::create('overall_taxes', function($table){
+			$table->increments('id');
 			$table->unsignedInteger('client_id');
-			$table->foreign('client_id')->references('client_id')->on('clients');
+			$table->foreign('client_id')->references('id')->on('clients')
+					->onUpdate('cascade')->onDelete('cascade');
 			$table->decimal('tax_difference');
 			$table->integer('tax_year');
 			$table->decimal('vat');
 			$table->date('tax_year_from');
 			$table->date('tax_year_to');
-			$table->timestamp('created_at');
-			$table->timestamp('updated_at');
-			$table->timestamp('deleted_at');
+			$table->timestamps();
+			$table->softDeletes();
 		});
 	}
 
@@ -33,7 +33,7 @@ class CreateOverallTax extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('overall_tax');
+		Schema::drop('overall_taxes');
 	}
 
 }

@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCapitalisation extends Migration {
+class Capitalisations extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -11,14 +11,13 @@ class CreateCapitalisation extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('capitalisation', function($table) {
-			$table->increments('capitalisation_id');
+		Schema::create('capitalisations', function($table) {
+			$table->increments('id');
 			$table->string('capitalisation_name');
 			$table->decimal('capitalisation_percentage');
 			$table->decimal('capitalisation_minimum_charge');
-			$table->timestamp('created_at');
-			$table->timestamp('updated_at');
-			$table->timestamp('deleted_at');
+			$table->timestamps();
+			$table->softDeletes();
 		});
 	}
 
@@ -29,7 +28,7 @@ class CreateCapitalisation extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('capitalisation');
+		Schema::drop('capitalisations');
 	}
 
 }

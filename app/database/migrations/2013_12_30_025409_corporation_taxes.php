@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCorporationTax extends Migration {
+class CorporationTaxes extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -11,10 +11,11 @@ class CreateCorporationTax extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('corporation_tax', function($table){
-			$table->increments('corporation_tax_id');
+		Schema::create('corporation_taxes', function($table){
+			$table->increments('id');
 			$table->unsignedInteger('client_id');
-			$table->foreign('client_id')->references('client_id')->on('clients');
+			$table->foreign('client_id')->references('id')->on('clients')
+					->onUpdate('cascade')->onDelete('cascade');
 			$table->decimal('small_companies_rate');
 			$table->decimal('full_corporation_tax_rate');
 			$table->decimal('marginal_relief_lower');
@@ -24,9 +25,8 @@ class CreateCorporationTax extends Migration {
 			$table->decimal('tax_credit_on_dividends');
 			$table->decimal('higher_rate_tax_on_dividends');
 			$table->decimal('additional_rate_tax_on_dividends');
-			$table->timestamp('created_at');
-			$table->timestamp('updated_at');
-			$table->timestamp('deleted_at');
+			$table->timestamps();
+			$table->softDeletes();
 		});
 	}
 
@@ -37,7 +37,7 @@ class CreateCorporationTax extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('corporation_tax');
+		Schema::drop('corporation_taxes');
 	}
 
 }

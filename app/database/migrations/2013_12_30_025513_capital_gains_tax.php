@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCapitalGainsTax extends Migration {
+class CapitalGainsTax extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -11,17 +11,17 @@ class CreateCapitalGainsTax extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('capital_gains_tax', function($table){
-			$table->increments('capital_gains_tax_id');
+		Schema::create('capital_gains_taxes', function($table){
+			$table->increments('id');
 			$table->unsignedInteger('client_id');
-			$table->foreign('client_id')->references('client_id')->on('clients');
+			$table->foreign('client_id')->references('id')->on('clients')
+					->onUpdate('cascade')->onDelete('cascade');
 			$table->decimal('cgt_annual_exemption');
 			$table->decimal('capital_gains_tax_rate');
 			$table->decimal('higher_cgt_rate');
 			$table->decimal('entrepreneur_rate');
-			$table->timestamp('created_at');
-			$table->timestamp('updated_at');
-			$table->timestamp('deleted_at');
+			$table->timestamps();
+			$table->softDeletes();
 		});
 	}
 
@@ -32,7 +32,7 @@ class CreateCapitalGainsTax extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('capital_gains_tax');
+		Schema::drop('capital_gains_taxes');
 	}
 
 }
