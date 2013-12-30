@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 
-class CreateNationalInsurance extends Migration {
+class NationalInsurance extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -11,10 +11,11 @@ class CreateNationalInsurance extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('national_insurance', function($table){
-			$table->increments('national_insurance_id');
+		Schema::create('national_insurances', function($table){
+			$table->increments('id');
 			$table->unsignedInteger('client_id');
-			$table->foreign('client_id')->references('client_id')->on('clients');
+			$table->foreign('client_id')->references('id')->on('clients')
+					->onUpdate('cascade')->onDelete('cascade');
 			$table->decimal('class1_ees_primary_threshold');
 			$table->decimal('class1_ees_upper_earnings');
 			$table->decimal('class1_ees_higher_rate');
@@ -27,9 +28,8 @@ class CreateNationalInsurance extends Migration {
 			$table->decimal('class4_upper_profit_limits');
 			$table->decimal('class4_higher_rate');
 			$table->decimal('class4_rate');
-			$table->timestamp('created_at');
-			$table->timestamp('updated_at');
-			$table->timestamp('deleted_at');
+			$table->timestamps();
+			$table->softDeletes();
 		});
 	}
 
@@ -40,7 +40,7 @@ class CreateNationalInsurance extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('national_insurance');
+		Schema::drop('national_insurances');
 	}
 
 }

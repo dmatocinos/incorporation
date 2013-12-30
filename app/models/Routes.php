@@ -1,12 +1,11 @@
 <?php
 
-Class Routes extends Eloquent {
+Class Route extends Eloquent {
 	
-	protected $table = 'routes';
 	protected $softDelete = true;
 	
-	public function routes() {
-		return $this->belongsTo('Clients','client_id','client_id');
+	public function client() {
+		return $this->belongsTo('Client');
 	}
 }
 

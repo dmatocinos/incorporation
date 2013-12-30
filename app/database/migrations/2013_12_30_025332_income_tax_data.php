@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 
-class CreateIncomeTaxData extends Migration {
+class IncomeTaxData extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,9 +12,10 @@ class CreateIncomeTaxData extends Migration {
 	public function up()
 	{
 		Schema::create('income_tax_data', function($table){
-			$table->increments('income_tax_data_id');
+			$table->increments('id');
 			$table->unsignedInteger('client_id');
-			$table->foreign('client_id')->references('client_id')->on('clients');
+			$table->foreign('client_id')->references('id')->on('clients')
+					->onUpdate('cascade')->onDelete('cascade');
 			$table->decimal('personal_allowance');
 			$table->decimal('higher_rate_tax_band');
 			$table->decimal('additional_rate_tax_band');
@@ -23,9 +24,8 @@ class CreateIncomeTaxData extends Migration {
 			$table->decimal('higher_rate_of_tax');
 			$table->decimal('additional_rate_of_tax');
 			$table->decimal('commulative_tax_to_higher_rate');
-			$table->timestamp('created_at');
-			$table->timestamp('updated_at');
-			$table->timestamp('deleted_at');
+			$table->timestamps();
+			$table->softDeletes();
 		});
 	}
 
