@@ -43,7 +43,7 @@
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse navbar-ex1-collapse">
 				<ul class="nav navbar-nav side-nav">
-					<li class=""><a href="{{ route('data_entry.edit') }}"><i class="fa fa-edit"></i> Data Entry</a></li>
+					<li class=""><a href="{{ route('data_entry.index') }}"><i class="fa fa-edit"></i> Data Entry</a></li>
 					<li class=""><a href="{{ route('results.salary.show') }}"><i class="fa fa-bar-chart-o"></i> Results</a></li>
 					<li class=""><a href="{{ route('summary.show') }}"><i class="fa fa-table"></i> Summary</a></li>
 				</ul>
