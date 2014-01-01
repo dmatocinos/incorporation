@@ -6,8 +6,7 @@ use \Partner as Partner;
  * @author Belmark June Caday <cadaybelmark@gmail.com>
  */
 
-class DividendsInLimitedCo extends Engine{
-
+class PartnershipTaxAndNationalInsurance extends Engine{
 	/**
 	 * The partner object to calculate the salary in limited
 	 * corporation for
@@ -20,15 +19,16 @@ class DividendsInLimitedCo extends Engine{
 	protected function init() {
 	
 		$this->column_rows = array(
-			'taxable'					=> 36,
-			'tax_credit'				=> 37,
-			'10_percent_dividends'		=> 39,
-			'32.5_percent_dividends'	=> 40,
-			'42.5_percent_dividends_1'	=> 41,
-			'42.5_percent_dividends_2'	=> 42,
-			'total_tax_divs'			=> 46,
-			'sum'						=> 47,
-			'net_in_pocket'				=> 48
+			'taxable'			=> 6,
+			'tax_due_1'			=> 7,
+			'tax_due_2'			=> 8,
+			'tax_due_3'			=> 9,
+			'tax_due_4'			=> 10,
+			'taxable_ni'		=> 11,
+			'ni_due'			=> 12,
+			'sum_per_partner'	=> 13,
+			'total_tax'			=> 15,
+			'sum_of_total_tax'	=> 16
 		);
 		
 		$this->data = array();
@@ -41,7 +41,7 @@ class DividendsInLimitedCo extends Engine{
 				$cell_column++;
 			}
 		}
-	}	
+	}
 }
 
 ?>
