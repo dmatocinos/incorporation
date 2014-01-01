@@ -34,10 +34,10 @@ class DividendsInLimitedCo extends Engine{
 		$this->data = array();
 		
 		foreach( $column_rows as $column => $row ){
-			$column = 'P';
+			$cell_column = 'P';
 			
 			foreach( $this->partners as $partner ) {
-				$this->data[$column][$partner->id] = $this->getCalculatedValue("{$column}{$row}");
+				$this->data[$column][$partner->id] = $this->getCalculatedValue("{$cell_column}{$row}");
 				$column++;
 			}
 		}
