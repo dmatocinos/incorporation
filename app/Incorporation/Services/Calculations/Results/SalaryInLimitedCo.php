@@ -5,7 +5,7 @@ use \Partner as Partner;
 /**
  * @author Leonel Tomes <mr.leonel.tomes@gmail.com>
  */
-class SalaryInLimitedCo {
+class SalaryInLimitedCo extends Engine{
 
 	/**
 	 * The partner object to calculate the salary in limited
