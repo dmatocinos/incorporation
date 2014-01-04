@@ -35,12 +35,17 @@ class SalaryInLimitedCo extends Engine{
 		$this->data = array();
 		
 		foreach( $column_rows as $column => $row){
-		
-			$cell_column = 'P';
+			if( $column == 'sum' ){
+					$cell_column = 'T';
+					$this->data[$column][$partner->id] = $this->getCalculatedValue("{$cell_column}{$row}");
+			}
+			else{
+				$cell_column = 'P';
 			
-			foreach( $this->partners as $partner ){
-				$this->data[$column][$partner->id] = $this->getCalculatedValue("{$cell_column}{$row}");
-				$cell_column++;
+				foreach( $this->partners as $partner ) {
+					$this->data[$column][$partner->id] = $this->getCalculatedValue("{$cell_column}{$row}");
+					$cell_column++;
+				}
 			}
 		}
 	}
