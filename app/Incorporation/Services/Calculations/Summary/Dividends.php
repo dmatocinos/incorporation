@@ -1,12 +1,14 @@
 <?php namespace Incorporation\Services\Calculations\Summary;
 
-use \Partner as Partner;
+use Incorporation\Services\Calculations\ExcelEngine;
+
+//use \Partner as Partner;
 
 /**
  * @author Belmark June Caday <cadaybelmark@gmail.com>
  */
 
-class Dividends extends Engine{
+class Dividends extends ExcelEngine{
 
 	/**
 	 * The partner object to calculate the salary in limited
@@ -14,7 +16,7 @@ class Dividends extends Engine{
 	 *
 	 * @var Partner
 	 */
-	protected Parnter $partners;
+	//protected Partner $partners;
 	protected $data;
 	
 	protected function init(){
@@ -25,6 +27,7 @@ class Dividends extends Engine{
 			'employers_ni'		=> 32,
 			'employees_ni'		=> 33,
 			'total_to_hmrc'		=> 35,
+			'net_in_pocket'		=> 37,
 			'left_in_company'	=> 38,
 			'amount_retained'	=> 40,
 		);
@@ -35,7 +38,7 @@ class Dividends extends Engine{
 		
 			$cell_column = 'J'; //Column J in the excel
 			
-			$this->data[$column][$partner->id] = $this->getCalculatedValue("{$cell_column}{$row}");
+			$this->data[$column] = $this->getCalculatedValue("{$cell_column}{$row}");
 		}
 	}
 }
