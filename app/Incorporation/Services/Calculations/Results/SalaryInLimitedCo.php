@@ -13,7 +13,7 @@ class SalaryInLimitedCo extends Engine{
 	 *
 	 * @var Partner
 	 */
-	protected Parnter $partners;
+	protected Partner $partners;
 	protected $data;
 	
 	protected function init(){
