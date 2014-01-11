@@ -14,7 +14,7 @@ class Partnership extends Engine{
 	 *
 	 * @var Partner
 	 */
-	protected Parnter $partners;
+	protected Partner $partners;
 	protected $data;
 	
 	protected function init(){
@@ -25,6 +25,7 @@ class Partnership extends Engine{
 			'employers_ni'		=> 32,
 			'employees_ni'		=> 33,
 			'total_to_hmrc'		=> 35,
+			'net_in_pocket'		=> 37,
 			'left_in_company'	=> 38,
 			'amount_retained'	=> 40,
 		);
@@ -35,7 +36,7 @@ class Partnership extends Engine{
 		
 			$cell_column = 'F'; //Column F in the excel
 			
-			$this->data[$column][$partner->id] = $this->getCalculatedValue("{$cell_column}{$row}");
+			$this->data[$column] = $this->getCalculatedValue("{$cell_column}{$row}");
 		}
 	}
 }
