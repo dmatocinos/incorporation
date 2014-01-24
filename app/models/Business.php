@@ -15,6 +15,21 @@ class Business extends Eloquent {
 		return $this->hasMany('Partner');
 	}
 
+	/**
+	 * Accessor for number of partners
+	 *
+	 * @return int
+	 */
+	public function getNumberOfPartnersAttribute()
+	{
+		return count($this->partners);
+	}
+
+	/**
+	 * Accessor for Option object from this model
+	 *
+	 * @return Option
+	 */
 	public function getOptionAttribute()
 	{
 		return Option::first();

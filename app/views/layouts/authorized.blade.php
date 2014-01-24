@@ -42,16 +42,18 @@
 
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<?php $menu = array(
+					'data_entry.index'	=> 'Data Entry',
+					'results.show'		=> 'Results',
+					'summary.show'		=> 'Summary'
+				); ?>
 				<ul class="nav navbar-nav side-nav">
-					<li class=""><a href="{{ route('data_entry.index') }}"><i class="fa fa-edit"></i> Data Entry</a></li>
-					<li class=""><a href="{{ route('results.salary.show') }}"><i class="fa fa-bar-chart-o"></i> Results</a></li>
-					<li class=""><a href="{{ route('summary.show') }}"><i class="fa fa-table"></i> Summary</a></li>
+				@foreach ($menu as $route => $label)
+					<li class="{{ $route == $active ? 'active' : '' }}"><a href="{{ route($route) }}">{{ $label }}</a></li>
+				@endforeach
 				</ul>
 
 				<ul class="nav navbar-nav navbar-right navbar-user">
-					<li class="">
-						<a href="{{ route('options.edit') }}" class="" ><i class="fa fa-cog"></i> Options</a>
-					</li>
 					<li class="dropdown user-dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> John Smith <b class="caret"></b></a>
 						<ul class="dropdown-menu">
@@ -67,17 +69,14 @@
 
 		<div id="page-wrapper">
 
-			<div class="row">
-				<div class="col-lg-12">
-					<div class="page-header">
-						<h1>
-							@section('title') 
-							@show
-						</h1>
-					</div>
-					{{-- Notifications --}}
+				@section('header')
+				<div class="page-header">
+					<h1>
+						@section('title') 
+						@show
+					</h1>
 				</div>
-			</div><!-- /.row -->
+				@show
 
 			<div class="row">
 				<div class="col-lg-12">

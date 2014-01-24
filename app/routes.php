@@ -23,7 +23,7 @@ Route::resource('options', 'OptionsController');
 */
 Route::get('/', function()
 {
-	return View::make('hello');
+	return View::make('layouts.authorized');
 });
 
 /*
@@ -32,16 +32,19 @@ Route::get('/', function()
 |--------------------------------------------------------------------------
 |
 */
-Route::get('options', array('uses' => 'OptionsController@edit', 'as' => 'options.edit'));
-Route::put('options', array('uses' => 'OptionsController@update', 'as' => 'options.update'));
-
 Route::resource('data_entry', 'DataEntryController');
-
+Route::get('results',	array('uses' => 'ResultsController@show',	'as' => 'results.show'));
+Route::get('summary',	array('uses' => 'SummaryController@show',	'as' => 'summary.show'));
+/*
 Route::group(array('prefix' => 'results'), function() {
-	Route::get('partnership_tax',	array('uses' => 'PartnershipTaxAndNationalInsuranceController@show',	'as' => 'results.partnership_tax.show'));
-	Route::get('salary',		array('uses' => 'SalaryInLimitedCoController@show',			'as' => 'results.salary.show'));
-	Route::get('dividends',		array('uses' => 'DividendsInLimitedCoController@show',			'as' => 'results.dividends.show'));
+	Route::get('partnership_tax',	array('uses' => 'ResultsController@partnershipTaxAndNationalInsurance',	'as' => 'results.partnership_tax'));
+	Route::get('salary',		array('uses' => 'ResultsController@salaryInLimitedCo',			'as' => 'results.salary'));
+	Route::get('dividends',		array('uses' => 'ResultsController@dividendsInLimitedCo',		'as' => 'results.dividends'));
 });
+Route::group(array('prefix' => 'summary'), function() {
+	Route::get('total_savings', 	array('uses' => 'SummaryController@totalSavings',			'as' => 'summary.total_savings'));
+	Route::get('graphs', 		array('uses' => 'SummaryController@graphs',				'as' => 'summary.graphs'));
+});
+*/
 
-Route::get('summary', array('uses' => 'SummaryController@show', 'as' => 'summary.show'));
 Route::get('report', array('uses' => 'ReportController@download', 'as' => 'report.download'));
