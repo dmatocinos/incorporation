@@ -1,32 +1,14 @@
 <?php
 
-use \Incorporation\Services\Calculations\Results\PartnershipTaxAndNationalInsuranceController as PartnershipTaxAndNationalInsuranceController;
-
-class PartnershipTaxAndNationalInsuranceControllerController extends AuthorizedController {
+class PartnershipTaxAndNationalInsuranceController extends AuthorizedController {
 
 	public function show()
 	{
-		$business = Business::first();
-		$partners = $business->partners;
+		$business = $this->business;
+		$service = new PartnershipTaxAndNationalInsuranceService($this->business);
+		$data = $service->getData();
 
-		$partnership_route_rows = array(
-			'taxable',
-			'tax_due_1', 'tax_due_2', 'tax_due_3', 'tax_due_4',
-			'taxable_ni',
-			'ni_due_1', 'ni_due_2',
-		);
-		$partnership_route = array();
-
-		foreach ($partners as $partner) {
-			$service = new PartnershipTaxAndNationalInsuranceController($partner);
-
-			foreach ($partnership_route_rows as $row) {
-				$fn = 'get' . studly_case($row);
-				$partnership_route[$row][] = $service->$fn();
-			}
-		}
-
-		return View::make('partnership.show', compact('partnership_route', 'partners'));
+		return View::make('partnership_tax_and_national_insurance.show', compact('business', 'data'));
 	}
 
 }
