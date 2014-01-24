@@ -28,10 +28,10 @@ class SummaryComparisonService extends IncorporationEngine {
 			foreach ($columns as $column_key => $cell_column) {
 				$this->data[$row_key][$column_key] = $this->getFormattedValue("{$cell_column}{$cell_row}");
 
-				$test["{$cell_column}{$cell_row}"] = $this->getFormattedValue("{$cell_column}{$cell_row}");
+				//$test["{$cell_column}{$cell_row}"] = $this->getFormattedValue("{$cell_column}{$cell_row}");
 			}
 		}
 
-		dd($test);
+		//dd($test);
 	}
 }
