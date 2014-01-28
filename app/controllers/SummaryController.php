@@ -4,10 +4,9 @@ class SummaryController extends AuthorizedController {
 	public function show()
 	{
 		$business = $this->business;
-
+		
 		$service = new SummaryComparisonService($this->business);
 		$comparison_data = $service->getData();
-
 		$service = new SummaryTotalSavingsService($this->business);
 		$total_savings_data = $service->getData();
 

@@ -3,6 +3,7 @@
 abstract class IncorporationEngine extends ExcelEngine {
 
 	protected $business;
+	protected $partners;
 
 	protected $data;
 
@@ -11,6 +12,10 @@ abstract class IncorporationEngine extends ExcelEngine {
 		parent::__construct('Incorporation');
 
 		$this->business = $business;
+		
+		// get the partners
+		$this->partners = DB::select('SELECT * FROM partners WHERE business_id = :business_id', array('business_id' => $business->id));
+		
 		$this->data = array();
 
 		$this->setCellValues($business);
@@ -37,7 +42,6 @@ abstract class IncorporationEngine extends ExcelEngine {
 	{
 		$cell_columns = array(
 			'D12'	=> 'business_entity',
-			'D14'	=> 'number_of_partners',
 			'D16'	=> 'net_profit_before_tax',
 			'D18'	=> 'amount_to_distribute',
 			'I21'	=> 'fee_based_on_tax_saved'
@@ -45,7 +49,7 @@ abstract class IncorporationEngine extends ExcelEngine {
 
 		foreach ($cell_columns as $cell => $column) {
 			if ($cell == 'I21') {
-				$value = str_replace('.00', '', $business->$column) . '%';
+				$value = $business->$column / 100;
 			}
 			else {
 				$value = $business->$column;
@@ -53,6 +57,8 @@ abstract class IncorporationEngine extends ExcelEngine {
 
 			$this->setValue($cell, $value);
 		}
+		
+		$this->setValue('D14', count($this->partners));
 	}
 
 	protected function test()
@@ -127,12 +133,12 @@ abstract class IncorporationEngine extends ExcelEngine {
 	 */
 	protected function setPartnersValues($partners)
 	{
-		$column = 'F';
+		$columns = array('F', 'G', 'H', 'I', 'J');
 		$row = '14';
+		$count = 0;
 
 		foreach ($partners as $partner) {
-			$this->setValue("{$column}{$row}", str_replace('.00', '', $partner->share) . '%');
-			$column++;
+			$this->setValue("{$columns[$count]}{$row}", ($partner->share / 100));
 		}
 	}
 

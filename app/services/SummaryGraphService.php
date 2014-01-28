@@ -23,11 +23,9 @@ class SummaryGraphService extends IncorporationEngine {
 		foreach ($chartNames as $i => $chartName) {
 			$chart = $worksheet->getChartByName($chartName);
 			$chart = $worksheet->getChartByName($chartName);
-			if (!is_null($chart->getTitle())) {
-				$caption = '"' . implode(' ',$chart->getTitle()->getCaption()) . '"';
-			} else {
-				$caption = "Untitled{$i}";
-			}
+			
+			// get unique file name
+			$caption = sprintf("%s_%s", uniqid(), $i);
 			
 			$asset_path = "/cache/{$caption}.jpg";
 			$jpegFile = public_path() . $asset_path;
