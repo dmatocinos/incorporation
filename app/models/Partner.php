@@ -4,7 +4,7 @@ class Partner extends Eloquent {
 	protected $guarded = array();
 
 	public static $rules = array(
-		'share' => 'required'
+		'share' => 'required|min:1|max:100'
 	);
 
 	public function business()

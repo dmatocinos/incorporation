@@ -5,9 +5,9 @@ class Business extends Eloquent {
 
 	public static $rules = array(
 		'business_entity' => 'required',
-		'net_profit_before_tax' => 'required',
-		'amount_to_distribute' => 'required',
-		'fee_based_on_tax_saved' => 'required'
+		'net_profit_before_tax' => 'required|min:1',
+		'amount_to_distribute' => 'required|numeric|min:1',
+		'fee_based_on_tax_saved' => 'required|numeric|min:1|max:100'
 	);
 
 	public function partners()
