@@ -14,6 +14,9 @@ class ResultsController extends AuthorizedController {
 
 		$service = new DividendsInLimitedCoService($business);
 		$dividends_data = $service->getData();
+		
+		$data = compact('partnership_data', 'dividends_data', 'salary_data', 'business');
+		//pd($data);
 
 		return View::make('results.show', compact('partnership_data', 'dividends_data', 'salary_data', 'business'));
 	}

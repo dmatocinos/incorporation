@@ -64,6 +64,17 @@ return array(
 			'prefix'    => '',
 		),
 		
+		'practicepro_users' => array(
+			'driver'    => 'mysql',
+			'host'      => 'db466545735.db.1and1.com',
+			'database'  => 'db466545735',
+			'username'  => 'dbo466545735',
+			'password'  => '@11_11L95zRT',
+			'charset'   => 'utf8',
+			'collation' => 'utf8_unicode_ci',
+			'prefix'    => '',
+        ),
+		
 		'mysql_mark' => array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
@@ -75,6 +86,17 @@ return array(
 			'prefix'    => '',
 		),
 
+		'practicepro_users_mark' => array(
+			'driver'    => 'mysql',
+			'host'      => 'localhost',
+			'database'  => 'practicepro_users',
+			'username'  => 'root',
+			'password'  => '',
+			'charset'   => 'utf8',
+			'collation' => 'utf8_unicode_ci',
+			'prefix'    => '',
+        ),
+		
 		'pgsql' => array(
 			'driver'   => 'pgsql',
 			'host'     => 'localhost',

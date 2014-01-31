@@ -18,6 +18,12 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	 * @var array
 	 */
 	protected $hidden = array('password');
+	
+	protected $fillable = [
+		'username',
+		'password',
+		'email'
+	];
 
 	/**
 	 * Get the unique identifier for the user.
@@ -49,4 +55,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		return $this->email;
 	}
 
+	public static function findPracticeProUser($username) {
+		return DB::table('users')->where('username', $username)->first();
+	}
 }

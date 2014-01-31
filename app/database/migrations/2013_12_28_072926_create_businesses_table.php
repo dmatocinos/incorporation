@@ -14,6 +14,7 @@ class CreateBusinessesTable extends Migration {
 	{
 		Schema::create('businesses', function(Blueprint $table) {
 			$table->increments('id');
+			$table->integer('user_id')->unsigned();
 			$table->string('business_entity');
 			$table->decimal('net_profit_before_tax');
 			$table->decimal('amount_to_distribute');

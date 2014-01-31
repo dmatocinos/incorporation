@@ -12,10 +12,6 @@ abstract class IncorporationEngine extends ExcelEngine {
 		parent::__construct('Incorporation');
 
 		$this->business = $business;
-		
-		// get the partners
-		$this->partners = DB::select('SELECT * FROM partners WHERE business_id = :business_id', array('business_id' => $business->id));
-		
 		$this->data = array();
 
 		$this->setCellValues($business);
@@ -58,7 +54,7 @@ abstract class IncorporationEngine extends ExcelEngine {
 			$this->setValue($cell, $value);
 		}
 		
-		$this->setValue('D14', count($this->partners));
+		$this->setValue('D14', count($business->partners));
 	}
 
 	protected function test()
@@ -136,9 +132,10 @@ abstract class IncorporationEngine extends ExcelEngine {
 		$columns = array('F', 'G', 'H', 'I', 'J');
 		$row = '14';
 		$count = 0;
+		$total_partners = count($partners);
 
-		foreach ($partners as $partner) {
-			$this->setValue("{$columns[$count]}{$row}", ($partner->share / 100));
+		for ($count = 0; $count < $total_partners; $count++) {
+			$this->setValue("{$columns[$count]}{$row}", ($partners->get($count)->share / 100));
 		}
 	}
 

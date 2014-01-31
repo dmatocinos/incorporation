@@ -9,11 +9,15 @@
 	<tbody>
 		<tr>
 			<td>Taxable (Dividends)</td>
-			<td>{{ implode('<td></td>', $dividends_data["taxable_dividends"]) }}</td>
+			@foreach ($dividends_data["taxable_dividends"] as $value)
+				<td> {{ $value }}</td>
+			@endforeach
 		</tr>
 		<tr>
 			<td>Tax Credit</td>
-			<td>{{ implode('<td></td>', $dividends_data["tax_credit"]) }}</td>
+			@foreach ($dividends_data["tax_credit"] as $value)
+				<td> {{ $value }}</td>
+			@endforeach
 		</tr>
 		<tr>
 			<td>&nbsp;</td>
@@ -21,21 +25,29 @@
 		</tr>
 		<tr>
 			<td>10% Dividends</td>
-			<td>{{ implode('<td></td>', $dividends_data["10%_dividends"]) }}</td>
+			@foreach ($dividends_data["10%_dividends"] as $value)
+				<td> {{ $value }}</td>
+			@endforeach
 		</tr>
 		<tr>
 			<td>32.5% Dividends</td>
-			<td>{{ implode('<td></td>', $dividends_data["32.5%_dividends"]) }}</td>
+			@foreach ($dividends_data["32.5%_dividends"] as $value)
+				<td> {{ $value }}</td>
+			@endforeach
 		</tr>
 	@for ($i = 1; $i <= 2; $i++)
 		<tr>
 			<td>{{ $i == 1 ? '42.5% Dividends' : '' }}</td>
-			<td>{{ implode('<td></td>', $dividends_data["42.5%_dividends_{$i}"]) }}</td>
+			@foreach ($dividends_data["42.5%_dividends_{$i}"] as $value)
+				<td> {{ $value }}</td>
+			@endforeach
 		</tr>
 	@endfor
 		<tr class="active">
 			<td>Total Tax (Dividends)</td>
-			<td>{{ implode('<td></td>', $dividends_data["total_tax_dividends"]) }}</td>
+			@foreach ($dividends_data["total_tax_dividends"] as $value)
+				<td> {{ $value }}</td>
+			@endforeach
 		</tr>
 		<tr>
 			@for ($i = 0; $i < $count; $i++)
@@ -45,7 +57,9 @@
 		</tr>
 		<tr>
 			<td>Net In Pocket</td>
-			<td>{{ implode('<td></td>', $dividends_data["net_in_pocket"]) }}</td>
+			@foreach ($dividends_data["net_in_pocket"] as $value)
+				<td> {{ $value }}</td>
+			@endforeach
 		</tr>
 </tbody>
 </table>

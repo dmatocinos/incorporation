@@ -32,19 +32,47 @@ Route::get('/', function()
 |--------------------------------------------------------------------------
 |
 */
-Route::resource('data_entry', 'DataEntryController');
-Route::get('results',	array('uses' => 'ResultsController@show',	'as' => 'results.show'));
-Route::get('summary',	array('uses' => 'SummaryController@show',	'as' => 'summary.show'));
-/*
-Route::group(array('prefix' => 'results'), function() {
-	Route::get('partnership_tax',	array('uses' => 'ResultsController@partnershipTaxAndNationalInsurance',	'as' => 'results.partnership_tax'));
-	Route::get('salary',		array('uses' => 'ResultsController@salaryInLimitedCo',			'as' => 'results.salary'));
-	Route::get('dividends',		array('uses' => 'ResultsController@dividendsInLimitedCo',		'as' => 'results.dividends'));
-});
-Route::group(array('prefix' => 'summary'), function() {
-	Route::get('total_savings', 	array('uses' => 'SummaryController@totalSavings',			'as' => 'summary.total_savings'));
-	Route::get('graphs', 		array('uses' => 'SummaryController@graphs',				'as' => 'summary.graphs'));
-});
-*/
+Route::group(["before" => "guest"], function()
+{
+	Route::get("/", "AuthController@login");
 
-Route::get('report', array('uses' => 'ReportController@download', 'as' => 'report.download'));
+	Route::any("login", [
+		"as"   => "login",
+		"uses" => "AuthController@login"
+	]);
+});
+
+Route::group(["before" => "auth"], function()
+{
+	Route::any("logout", [
+		"as"   => "logout",
+		"uses" => "AuthController@logout"
+	]);
+	
+	Route::get("/", "BusinessController@index");
+	/*Route::get('data_entry',	array('uses' => 'DataEntryController@index',	'as' => 'data_entry'));
+	Route::get('data_update/{business_id?}', 'DataEntryController@update');
+	Route::get('results',	array('uses' => 'ResultsController@show',	'as' => 'results.show'));
+	Route::get('summary',	array('uses' => 'SummaryController@show',	'as' => 'summary.show'));*/
+	
+	Route::get('create', 'BusinessController@create_ui');
+	Route::get('update/{business_id}', 'BusinessController@update_ui');
+	Route::put('save_new', 'BusinessController@save_new');
+	Route::put('save_update/{business_id}', 'BusinessController@save_update');
+	Route::get('results/{business_id}',	'ResultsController@show');
+	Route::get('summary/{business_id}', 'SummaryController@show');
+
+	/*
+	Route::group(array('prefix' => 'results'), function() {
+		Route::get('partnership_tax',	array('uses' => 'ResultsController@partnershipTaxAndNationalInsurance',	'as' => 'results.partnership_tax'));
+		Route::get('salary',		array('uses' => 'ResultsController@salaryInLimitedCo',			'as' => 'results.salary'));
+		Route::get('dividends',		array('uses' => 'ResultsController@dividendsInLimitedCo',		'as' => 'results.dividends'));
+	});
+	Route::group(array('prefix' => 'summary'), function() {
+		Route::get('total_savings', 	array('uses' => 'SummaryController@totalSavings',			'as' => 'summary.total_savings'));
+		Route::get('graphs', 		array('uses' => 'SummaryController@graphs',				'as' => 'summary.graphs'));
+	});
+	*/
+
+	Route::get('report', array('uses' => 'ReportController@download', 'as' => 'report.download'));
+});

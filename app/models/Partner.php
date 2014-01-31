@@ -6,6 +6,11 @@ class Partner extends Eloquent {
 	public static $rules = array(
 		'share' => 'required|min:1|max:100'
 	);
+	
+	protected $fillable = [
+		'share',
+		'business_id'
+	];
 
 	public function business()
 	{

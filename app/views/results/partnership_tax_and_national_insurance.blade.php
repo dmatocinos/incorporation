@@ -9,22 +9,30 @@
 	<tbody>
 		<tr>
 			<td>Taxable (Tax)</td>
-			<td>{{ implode('<td></td>', $partnership_data["taxable_tax"]) }}</td>
+			@foreach ($partnership_data["taxable_tax"] as $value)
+				<td> {{ $value }}</td>
+			@endforeach
 		</tr>
 	@for ($i = 4; $i <= 4; $i++)
 		<tr>
 			<td>{{ ($i == 1) ? 'Tax Due' : ''}}</td>
-			<td>{{ implode('<td></td>', $partnership_data["tax_due_{$i}"]) }}</td>
+			@foreach ($partnership_data["tax_due_{$i}"] as $value)
+				<td> {{ $value }}</td>
+			@endforeach
 		</tr>
 	@endfor
 		<tr>
 			<td>Taxable (N.I.)</td>
-			<td>{{ implode('<td></td>', $partnership_data["taxable_ni"]) }}</td>
+			@foreach ($partnership_data["taxable_ni"] as $value)
+				<td> {{ $value }}</td>
+			@endforeach
 		</tr>
 	@for ($i = 1; $i <= 2; $i++)
 		<tr>
 			<td>{{ ($i == 1) ? 'N.I. Due' : ''}}</td>
-			<td>{{ implode('<td></td>', $partnership_data["ni_due_{$i}"]) }}</td>
+			@foreach ($partnership_data["ni_due_{$i}"] as $value)
+				<td> {{ $value }}</td>
+			@endforeach
 		</tr>
 	@endfor
 		<tr>
@@ -33,7 +41,9 @@
 		</tr>
 		<tr class="active">
 			<td>Total Tax (Partnership)</td>
-			<td>{{ implode('<td></td>', $partnership_data["total_tax_partnership"]) }}</td>
+			@foreach ($partnership_data["total_tax_partnership"] as $value)
+				<td> {{ $value }}</td>
+			@endforeach
 		</tr>
 		<tr>
 			@for ($i = 0; $i < $count; $i++)

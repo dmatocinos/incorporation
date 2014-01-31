@@ -18,7 +18,7 @@ Data Entry
 </div>
 @endif
 
-{{ Form::model($business, array('route' => array('data_entry.update', $business->id), 'method' => 'PUT')) }}
+{{ Form::open(array('url' => $url, 'method' => 'PUT')) }}
 <div class="row">
 <div class="col-lg-3">
 <?php
@@ -27,21 +27,21 @@ $number_of_partners = range(1, 5);
 ?>
 	<div class="form-group">
 		{{ Form::label('business_entity', 'Current entity of the business') }}
-		{{ Form::select('business_entity', array_combine($business_entity_types, $business_entity_types), NULL, array('class' => 'form-control')) }}
+		{{ Form::select('business_entity', array_combine($business_entity_types, $business_entity_types), $business->business_entity, array('class' => 'form-control')) }}
 		{{ $errors->first('business_entity', '<span class="help-block">:message</span>') }}
 	</div>
 	<div class="form-group">
 		{{ Form::label('number_of_partners', 'Number of partners') }}
-		{{ Form::select('number_of_partners', array_combine($number_of_partners, $number_of_partners), NULL, array('class' => 'form-control')) }}
+		{{ Form::select('number_of_partners', array_combine($number_of_partners, $number_of_partners), count($business->partners), array('class' => 'form-control')) }}
 	</div>
 	<div class="form-group">
 		{{ Form::label('net_profit_before_tax', 'Net profit before tax') }}
-		{{ Form::text('net_profit_before_tax', NULL, array('class' => 'form-control')) }}
+		{{ Form::text('net_profit_before_tax', $business->net_profit_before_tax, array('class' => 'form-control')) }}
 		{{ $errors->first('net_profit_before_tax', '<span class="help-block">:message</span>') }}
 	</div>
 	<div class="form-group">
 		{{ Form::label('amount_to_distribute', 'Amount to distribute') }}
-		{{ Form::text('amount_to_distribute', NULL, array('class' => 'form-control')) }}
+		{{ Form::text('amount_to_distribute', $business->amount_to_distribute, array('class' => 'form-control')) }}
 		{{ $errors->first('amount_to_distribute', '<span class="help-block">:message</span>') }}
 	</div>
 </div> {{-- .col-lg-3 --}}
@@ -84,7 +84,7 @@ $number_of_partners = range(1, 5);
 	<div class="col-lg-4 col-lg-offset-6">
 		<div class="input-group">
 			<span class="input-group-addon">Fee based on </span>
-			{{ Form::text('fee_based_on_tax_saved', NULL, array('class' => 'form-control')) }}
+			{{ Form::text('fee_based_on_tax_saved', $business->fee_based_on_tax_saved, array('class' => 'form-control')) }}
 			<span class="input-group-addon">% of tax saved</span>
 		</div>
 	</div>

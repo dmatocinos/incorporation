@@ -32,7 +32,7 @@ class SummaryComparisonService extends IncorporationEngine {
 			}
 		}
 		
-		//pd($this->getFormattedValue("I21"));
+		//pd($this->getFormattedValue("H14"));
 		//pd($this->data);
 		//dd($test);
 	}

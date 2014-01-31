@@ -34,4 +34,39 @@ class Business extends Eloquent {
 	{
 		return Option::first();
 	}
+	
+	public function setPartners($new_partners) 
+	{
+		$partners = $this->partners()->getResults();
+		$count_current_partners = count($partners);
+		$count = 0;
+		
+		foreach ($new_partners as $partner) {
+			if ($count < $count_current_partners) {
+				$p = $partners->get($count);
+				$p->fill(array('share' => $partner['share']));
+				$p->update();
+			}
+			else {
+				Partner::create(array('share' => $partner['share'], 'business_id' => $this->id));
+			}
+			
+			$count++;
+		}
+		
+		if ($count < $count_current_partners) {
+			for (; $count < $count_current_partners; $count++) {
+				$partners->get($count)->delete();
+			}
+		}
+	}
+	
+	public static function getAll($user_id = NULL) {
+		if ($user_id) {
+			return DB::select("SELECT * FROM businesses WHERE user_id = :user_id", array('user_id' => $user_id));
+		}
+		else {
+			return DB::select("SELECT * FROM businesses");
+		}
+	}
 }

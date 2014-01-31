@@ -20,6 +20,13 @@
 
 	{{-- Additional Stylesheets --}}
 	@section('styles')
+	
+	@if (isset($additional_styles))
+		@foreach ($additional_styles as $style)
+			<link href="{{ asset($style) }}" rel="stylesheet">
+		@endforeach
+	@endif
+	
 	@show
 </head>
 
@@ -37,30 +44,37 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="/">Incorporation Tax Planner</a>
+				<a class="navbar-brand" href="{{ url() }}">Incorporation Tax Planner</a>
 			</div>
 
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse navbar-ex1-collapse">
-				<?php $menu = array(
-					'data_entry.index'	=> 'Data Entry',
-					'results.show'		=> 'Results',
-					'summary.show'		=> 'Summary'
-				); ?>
+				<?php 
+					$menu = array(
+						'update'	=> 'Data Entry',
+						'results'	=> 'Results',
+						'summary'	=> 'Summary'
+					); 
+					
+					$active = Request::segment(1);
+				?>
 				<ul class="nav navbar-nav side-nav">
-				@foreach ($menu as $route => $label)
-					<li class="{{ $route == $active ? 'active' : '' }}"><a href="{{ route($route) }}">{{ $label }}</a></li>
-				@endforeach
+					<li class="{{ 'create' == $active ? 'active' : '' }}"><a href="{{ url('create') }}">Create</a></li>
+					@if (array_key_exists($active, $menu))
+						@foreach ($menu as $route => $label)
+							<li class="{{ $route == $active ? 'active' : '' }}"><a href="{{ url(sprintf('%s/%s', $route, $business->id)) }}">{{ $label }}</a></li>
+						@endforeach
+					@endif
 				</ul>
 
 				<ul class="nav navbar-nav navbar-right navbar-user">
 					<li class="dropdown user-dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> John Smith <b class="caret"></b></a>
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> {{ Auth::user()->email }} <b class="caret"></b></a>
 						<ul class="dropdown-menu">
 							<li><a href="#"><i class="fa fa-user"></i> Profile</a></li>
 							<li><a href="#"><i class="fa fa-gear"></i> Settings</a></li>
 							<li class="divider"></li>
-							<li><a href="#"><i class="fa fa-power-off"></i> Log Out</a></li>
+							<li><a href="{{ URL::route("logout") }}"><i class="fa fa-power-off"></i> Log Out</a></li>
 						</ul>
 					</li>
 				</ul>
@@ -94,8 +108,13 @@
 	<!-- JavaScript -->
 	<script src="{{ asset('assets/js/jquery-1.10.2.js') }}"></script>
 	<script src="{{ asset('assets/js/bootstrap.js') }}"></script>
-
-	@section('scripts')
+	
+	@if (isset($additional_scripts))
+		@foreach ($additional_scripts as $script)
+			<script src="{{ asset($script) }}"></script>
+		@endforeach
+	@endif
+	
 	@show
 
 </body>
