@@ -47,4 +47,4 @@ Route::group(array('prefix' => 'summary'), function() {
 });
 */
 
-Route::get('report', array('uses' => 'ReportController@download', 'as' => 'report.download'));
+Route::get('report/incorporation', array('uses' => 'ReportController@incorporation', 'as' => 'report.incorporation'));

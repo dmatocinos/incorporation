@@ -4,6 +4,7 @@
 
 @section('title')
 Summary
+<a href="{{ route('report.incorporation') }}" class="btn btn-success">Download Report</a>
 @stop
 
 @section('content')
@@ -25,3 +26,4 @@ Summary
 	</div>
 </div>
 @stop
+
