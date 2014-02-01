@@ -61,6 +61,10 @@ class Business extends Eloquent {
 		}
 	}
 	
+	public function deletePartners() {
+		 Partner::where('business_id', '=', $this->id)->delete();
+	}
+	
 	public static function getAll($user_id = NULL) {
 		if ($user_id) {
 			return DB::select("SELECT * FROM businesses WHERE user_id = :user_id", array('user_id' => $user_id));

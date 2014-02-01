@@ -16,23 +16,25 @@ Home
 					<table id="business-list" style="float: left; width: 100%;">
 						<thead>
 							<tr>
-								<th style="width: 50px !important;"></th>
+								<th style="width: 40px !important;"></th>
 								<th>Business Entity</th>
 								<th>Net Profit Before Tax</th>
 								<th>Amount To Distribute</th>
 								<th>Fee Base</th>
 								<th>Created At</th>
+								<th style="width: 40px !important;"></th>
 							</tr>
 						</thead>
 						<tbody>
 							@foreach ($businesses as $business)
 								<tr style="">
-									<td>{{ url('/update/' . $business->id) }}</td>
+									<td class="center"><a class="btn btn-primary btn-sm" href="{{ url('/update/' . $business->id) }}"><i class="fa fa-edit"></i></a></td>
 									<td>{{ $business->business_entity }}</td>
 									<td>{{ $business->net_profit_before_tax }}</td>
 									<td>{{ $business->amount_to_distribute }}</td>
 									<td>{{ $business->fee_based_on_tax_saved }}</td>
 									<td>{{ $business->created_at }}</td>
+									<td class="center"><a class="delete-business btn btn-danger btn-sm" href="{{ url('/delete/' . $business->id) }}"><i class="fa fa-trash-o"></i></a></td>
 								</tr>
 							@endforeach
 						</tbody>

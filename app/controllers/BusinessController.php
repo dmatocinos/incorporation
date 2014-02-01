@@ -40,7 +40,8 @@ class BusinessController extends AuthorizedController {
 		
 		$data['additional_scripts'] = array(
 			'assets/js/change_listener.js',
-			'assets/js/data.js'
+			'assets/js/data.js',
+			'assets/js/angular.min.js'
 		);
 		
 		return View::make('data_entry.edit', $data);
@@ -53,16 +54,41 @@ class BusinessController extends AuthorizedController {
 	 */
 	public function update_ui()
 	{
+		if (!$this->isBusinessOwned($this->business)) {
+			return Redirect::to('')
+				->with('message', 'You cannot make changes to this business');
+		}
+		
 		$business = $this->business;
 		$data = compact('business');
 		$data['url'] = 'save_update/' . $business->id;
 		
 		$data['additional_scripts'] = array(
 			'assets/js/change_listener.js',
-			'assets/js/data.js'
+			'assets/js/data.js',
+			'assets/js/angular.min.js'
 		);
 		
 		return View::make('data_entry.edit', $data);
+	}
+	
+	/**
+	 * Display a listing of the resource.
+	 *
+	 * @return Response
+	 */
+	public function delete()
+	{
+		if (!$this->isBusinessOwned($this->business)) {
+			return Redirect::to('')
+				->with('message', 'You cannot delete this business');
+		}
+		
+		$this->business->deletePartners();
+		$this->business->delete();
+		
+		return Redirect::to('')
+				->with('message', 'You have successfully deleted a business');
 	}
 
 	/**
@@ -177,6 +203,11 @@ class BusinessController extends AuthorizedController {
 	 */
 	public function save_update($id)
 	{
+		if (!$this->isBusinessOwned($this->business)) {
+			return Redirect::to('')
+				->with('message', 'You cannot make changes to this business');
+		}
+		
 		$input = array_except(Input::all(), '_method');
 		
 		$validation = Validator::make($input, Business::$rules);
@@ -244,5 +275,9 @@ class BusinessController extends AuthorizedController {
 	{
 	}
 	 */
+	 
+	protected function isBusinessOwned ($business) {
+		return ($business->user_id == Auth::user()->id) ? true : false;
+	}
 
 }

@@ -57,6 +57,7 @@ Route::group(["before" => "auth"], function()
 	
 	Route::get('create', 'BusinessController@create_ui');
 	Route::get('update/{business_id}', 'BusinessController@update_ui');
+	Route::get('delete/{business_id}', 'BusinessController@delete');
 	Route::put('save_new', 'BusinessController@save_new');
 	Route::put('save_update/{business_id}', 'BusinessController@save_update');
 	Route::get('results/{business_id}',	'ResultsController@show');

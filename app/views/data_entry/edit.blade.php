@@ -36,12 +36,28 @@ $number_of_partners = range(1, 5);
 	</div>
 	<div class="form-group">
 		{{ Form::label('net_profit_before_tax', 'Net profit before tax') }}
-		{{ Form::text('net_profit_before_tax', $business->net_profit_before_tax, array('class' => 'form-control')) }}
+		{{ 
+			Form::text('net_profit_before_tax', $business->net_profit_before_tax, array(
+				'class' => 'form-control', 
+				'ng-model' 	=> 'C1', 
+				'ng-init' 	=> "C1='{$business->net_profit_before_tax}'",
+				'numbers-only'	=> 'numbers-only',
+				'required'	=> 'required'
+			)) 
+		}}
 		{{ $errors->first('net_profit_before_tax', '<span class="help-block">:message</span>') }}
 	</div>
 	<div class="form-group">
 		{{ Form::label('amount_to_distribute', 'Amount to distribute') }}
-		{{ Form::text('amount_to_distribute', $business->amount_to_distribute, array('class' => 'form-control')) }}
+		{{ 
+			Form::text('amount_to_distribute', $business->amount_to_distribute, array(
+				'class' => 'form-control',
+				'ng-model' 	=> 'D1', 
+				'ng-init' 	=> "D1='{$business->amount_to_distribute}'",
+				'numbers-only'	=> 'numbers-only',
+				'required'	=> 'required'
+			)) 
+		}}
 		{{ $errors->first('amount_to_distribute', '<span class="help-block">:message</span>') }}
 	</div>
 </div> {{-- .col-lg-3 --}}
@@ -69,7 +85,15 @@ $number_of_partners = range(1, 5);
 			
 				<td>
 					<div class="input-group">
-						{{ Form::text($name, Input::old($name, $value), array('class' => 'form-control partners_share')) }}
+						{{ 
+							Form::text($name, Input::old($name, $value), array(
+								'class' => 'form-control partners_share',
+								'ng-model' 	=> 'E{$i}', 
+								'ng-init' 	=> "E{$i}='{$value}'",
+								'numbers-only'	=> 'numbers-only',
+								'required'	=> 'required'
+							)) 
+						}}
 						  <span class="input-group-addon">%</span>
 					</div>
 				</td>
@@ -84,7 +108,15 @@ $number_of_partners = range(1, 5);
 	<div class="col-lg-4 col-lg-offset-6">
 		<div class="input-group">
 			<span class="input-group-addon">Fee based on </span>
-			{{ Form::text('fee_based_on_tax_saved', $business->fee_based_on_tax_saved, array('class' => 'form-control')) }}
+			{{ 
+				Form::text('fee_based_on_tax_saved', $business->fee_based_on_tax_saved, array(
+					'class' => 'form-control',
+					'ng-model' 	=> 'F1', 
+					'ng-init' 	=> "F1='{$business->fee_based_on_tax_saved}'",
+					'numbers-only'	=> 'numbers-only',
+					'required'	=> 'required'
+				)) 
+			}}
 			<span class="input-group-addon">% of tax saved</span>
 		</div>
 	</div>
