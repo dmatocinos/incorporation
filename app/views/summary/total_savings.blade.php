@@ -34,7 +34,7 @@
 			<td></td>
 		</tr>
 		<tr class="active">
-			<td>BPK Fee (first year only)</td>
+			<td>{{ $user->company_name }} Fee (first year only)</td>
 			<td>{{ $total_savings_data["bpk_fee_first_year_only"] }}</td>
 		</tr>
 	</tbody>

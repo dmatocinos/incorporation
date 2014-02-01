@@ -58,6 +58,6 @@ Route::group(["before" => "auth"], function()
 	Route::get('results/{business_id}',	'ResultsController@show');
 	Route::get('summary/{business_id}', 'SummaryController@show');
 	Route::get('report', array('uses' => 'ReportController@download', 'as' => 'report.download'));
-	Route::get('report/incorporation', array('uses' => 'ReportController@incorporation', 'as' => 'report.incorporation'));
+	Route::get('report/incorporation/{business_id}', array('uses' => 'ReportController@incorporation', 'as' => 'report.incorporation'));
 });
 

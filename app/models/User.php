@@ -55,6 +55,12 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		return $this->email;
 	}
 
+	public function getCompanyNameAttribute()
+	{
+		// @todo update import to include mh2_company_name from practicepro
+		return $this->mh2_company_name; 
+	}
+
 	public static function findPracticeProUser($username) {
 		return DB::table('users')->where('username', $username)->first();
 	}

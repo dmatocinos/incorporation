@@ -2,6 +2,9 @@
 
 class AuthorizedController extends BaseController {
 
+	protected $user;
+	protected $business;
+
 	public function __construct()
 	{
 		$this->beforeFilter(function($route, $request) {
@@ -11,6 +14,8 @@ class AuthorizedController extends BaseController {
 				$this->business = Business::find($business_id);
 			}
 		});
+
+		$this->user = Auth::user();
 		
 		parent::__construct();
 	}

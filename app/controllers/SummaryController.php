@@ -4,6 +4,8 @@ class SummaryController extends AuthorizedController {
 	public function show()
 	{
 		$business = $this->business;
+
+		$user = $this->user;
 		
 		$service = new SummaryComparisonService($this->business);
 		$comparison_data = $service->getData();
@@ -13,7 +15,7 @@ class SummaryController extends AuthorizedController {
 		$service = new SummaryGraphService($this->business);
 		$graphs_data = $service->getData();
 
-		return View::make('summary.show', compact('business', 'total_savings_data', 'graphs_data', 'comparison_data'));
+		return View::make('summary.show', compact('business', 'total_savings_data', 'graphs_data', 'comparison_data', 'user'));
 	}
 
 	public function totalSavings()
