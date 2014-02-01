@@ -17,7 +17,7 @@ Data Entry
 </div>
 </div>
 @endif
-
+<div ng-app="BvApp" id="bv-content" class="">
 {{ Form::open(array('url' => $url, 'method' => 'PUT')) }}
 <div class="row">
 <div class="col-lg-3">
@@ -88,8 +88,8 @@ $number_of_partners = range(1, 5);
 						{{ 
 							Form::text($name, Input::old($name, $value), array(
 								'class' => 'form-control partners_share',
-								'ng-model' 	=> 'E{$i}', 
-								'ng-init' 	=> "E{$i}='{$value}'",
+								'ng-model' 	=> 'E' . $i, 
+								'ng-init' 	=> "E" . $i . "='{$value}'",
 								'numbers-only'	=> 'numbers-only',
 								'required'	=> 'required'
 							)) 
@@ -125,6 +125,7 @@ $number_of_partners = range(1, 5);
 	</div>
 </div> {{-- .row --}}
 {{ Form::close() }}
+</div>
 <div class="row">
 @stop
 

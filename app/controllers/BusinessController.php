@@ -40,8 +40,8 @@ class BusinessController extends AuthorizedController {
 		
 		$data['additional_scripts'] = array(
 			'assets/js/change_listener.js',
-			'assets/js/data.js',
-			'assets/js/angular.min.js'
+			'assets/js/angular.min.js',
+			'assets/js/data.js'
 		);
 		
 		return View::make('data_entry.edit', $data);
@@ -65,8 +65,8 @@ class BusinessController extends AuthorizedController {
 		
 		$data['additional_scripts'] = array(
 			'assets/js/change_listener.js',
-			'assets/js/data.js',
-			'assets/js/angular.min.js'
+			'assets/js/angular.min.js',
+			'assets/js/data.js'
 		);
 		
 		return View::make('data_entry.edit', $data);
