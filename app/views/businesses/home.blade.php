@@ -20,7 +20,7 @@ Home
 								<th>Business Entity</th>
 								<th>Net Profit Before Tax</th>
 								<th>Amount To Distribute</th>
-								<th>Fee Base</th>
+								<th>Fee Base (%)</th>
 								<th>Created At</th>
 								<th style="width: 40px !important;"></th>
 							</tr>
