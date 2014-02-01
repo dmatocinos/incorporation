@@ -17,20 +17,22 @@ class SummaryGraphService extends IncorporationEngine {
 				'at the top of this script as appropriate for your directory structure'
 			);
 		}
-
+		
 		$worksheet = $this->getActiveSheet();
 		$chartNames = $worksheet->getChartNames();
 		foreach ($chartNames as $i => $chartName) {
-			$chart = $worksheet->getChartByName($chartName);
-			$chart = $worksheet->getChartByName($chartName);
-			
-			// get unique file name
-			$caption = sprintf("%s_%s", uniqid(), $i);
-			
-			$asset_path = "/cache/{$caption}.jpg";
+			$asset_path = sprintf("/cache/%s_%s_%s.jpg", Auth::user()->id, $this->business->id, $i);
 			$jpegFile = public_path() . $asset_path;
+			
+			if (file_exists($jpegFile))  {
+				// delete graph image
+				unlink($jpegFile);
+			}
+
+			$chart = $worksheet->getChartByName($chartName);
+			$chart = $worksheet->getChartByName($chartName);
 			$chart->render($jpegFile);
-			$this->data[$caption] = $asset_path;
+			$this->data[] = $asset_path;
 		}
 	}
 
