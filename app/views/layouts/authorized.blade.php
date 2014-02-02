@@ -53,14 +53,15 @@
 					$menu = array(
 						'update'	=> 'Data Entry',
 						'results'	=> 'Results',
-						'summary'	=> 'Summary'
+						'summary'	=> 'Summary',
+						'goodwill'	=> 'Goodwill'
 					); 
 					
 					$active = Request::segment(1);
 				?>
 				<ul class="nav navbar-nav side-nav">
 					<li class="{{ 'create' == $active ? 'active' : '' }}"><a href="{{ url('create') }}">Create</a></li>
-					@if (array_key_exists($active, $menu))
+					@if ($active != 'create' && ! is_null($active))
 						@foreach ($menu as $route => $label)
 							<li class="{{ $route == $active ? 'active' : '' }}"><a href="{{ url(sprintf('%s/%s', $route, $business->id)) }}">{{ $label }}</a></li>
 						@endforeach
@@ -86,7 +87,7 @@
 				@section('header')
 				<div class="page-header">
 					<h1>
-						@section('title') 
+						@section('page_title') 
 						@show
 					</h1>
 				</div>

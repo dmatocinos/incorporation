@@ -59,5 +59,7 @@ Route::group(["before" => "auth"], function()
 	Route::get('summary/{business_id}', 'SummaryController@show');
 	Route::get('report', array('uses' => 'ReportController@download', 'as' => 'report.download'));
 	Route::get('report/incorporation/{business_id}', array('uses' => 'ReportController@incorporation', 'as' => 'report.incorporation'));
+	Route::get('goodwill/{business_id}', 'GoodwillController@show');
+	Route::get('goodwill/report/{business_id}', array('uses' => 'GoodwillController@download', 'as' => 'goodwill.report'));
 });
 

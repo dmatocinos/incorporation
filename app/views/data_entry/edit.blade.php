@@ -10,136 +10,188 @@ Data Entry
 
 @if ($errors->any())
 <div class="row">
-<div class="alert alert-danger alert-block">
-	<button type="button" class="close" data-dismiss="alert">&times;</button>
-	<h4>Error</h4>
-	{{ Session::get('message') }}
-</div>
+	<div class="alert alert-danger alert-block">
+		<button type="button" class="close" data-dismiss="alert">&times;</button>
+		<h4>Error</h4>
+		{{ Session::get('message') }}
+	</div>
 </div>
 @endif
+
 <div ng-app="BvApp" id="bv-content" class="">
-{{ Form::open(array('url' => $url, 'method' => 'PUT')) }}
-<div class="row">
-<div class="col-lg-3">
-<?php
-$business_entity_types = array('Sole Trader', 'Partnership');
-$number_of_partners = range(1, 5);
-?>
-	<div class="form-group">
-		{{ Form::label('business_entity', 'Current entity of the business') }}
-		{{ Form::select('business_entity', array_combine($business_entity_types, $business_entity_types), $business->business_entity, array('class' => 'form-control')) }}
-		{{ $errors->first('business_entity', '<span class="help-block">:message</span>') }}
-	</div>
-	<div class="form-group">
-		{{ Form::label('number_of_partners', 'Number of partners') }}
-		{{ Form::select('number_of_partners', array_combine($number_of_partners, $number_of_partners), count($business->partners), array('class' => 'form-control')) }}
-	</div>
-	<div class="form-group">
-		{{ Form::label('net_profit_before_tax', 'Net profit before tax') }}
-		{{ 
-			Form::text('net_profit_before_tax', $business->net_profit_before_tax, array(
-				'class' => 'form-control', 
-				'ng-model' 	=> 'C1', 
-				'ng-init' 	=> "C1='{$business->net_profit_before_tax}'",
-				'numbers-only'	=> 'numbers-only',
-				'required'	=> 'required'
-			)) 
-		}}
-		{{ $errors->first('net_profit_before_tax', '<span class="help-block">:message</span>') }}
-	</div>
-	<div class="form-group">
-		{{ Form::label('amount_to_distribute', 'Amount to distribute') }}
-		{{ 
-			Form::text('amount_to_distribute', $business->amount_to_distribute, array(
-				'class' => 'form-control',
-				'ng-model' 	=> 'D1', 
-				'ng-init' 	=> "D1='{$business->amount_to_distribute}'",
-				'numbers-only'	=> 'numbers-only',
-				'required'	=> 'required'
-			)) 
-		}}
-		{{ $errors->first('amount_to_distribute', '<span class="help-block">:message</span>') }}
-	</div>
-</div> {{-- .col-lg-3 --}}
-<div class="col-lg-9">
-	<table class="table">
-		<thead>
-			<tr>
-				<th></th>
-				<th>Sole Trader /<br>Partner 1</th>
-				<th>Partner 2</th>
-				<th>Partner 3</th>
-				<th>Partner 4</th>
-				<th>Partner 5</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<td>Enter Partners</td>
-				@for ($i = 0; $i < 5; $i++)
-				<?php
-				$name = "partners[{$i}][share]";
-				$partner = $business->partners->get($i);
-				$value = $partner ? $partner->share : '';
-				?>
-			
-				<td>
-					<div class="input-group">
-						{{ 
-							Form::text($name, Input::old($name, $value), array(
-								'class' => 'form-control partners_share',
-								'ng-model' 	=> 'E' . $i, 
-								'ng-init' 	=> "E" . $i . "='{$value}'",
-								'numbers-only'	=> 'numbers-only',
-								'required'	=> 'required'
-							)) 
-						}}
-						  <span class="input-group-addon">%</span>
-					</div>
-				</td>
-				@endfor
-			</tr>
-		</tbody>
-	</table>
-</div>{{-- .col-lg-9 --}}
-</div>{{-- .row --}}
-<hr>
-<div class="row">
-	<div class="col-lg-4 col-lg-offset-6">
-		<div class="input-group">
-			<span class="input-group-addon">Fee based on </span>
-			{{ 
-				Form::text('fee_based_on_tax_saved', $business->fee_based_on_tax_saved, array(
-					'class' => 'form-control',
-					'ng-model' 	=> 'F1', 
-					'ng-init' 	=> "F1='{$business->fee_based_on_tax_saved}'",
-					'numbers-only'	=> 'numbers-only',
-					'required'	=> 'required'
-				)) 
-			}}
-			<span class="input-group-addon">% of tax saved</span>
+	{{ Form::open(array('url' => $url, 'method' => 'PUT','class' => 'form-horizontal')) }}
+
+	<legend>Incorporation</legend>
+	<div class="row">
+		<?php
+			$business_entity_types = array('Sole Trader', 'Partnership');
+			$number_of_partners = range(1, 5);
+		?>
+		<div class="col-lg-8">
+			<div class="form-group">
+				{{ Form::label('business_entity', 'Current entity of the business', array('class' => 'col-lg-3 control-label')) }}
+				<div class="col-lg-5">
+					{{ Form::select('business_entity', array_combine($business_entity_types, $business_entity_types), $business->business_entity, array('class' => 'form-control')) }}
+					{{ $errors->first('business_entity', '<span class="help-block">:message</span>') }}
+				</div>
+			</div>
+			<div class="form-group">
+				{{ Form::label('number_of_partners', 'Number of partners', array('class' => 'col-lg-3 control-label')) }}
+				<div class="col-lg-5">
+					{{ Form::select('number_of_partners', array_combine($number_of_partners, $number_of_partners), count($business->partners), array('class' => 'form-control')) }}
+				</div>
+			</div>
+			<div class="form-group">
+				{{ Form::label('net_profit_before_tax', 'Net profit before tax', array('class' => 'col-lg-3 control-label')) }}
+				<div class="col-lg-5">
+					{{ 
+						Form::text('net_profit_before_tax', $business->net_profit_before_tax, array(
+							'class' => 'form-control', 
+							'ng-model' 	=> 'C1', 
+							'ng-init' 	=> "C1='{$business->net_profit_before_tax}'",
+							'numbers-only'	=> 'numbers-only',
+							'required'	=> 'required'
+						)) 
+					}}
+					{{ $errors->first('net_profit_before_tax', '<span class="help-block">:message</span>') }}
+				</div>
+			</div>
+			<div class="form-group">
+				{{ Form::label('amount_to_distribute', 'Amount to distribute', array('class' => 'col-lg-3 control-label')) }}
+				<div class="col-lg-5">
+					{{ 
+						Form::text('amount_to_distribute', $business->amount_to_distribute, array(
+							'class' => 'form-control',
+							'ng-model' 	=> 'D1', 
+							'ng-init' 	=> "D1='{$business->amount_to_distribute}'",
+							'numbers-only'	=> 'numbers-only',
+							'required'	=> 'required'
+						)) 
+					}}
+					{{ $errors->first('amount_to_distribute', '<span class="help-block">:message</span>') }}
+				</div>
+			</div>
+		</div> {{-- .col-lg-9 --}}
+	</div>{{-- .row --}}
+
+	<br /><br />
+	<legend>Goodwill</legend>
+	<div class="row">
+		<div class="col-lg-8">
+			<div class="form-group">
+				{{ Form::label('goodwill_estimated_value', 'Estimated value for goodwill', array('class' => 'col-lg-3 control-label')) }}
+			    	<div class="col-lg-5">
+					{{ 
+						Form::text('goodwill_estimated_value', $business->goodwill_estimated_value, array(
+							'class' => 'form-control',
+							'ng-model' 	=> 'E10', 
+							'ng-init' 	=> "E10='{$business->amount_to_distribute}'",
+							'numbers-only'	=> 'numbers-only',
+							'required'	=> 'required'
+						)) 
+					}}
+					{{ $errors->first('goodwill_estimated_value', '<span class="help-block">:message</span>') }}
+			    	</div>
+			</div>
+			<div class="form-group">
+				{{ Form::label('existing_business_commenced', 'Existing business commenced post 01/04/2002', array('class' => 'col-lg-3 control-label')) }}
+			    	<div class="col-lg-5">
+					{{ 
+						Form::select('existing_business_commenced', array('yes' => 'Yes', 'no' => 'No'), $business->existing_business_commenced, array(
+							'class' => 'form-control'
+						)) 
+					}}
+			    	</div>
+			</div>
+			<div class="form-group">
+				{{ Form::label('goodwill_write_off_years', 'Goodwill  write off by how many years', array('class' => 'col-lg-3 control-label')) }}
+			    	<div class="col-lg-5">
+					{{ 
+						Form::text('goodwill_write_off_years', $business->goowill_write_off_years, array(
+							'class' => 'form-control',
+							'ng-model' 	=> 'E17', 
+							'ng-init' 	=> "E17='{$business->goodwill_write_off_years}'",
+							'numbers-only'	=> 'numbers-only',
+							'required'	=> 'required'
+						)) 
+					}}
+					{{ $errors->first('goodwill_estimated_value', '<span class="help-block">:message</span>') }}
+			    	</div>
+			</div>
 		</div>
-	</div>
-	<div class="col-lg-2">
-		<input type="submit" class="btn btn-primary" value="Save"/>
-	</div>
-</div> {{-- .row --}}
-{{ Form::close() }}
+	</div> {{-- .row --}}
+	
+	
+	<br /><br />
+	<legend>Partners</legend>
+
+	<div class="row">
+		<div class="col-lg-12">
+			<table class="table">
+				<thead>
+					<tr>
+						<th style="border-style: none; width: 150px;"></th>
+						<th style="border-style: none;">Partner 1</th>
+						<th style="border-style: none;">Partner 2</th>
+						<th style="border-style: none;">Partner 3</th>
+						<th style="border-style: none;">Partner 4</th>
+						<th style="border-style: none;">Partner 5</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td style="width: 150px"><label>Partners' Share</label></td>
+						@for ($i = 0; $i < 5; $i++)
+							<?php
+								$name = "partners[{$i}][share]";
+								$partner = $business->partners->get($i);
+								$value = $partner ? $partner->share : '';
+							?>
+					
+							<td>
+								<div class="input-group">
+									{{ 
+										Form::text($name, Input::old($name, $value), array(
+											'class' => 'form-control partners_share',
+											'ng-model' 	=> 'E' . $i, 
+											'ng-init' 	=> "E" . $i . "='{$value}'",
+											'numbers-only'	=> 'numbers-only',
+											'required'	=> 'required'
+										)) 
+									}}
+									<span class="input-group-addon">%</span>
+								</div>
+							</td>
+						@endfor
+					</tr>
+				</tbody>
+			</table>
+		</div>{{-- .col-lg-12 --}}
+	</div>{{-- .row --}}
+
+	<hr>
+	<div class="row">
+		<div class="col-lg-4">
+			<div class="input-group">
+				<span class="input-group-addon">Fee based on </span>
+				{{ 
+					Form::text('fee_based_on_tax_saved', $business->fee_based_on_tax_saved, array(
+						'class' => 'form-control',
+						'ng-model' 	=> 'F1', 
+						'ng-init' 	=> "F1='{$business->fee_based_on_tax_saved}'",
+						'numbers-only'	=> 'numbers-only',
+						'required'	=> 'required'
+					)) 
+				}}
+				<span class="input-group-addon">% of tax saved</span>
+			</div>
+		</div>
+		<div class="col-lg-2">
+			<input type="submit" class="btn btn-primary" value="Save"/>
+		</div>
+	</div> {{-- .row --}}
+
+	{{ Form::close() }}
 </div>
-<div class="row">
 @stop
 
-@section('scripts')
-	<script type="text/javascript">
-		$(document).ready(function() {
-			$('#number_of_partners').change(function() {
-				var count = $(this).val();
-				var current = 0;
-				$('.partners_share').each(function() {
-					$(this).attr('disabled', current >= count);
-					current++;
-				});
-			}).trigger('change');
-		});
-	</script>
-@stop

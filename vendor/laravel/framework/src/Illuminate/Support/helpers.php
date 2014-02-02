@@ -560,6 +560,45 @@ if ( ! function_exists('dd'))
 	}
 }
 
+if ( ! function_exists('pd'))
+{
+	/**
+	 * Dump the passed variables nicely and end the script.
+	 *
+	 * @param  dynamic  mixed
+	 * @return void
+	 */
+	function pd($dump, $exit = TRUE)
+	{
+		$style = '
+			<style>
+			pre, code  {
+				display: block;
+				padding: 9.5px;
+				margin: 0 0 10px;
+				font-size: 13px;
+				line-height: 1.428571429;
+				color: #333;
+				word-break: break-all;
+				word-wrap: break-word;
+				background-color: #f5f5f5;
+				border: 1px solid #ccc;
+				border-radius: 4px;
+			}
+			</style>
+		';
+		if ($dump) {
+			print $style;
+			print '<pre>';
+			print_r($dump);
+			print '</pre>';
+		}
+		if ($exit) {
+			exit;
+		}
+	}
+}
+
 if ( ! function_exists('e'))
 {
 	/**

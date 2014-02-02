@@ -7,7 +7,11 @@ class Business extends Eloquent {
 		'business_entity' => 'required',
 		'net_profit_before_tax' => 'required|min:1',
 		'amount_to_distribute' => 'required|numeric|min:1',
-		'fee_based_on_tax_saved' => 'required|numeric|min:1|max:100'
+		'fee_based_on_tax_saved' => 'required|numeric|min:1|max:100',
+		'has_goodwill' => 'numeric|min:0',
+		'goodwill_estimated_value' => 'required|min:1',
+		'existing_business_commenced' => 'required|min:1',
+		'goodwill_write_off_years' => 'required|min:1'
 	);
 
 	public function partners()
@@ -44,11 +48,11 @@ class Business extends Eloquent {
 		foreach ($new_partners as $partner) {
 			if ($count < $count_current_partners) {
 				$p = $partners->get($count);
-				$p->fill(array('share' => $partner['share']));
+				$p->fill($partner);
 				$p->update();
 			}
 			else {
-				Partner::create(array('share' => $partner['share'], 'business_id' => $this->id));
+				Partner::create(array_merge($partner, array('business_id' => $this->id)));
 			}
 			
 			$count++;
@@ -61,11 +65,13 @@ class Business extends Eloquent {
 		}
 	}
 	
-	public function deletePartners() {
+	public function deletePartners() 
+	{
 		 Partner::where('business_id', '=', $this->id)->delete();
 	}
 	
-	public static function getAll($user_id = NULL) {
+	public static function getAll($user_id = NULL) 
+	{
 		if ($user_id) {
 			return DB::select("SELECT * FROM businesses WHERE user_id = :user_id", array('user_id' => $user_id));
 		}

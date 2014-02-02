@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="full" lang="en">
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,6 +16,7 @@
 
 	{{-- Add custom CSS here --}}
 	<link href="{{ asset('assets/css/sb-admin.css') }}" rel="stylesheet">
+	<link href="{{ asset('assets/css/the_big_picture.css') }}" rel="stylesheet">
 	<link rel="stylesheet" href="{{ asset('assets/font-awesome/css/font-awesome.min.css') }}">
 
 	{{-- Additional Stylesheets --}}
@@ -34,7 +35,7 @@
       
     <div class="container">
       <div class="row">
-        <div class="col-lg-5 col-sm-6">
+        <div class="col-lg-6 col-sm-5 blob">
           <h1>The Next Big Thing in the Cloud</h1>
           <p>BizValuation is an innovative piece of software which helps to calculate the Guide Price Valuation of a business. The software is extremely simple to use and in a matter of minutes the user can produce a professional valuation report of their business.</p>
           <p>Taking key financial information from a set of business accounts and using one of the relevant business valuation methods, BizValuation calculates the guide price of any business. </p>
