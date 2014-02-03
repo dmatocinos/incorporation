@@ -4,6 +4,9 @@
 Data Entry
 @stop
 
+@section('page_title')
+Data Entry
+@stop
 <?php $active = 'data_entry.index'; ?>
 
 @section('content')

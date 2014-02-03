@@ -5,9 +5,11 @@
 @section('title')
 Summary
 @stop
+@section('page_title')
+Summary <a href="{{ route('report.incorporation', $business->id) }}" class="btn btn-success">Download Report</a>
+@stop
 
 @section('content')
-<a href="{{ route('report.incorporation', $business->id) }}" class="btn btn-success">Download Report</a>
 <div class="row">
 	<div class="col-lg-12">
 		@include('summary/comparison')

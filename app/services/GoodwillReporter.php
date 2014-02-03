@@ -1,84 +1,100 @@
 <?php
 
-class GoodwillReporter {
+class GoodwillReporter extends TCPDF {
 	
 	protected $business;
-	protected $excel_engine;
 	protected $pdf;
 		
-	public function __construct(Business $business, GoodwillEngine $excel_engine)
+	public function __construct(Business $business)
 	{
+		parent::__construct(PDF_PAGE_ORIENTATION, PDF_UNIT, array(215.9,279.4), true, 'UTF-8', false);
+
 		$this->business = $business;
-		$this->excel_engine = $excel_engine;
+	}
+
+	public function Header() 
+	{
+		$header_title = 'Your Goodwill Report';
+		
+		$this->setTextColor(69, 167, 196);			
+		$this->SetFont('rockb', '', 24, '', true);
+		$this->MultiCell(0, 5, $header_title, 0, 'C', 0, 0, '', 8, true);
+		
+	}
+
+	public function Footer() 
+	{
 	}
 	
 	public function setupPdf()
 	{
-		$this->pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
-
+		
 		// set document information
-		$this->pdf->SetCreator('');
-		$this->pdf->SetAuthor('Pro Media Consultants');
-		$this->pdf->SetTitle('Goodwill Report');
-		$this->pdf->SetSubject('PDF Export');
+		$this->SetCreator('');
+		$this->SetAuthor('Pro Media Consultants');
+		$this->SetTitle('Goodwill Report');
+		$this->SetSubject('PDF Export');
 
 		// set default header data
-	//	$this->pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, PDF_HEADER_TITLE.' 006', PDF_HEADER_STRING);
+	//	$this->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, PDF_HEADER_TITLE.' 006', PDF_HEADER_STRING);
 
 		// set header and footer fonts
-		$this->pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
-		$this->pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
+		$this->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
+		$this->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
 
 		// set default monospaced font
-		$this->pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
+		$this->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
 
 		// set margins
-		$this->pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
-		$this->pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
-		$this->pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
+		$this->SetMargins(PDF_MARGIN_LEFT, 25, PDF_MARGIN_RIGHT);
+		$this->SetHeaderMargin(8);
+		$this->SetFooterMargin(1);		
 
 		// set auto page breaks
-		$this->pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
+		$this->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
 
 		// set image scale factor
-		$this->pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
+		$this->setImageScale(PDF_IMAGE_SCALE_RATIO);
 
 		// set some language-dependent strings (optional)
 		if (@file_exists(dirname(__FILE__).'/lang/eng.php')) {
 			require_once(dirname(__FILE__).'/lang/eng.php');
-			$this->pdf->setLanguageArray($l);
+			$this->setLanguageArray($l);
 		}
 
 		// set font
-		$this->pdf->SetFont('dejavusans', '', 10);
+		$this->SetFont('dejavusans', '', 10);
 
 		// add a page
-		$this->pdf->AddPage();
+		$this->AddPage();
 
 		// output the HTML content
-		$this->pdf->writeHTML($this->html, true, false, true, false, '');
+		$this->writeHTML($this->html, true, false, true, false, '');
 
 		// reset pointer to the last page
-		$this->pdf->lastPage();
+		$this->lastPage();
 
 
 		//Close and output PDF document
-		$this->pdf->Output("Goodwill_Report.pdf", 'I');
+		//$this->Output("Goodwill_Report.pdf", 'I');
+		$this->Output("Goodwill_Report.pdf", 'D');
 
 	}
 	
-	public function buildHtml()
+	public function buildHtml($params = [])
 	{
+		
+		$params = array_merge(['data' => $params], ['business' => $this->business, 'user' => Session::get('practicepro_user')]);
 		$this->html = View::make("goodwill.pdf_styles")->render();
 		$this->html .= View::make(
 			"goodwill.report", 
-			['business' => $this->business, 'excel_engine' => $this->excel_engine]
+			$params
 		)->render();
 	}
 
-	public function generate()
+	public function generate($params = [])
 	{
-		$this->buildHtml();
+		$this->buildHtml($params);
 		$this->setupPdf();
 	}
 }

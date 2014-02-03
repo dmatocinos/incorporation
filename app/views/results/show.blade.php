@@ -6,6 +6,10 @@
 Results
 @stop
 
+@section('page_title')
+Results
+@stop
+
 @section('content')
 <ul class="nav nav-pills nav-justified">
 	<li class="active"><a href="#salary" data-toggle="tab">Salary in Limited Co</a></li>

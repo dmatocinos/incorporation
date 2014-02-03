@@ -26,7 +26,8 @@ return array(
 	|
 	*/
 
-	'default' => 'mysql',
+	//'default' => 'mysql',
+	'default' => 'mysql_dixie',
 	//'default' => 'mysql_mark',
 
 	/*
@@ -73,7 +74,7 @@ return array(
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',
-        ),
+        	),
 		
 		'mysql_mark' => array(
 			'driver'    => 'mysql',
@@ -81,6 +82,17 @@ return array(
 			'database'  => 'practicepro_incorporation',
 			'username'  => 'root',
 			'password'  => '',
+			'charset'   => 'utf8',
+			'collation' => 'utf8_unicode_ci',
+			'prefix'    => '',
+		),
+
+		'mysql_dixie' => array(
+			'driver'    => 'mysql',
+			'host'      => 'localhost',
+			'database'  => 'incorporation',
+			'username'  => 'root',
+			'password'  => 'admin123',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',
@@ -95,7 +107,18 @@ return array(
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',
-        ),
+        	),
+
+		'practicepro_users_dixie' => array(
+			'driver'    => 'mysql',
+			'host'      => 'localhost',
+			'database'  => 'practicepro_users',
+			'username'  => 'root',
+			'password'  => 'admin123',
+			'charset'   => 'utf8',
+			'collation' => 'utf8_unicode_ci',
+			'prefix'    => '',
+        	),
 		
 		'pgsql' => array(
 			'driver'   => 'pgsql',

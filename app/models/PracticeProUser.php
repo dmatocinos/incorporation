@@ -40,7 +40,7 @@ class PracticeProUser extends Eloquent implements UserInterface, RemindableInter
 	public static function findByEmail($email, $password) {
 		// TODO: do we need to use restful?
 		// TODO: check also if the user has the permission to use biz val
-		return DB::connection('practicepro_users')
+		return DB::connection('practicepro_users_dixie')
 			->select(DB::raw("SELECT * FROM practice_pro_login WHERE mh2_email = :email AND mh2_password = :password LIMIT 1"), array(
 				'email'    => $email,
 				'password' => md5($password)

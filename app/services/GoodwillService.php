@@ -8,7 +8,7 @@ class GoodwillService {
 	public function __construct(Business $business)
 	{
 		$this->excel_engine = new GoodwillEngine($business);
-		$this->reporter = new GoodwillReporter($business, $this->excel_engine);
+		$this->reporter = new GoodwillReporter($business);
 	}
 
 	public function __get($name)

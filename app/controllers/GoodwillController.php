@@ -15,7 +15,7 @@ class GoodwillController extends AuthorizedController {
 		$business = $this->business;
 
 		$service = new GoodwillService($this->business);
-		$service->reporter->generate();
+		$service->reporter->generate($service->excel_engine->getData());
 	}
 
 }
