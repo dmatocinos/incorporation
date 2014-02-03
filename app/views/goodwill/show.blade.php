@@ -12,7 +12,7 @@ Goodwill
 @stop
 
 @section('content')
-	<legend>Capital Gain on Business Transfer</legend>
+	<legend>Capital gain on business transfer</legend>
 	<div class="row">
 		<div class="col-lg-12">
 			<table class="table">
@@ -58,7 +58,7 @@ Goodwill
 	</div>
 
 	<br/>
-	<legend>Tax if Value of Goodwill Taken by Dividends</legend>
+	<legend>Tax if value of goodwill taken by dividends</legend>
 	<div class="row">
 		<div class="col-lg-12">
 			<table class="table">
