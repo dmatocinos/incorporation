@@ -37,8 +37,12 @@
       <div class="row">
         <div class="col-lg-6 col-sm-5 blob">
           <h1>The Next Big Thing in the Cloud</h1>
-          <p>BizValuation is an innovative piece of software which helps to calculate the Guide Price Valuation of a business. The software is extremely simple to use and in a matter of minutes the user can produce a professional valuation report of their business.</p>
-          <p>Taking key financial information from a set of business accounts and using one of the relevant business valuation methods, BizValuation calculates the guide price of any business. </p>
+	  <br />
+          <p>Incorporation (Inc.) is the forming of a new corporation (a corporation being a legal entity that is effectively recognized as a person under the law). The corporation may be a business, a non-profit organization, sports club, or a government of a new city or town. This article focuses on the process of incorporation; see also corporation.</p>
+	<br />
+          <p>
+		Goodwill is best described as what a company’s name or reputation is worth if it was sold. You’ve worked hard to gain a good reputation and this is why Goodwill has a value. So if customers were being attracted to a business because of the name then it is generating customers because of the reputation – this is not something that you can see or touch so it’s ‘intangible’. 
+	</p>
         </div>
         <div class="col-lg-4 pull-right">
       	   <div class="main well">
