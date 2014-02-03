@@ -26,8 +26,8 @@ return array(
 	|
 	*/
 
-	//'default' => 'mysql',
-	'default' => 'mysql_dixie',
+	'default' => 'mysql',
+	//'default' => 'mysql_dixie',
 	//'default' => 'mysql_mark',
 
 	/*
@@ -56,10 +56,10 @@ return array(
 
 		'mysql' => array(
 			'driver'    => 'mysql',
-			'host'      => 'localhost',
-			'database'  => 'database',
-			'username'  => 'root',
-			'password'  => '',
+			'host'      => 'mysqlsdb.co8hm2var4k9.eu-west-1.rds.amazonaws.com',
+			'database'  => 'dep9zhcg9bc',
+			'username'  => 'dep9zhcg9bc',
+			'password'  => 'WHmKY0PK_i58',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',
@@ -70,51 +70,7 @@ return array(
 			'host'      => 'db466545735.db.1and1.com',
 			'database'  => 'db466545735',
 			'username'  => 'dbo466545735',
-			'password'  => '@11_11L95zRT',
-			'charset'   => 'utf8',
-			'collation' => 'utf8_unicode_ci',
-			'prefix'    => '',
-        	),
-		
-		'mysql_mark' => array(
-			'driver'    => 'mysql',
-			'host'      => 'localhost',
-			'database'  => 'practicepro_incorporation',
-			'username'  => 'root',
-			'password'  => '',
-			'charset'   => 'utf8',
-			'collation' => 'utf8_unicode_ci',
-			'prefix'    => '',
-		),
-
-		'mysql_dixie' => array(
-			'driver'    => 'mysql',
-			'host'      => 'localhost',
-			'database'  => 'incorporation',
-			'username'  => 'root',
-			'password'  => 'admin123',
-			'charset'   => 'utf8',
-			'collation' => 'utf8_unicode_ci',
-			'prefix'    => '',
-		),
-
-		'practicepro_users_mark' => array(
-			'driver'    => 'mysql',
-			'host'      => 'localhost',
-			'database'  => 'practicepro_users',
-			'username'  => 'root',
-			'password'  => '',
-			'charset'   => 'utf8',
-			'collation' => 'utf8_unicode_ci',
-			'prefix'    => '',
-        	),
-
-		'practicepro_users_dixie' => array(
-			'driver'    => 'mysql',
-			'host'      => 'localhost',
-			'database'  => 'practicepro_users',
-			'username'  => 'root',
-			'password'  => 'admin123',
+			'password'  => 'v4Lu@t10n**!!',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',
