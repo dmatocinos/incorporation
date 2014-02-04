@@ -30,7 +30,6 @@
 	}
 	.header {
 	//	color: #3A8DD6;	
-		margin-top: -50px;
 		font-size: 28px;
 		font-weight: bold;
 	}
@@ -38,6 +37,9 @@
 		font-weight: bold;
 		color: #133561;	
 		font-size: 12px;
+	}
+	.emphasize {
+		font-weight: bold;
 	}
 	h2 {
 		padding: 5px;

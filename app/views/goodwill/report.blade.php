@@ -1,3 +1,4 @@
+<div class="header text-center">Your Goodwill Report</div>
 <div class="report-container">
 	<div>1. Breakdown of your savings:</div>
 	<div class="legend">Company</div>
@@ -43,9 +44,9 @@
 	<p></p>
 	<div>Acknowledgement</div>
 	<p>Either party may terminate this Agreement at any time, for any reason, by giving 10 days written notice.  Any services that have not been paid for at that time will then be settled in full within 10 days.</p>
+	<p class="emphasize">We would like to benefit from the services described within this report. We understand the benefits of the report and the associated costs; we authorise work to commence on the valuation of our goodwill and company assets:</p>
 	<p></p>
-	<div><p><h4>We would like to benefit from the services described within this report. We understand the benefits of the report and the associated costs; we authorise work to commence on the valuation of our goodwill and company assets:</h4></p></div>
-	<p>Signed: _________________________<br /><em	>For and on behalf of: {{ $user->mh2_fname . $user->mh2_lname}}</em></p>
-	<br />
+	<p></p>
+	<p>Signed: _________________________<br /><em	>For and on behalf of: ________________</em></p>
 	<p>Date: _____________________</p>
 </div>

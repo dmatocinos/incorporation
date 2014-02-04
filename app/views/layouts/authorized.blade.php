@@ -54,8 +54,8 @@
 						'update'	=> 'Data Entry',
 						'results'	=> 'Results',
 						'summary'	=> 'Summary',
-						'goodwill'	=> 'Goodwill'
-					); 
+						'goodwill'	=> 'Goodwill <sup><span class="label label-success"><b>PRO</b></span></sup>'
+				); 
 					
 					$active = Request::segment(1);
 				?>
