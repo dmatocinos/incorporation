@@ -84,8 +84,8 @@ class GoodwillReporter extends TCPDF {
 
 
 		//Close and output PDF document
-		$this->Output("Goodwill_Report.pdf", 'I');
-		//$this->Output("Goodwill_Report.pdf", 'D');
+		//$this->Output("Goodwill_Report.pdf", 'I');
+		$this->Output("Goodwill_Report.pdf", 'D');
 
 	}
 
