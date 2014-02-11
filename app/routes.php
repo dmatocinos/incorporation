@@ -61,5 +61,8 @@ Route::group(["before" => "auth"], function()
 	Route::get('report/incorporation/{business_id}', array('uses' => 'ReportController@incorporation', 'as' => 'report.incorporation'));
 	Route::get('goodwill/{business_id}', 'GoodwillController@show');
 	Route::get('goodwill/report/{business_id}', array('uses' => 'GoodwillController@download', 'as' => 'goodwill.report'));
+	Route::any('goodwill/paypal/{business_id}', 'GoodwillController@goodwillPayment');
+	Route::any('goodwill/paypal_return/{business_id}', 'GoodwillController@returnPayment');
+	Route::any('goodwill/paypal_cancel/{business_id}', 'GoodwillController@cancelPayment');
 });
 

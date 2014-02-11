@@ -7,17 +7,11 @@ Goodwill
 @stop
 
 @section('page_title')
-@if($business->has_goodwill)
 Goodwill
 	<a href="{{ url(sprintf('%s/%s', 'goodwill/report', $business->id)) }}" class="btn btn-success">Download Report</a>
-@endif
 @stop
 
 @section('content')
-	@if($business->has_goodwill)
-		@if($paypal_success)
-			<div class="alert alert-success">Thank you for subscribing this business to our goodwill report feature!</div>
-		@endif
 	<legend>Capital gain on business transfer</legend>
 	<div class="row">
 		<div class="col-lg-12">
@@ -161,8 +155,5 @@ Goodwill
 		</div>
 	</div>
 	@endforeach
-	@else 
-		<div class="alert alert-warning">It appears that this business have not subscribed to our goodwill report feature. <a href="{{ url('goodwill/paypal/' . $business->id) }}">Subscribed now!</a></div>
-	@endif
 @stop
 
