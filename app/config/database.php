@@ -58,7 +58,7 @@ return array(
 			'driver'    => 'mysql',
 			'host'      => 'db515894223.db.1and1.com',
 			'database'  => 'db515894223',
-			'username'  => 'db515894223',
+			'username'  => 'dbo515894223',
 			'password'  => 'rftS<.[~S}Y>e35',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
