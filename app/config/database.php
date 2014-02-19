@@ -70,7 +70,7 @@ return array(
 			'host'      => 'db466545735.db.1and1.com',
 			'database'  => 'db466545735',
 			'username'  => 'dbo466545735',
-			'password'  => 'v4Lu@t10n**!!',
+			'password'  => '@11_11L95zRT',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',
