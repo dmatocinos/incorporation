@@ -56,10 +56,10 @@ return array(
 
 		'mysql' => array(
 			'driver'    => 'mysql',
-			'host'      => 'mysqlsdb.co8hm2var4k9.eu-west-1.rds.amazonaws.com',
-			'database'  => 'dep9zhcg9bc',
-			'username'  => 'dep9zhcg9bc',
-			'password'  => 'WHmKY0PK_i58',
+			'host'      => 'db515894223.db.1and1.com',
+			'database'  => 'db515894223',
+			'username'  => 'db515894223',
+			'password'  => 'rftS<.[~S}Y>e35',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',
