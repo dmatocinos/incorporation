@@ -7,6 +7,35 @@
 | @todo: comment out on production
 |
 */
+Route::get('install/{key?}',  array('as' => 'install', function($key = null)
+{
+       if($key == "where_are_the_cranberries"){
+               try {
+					
+                       echo '<br>init migrate:install...';
+                       Artisan::call('migrate:install');
+                       echo 'done migrate:install';
+                       
+                       echo '<br>init with app tables migrations...';
+                       Artisan::call('migrate', [
+                               '--path'     => "app/database/migrations"
+                               ]);
+                       echo '<br>done with app tables migrations';
+					
+                       echo '<br>init with tables seeders...';
+                       Artisan::call('db:seed');
+                       echo '<br>done with tables seeders...';
+
+               } catch (Exception $e) {
+					echo $e->getMessage();
+                    Response::make($e->getMessage(), 500);
+               }
+       }else{
+               App::abort(404);
+       }
+}));
+
+
 Route::resource('businesses', 'BusinessesController');
 Route::resource('partners', 'PartnersController');
 Route::resource('options', 'OptionsController');
