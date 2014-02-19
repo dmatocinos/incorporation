@@ -35,8 +35,8 @@ class GoodwillController extends AuthorizedController {
 		$paypal_data = array(
 			'amount' 	=> '1.00',
 			'description'	=> 'Your purchase',
-			'returnUrl'	=> 'http://121.97.55.222/incorporation/public/index.php/goodwill/paypal_return/' . $this->business->id,
-			'cancelUrl'	=> 'http://121.97.55.222/incorporation/public/index.php/goodwill/paypal_cancel/' . $this->business->id,
+			'returnUrl'	=> 'http://practicepro.co.uk/incorporation/public/index.php/goodwill/paypal_return/' . $this->business->id,
+			'cancelUrl'	=> 'http://practicepro.co.uk/incorporation/public/index.php/goodwill/paypal_cancel/' . $this->business->id,
 			'currency'	=> 'USD'
 		);
 
