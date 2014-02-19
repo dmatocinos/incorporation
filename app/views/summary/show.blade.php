@@ -6,7 +6,7 @@
 Summary
 @stop
 @section('page_title')
-Summary {{-- <a href="{{ route('report.incorporation', $business->id) }}" class="btn btn-success">Download Report</a> --}}
+Summary <a href="{{ route('report.incorporation', $business->id) }}" class="btn btn-success">Download Report</a>
 @stop
 
 @section('content')

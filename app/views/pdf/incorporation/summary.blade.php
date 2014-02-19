@@ -1,3 +1,4 @@
+<div class="report-container">
 <h1>
 Your Summary of Tax Savings
 </h1>
@@ -32,11 +33,8 @@ Your Summary of Tax Savings
 <br>
 
 @foreach ($graphs_data as $caption => $path)
-<div class="row">
-	<div class="col-lg-6 col-lg-offset-3">
-	<a href="#" class="thumbnail">
-		<img src="{{ asset($path) }}" class="img-thumbnail"/>
-	</a>
-	</div>
+<div class="row" style="width: 100%">
+	<img style="width: 400px; padding-left: 300px;" src="{{ asset($path) }}" class="img-thumbnail"/>
 </div>
 @endforeach
+</div>
