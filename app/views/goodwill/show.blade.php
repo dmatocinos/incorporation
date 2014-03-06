@@ -14,7 +14,9 @@ Goodwill
 @stop
 
 @section('content')
+	{{--
 	@if($business->has_goodwill)
+	--}}
 		@if($paypal_success)
 			<div class="alert alert-success">Thank you for subscribing this business to our goodwill report feature!</div>
 		@endif
@@ -161,8 +163,10 @@ Goodwill
 		</div>
 	</div>
 	@endforeach
+	{{--
 	@else 
 		<div class="alert alert-warning">It appears that this business have not subscribed to our goodwill report feature. <a href="{{ url('goodwill/paypal/' . $business->id) }}">Subscribed now!</a></div>
 	@endif
+	--}}
 @stop
 
