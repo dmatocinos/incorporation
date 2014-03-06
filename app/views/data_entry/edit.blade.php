@@ -144,11 +144,12 @@ Data Entry
 				<tbody>
 					<tr>
 						<td style="width: 150px"><label>Partners' Share</label></td>
-						@for ($i = 0; $i < 5; $i++)
+						@for ($i = 5; $i >= 1; $i--)
 							<?php
 								$name = "partners[{$i}][share]";
 								$partner = $business->partners->get($i);
 								$value = $partner ? $partner->share : '';
+								$init_val =  (int) $i == 5 && ($business->business_entity == 'Sole Trader' || $business->business_entity == '') ? 100 : $value; 
 							?>
 					
 							<td>
@@ -157,9 +158,10 @@ Data Entry
 										Form::text($name, Input::old($name, $value), array(
 											'class' => 'form-control partners_share',
 											'ng-model' 	=> 'E' . $i, 
-											'ng-init' 	=> "E" . $i . "='{$value}'",
+											'ng-init' 	=> "E" . $i . "='{$init_val}'",
 											'numbers-only'	=> 'numbers-only',
-											'required'	=> 'required'
+											'required'	=> 'required',
+											'id'		=> "partner_share_{$i}"
 										)) 
 									}}
 									<span class="input-group-addon">%</span>
@@ -179,7 +181,7 @@ Data Entry
 				<span class="input-group-addon">Fee based on </span>
 				{{ 
 					Form::text('fee_based_on_tax_saved', $business->fee_based_on_tax_saved, array(
-						'class' => 'form-control',
+						'class' => 'form-control fee-base-on-tax-saved',
 						'ng-model' 	=> 'F1', 
 						'ng-init' 	=> "F1='{$business->fee_based_on_tax_saved}'",
 						'numbers-only'	=> 'numbers-only',
