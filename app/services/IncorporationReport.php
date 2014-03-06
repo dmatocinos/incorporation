@@ -148,7 +148,7 @@ class IncorporationReport extends TCPDF {
 			$this->writeHTML($style . $html, true, false, true, false, '');
 		}
 
-		$this->Output("valuation.pdf", 'I');
+		$this->Output("incorporation.pdf", 'D');
 	}
 
 	public function buildSummary()

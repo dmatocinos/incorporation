@@ -8,10 +8,10 @@ class Business extends Eloquent {
 		'net_profit_before_tax' => 'required|min:1',
 		'amount_to_distribute' => 'required|numeric|min:1',
 		'fee_based_on_tax_saved' => 'required|numeric|min:1|max:100',
-		'has_goodwill' => 'numeric|min:0',
-		'goodwill_estimated_value' => 'required|min:1',
-		'existing_business_commenced' => 'required|min:1',
-		'goodwill_write_off_years' => 'required|min:1'
+	//	'has_goodwill' => 'numeric|min:0',
+	//	'goodwill_estimated_value' => 'required|min:1',
+	//	'existing_business_commenced' => 'required|min:1',
+	//	'goodwill_write_off_years' => 'required|min:1'
 	);
 
 	public function partners()

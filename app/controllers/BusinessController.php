@@ -137,7 +137,7 @@ class BusinessController extends AuthorizedController {
 		
 		$validation = Validator::make($input, Business::$rules);
 		if ( ! $validation->passes()) {
-			return Redirect::to('new')
+			return Redirect::to('create')
 				->withInput()
 				->withErrors($validation)
 				->with('message', 'There were validation errors.');
@@ -156,7 +156,7 @@ class BusinessController extends AuthorizedController {
 		for ($i = 0; $i < $number_of_partners; $i++) {
 			$validation = Validator::make($partners[$i], Partner::$rules);
 			if ( ! $validation->passes()) {
-				return Redirect::to('new')
+				return Redirect::to('create')
 					->withInput()
 					->withErrors($validation)
 					->with('message', 'Partner share is required.');
@@ -175,7 +175,7 @@ class BusinessController extends AuthorizedController {
 
 		$validation = Validator::make(compact('total'), array('total'	=> 'foo'), $messages);
 		if ( ! $validation->passes()) {
-			return Redirect::to('new')
+			return Redirect::to('create')
 				->withInput()
 				->withErrors($validation)
 				->with('message', 'The total share for all partners should be equal to 100%');

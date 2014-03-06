@@ -77,6 +77,7 @@ Data Entry
 		</div> {{-- .col-lg-9 --}}
 	</div>{{-- .row --}}
 
+<!--
 	<br /><br />
 	<legend>Goodwill</legend>
 	<div class="row">
@@ -123,8 +124,7 @@ Data Entry
 			</div>
 		</div>
 	</div> {{-- .row --}}
-	
-	
+-->	
 	<br /><br />
 	<legend>Partners</legend>
 
