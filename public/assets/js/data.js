@@ -31,7 +31,7 @@ $(document).ready(function () {
 		}
 		
 		disablePartners(1);
-	});
+	}).trigger('change');
 	
 	$("#number_of_partners").change(function() {
 		disablePartners($(this).val());
