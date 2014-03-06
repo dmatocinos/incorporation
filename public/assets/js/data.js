@@ -26,10 +26,11 @@ $(document).ready(function () {
 		}
 		else {
 			$("#number_of_partners").attr('disabled', 'disabled');
+			$('.partners_share').first().val(100);
 		}
 		
 		disablePartners(1);
-	});
+	}).trigger('change');
 	
 	$("#number_of_partners").change(function() {
 		disablePartners($(this).val());
