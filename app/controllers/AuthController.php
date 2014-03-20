@@ -43,6 +43,12 @@ class AuthController extends Controller {
 							"email"    => $practicepro_user[0]->mh2_email
 						]);
 					}
+					else {
+						// we need to update email address if in case practicepro user updated theirs
+						$bizval_user->email = $practicepro_user[0]->mh2_email;
+						$bizval_user->save();
+					}
+					
 					
 					$credentials = [
 						"username" => $practicepro_user[0]->mh2_id,
