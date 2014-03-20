@@ -23,10 +23,11 @@ $(document).ready(function () {
 		if ($(this).val() == 'Partnership') {
 			$("#number_of_partners").removeAttr('disabled');
 			$("#number_of_partners").val(1);
+			$('#partner_share_5').val('');
 		}
 		else {
 			$("#number_of_partners").attr('disabled', 'disabled');
-			$('.partners_share').first().val(100);
+			$('#partner_share_5').val('100');
 		}
 		
 		disablePartners(1);
