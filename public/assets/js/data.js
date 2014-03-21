@@ -22,7 +22,6 @@ $(document).ready(function () {
 	$("#business_entity").change(function() {
 		if ($(this).val() == 'Partnership') {
 			$("#number_of_partners").removeAttr('disabled');
-			$("#number_of_partners").val(1);
 			$('#partner_share_5').val('');
 		}
 		else {

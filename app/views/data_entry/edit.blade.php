@@ -144,12 +144,12 @@ Data Entry
 				<tbody>
 					<tr>
 						<td style="width: 150px"><label>Partners' Share</label></td>
-						@for ($i = 5; $i >= 1; $i--)
+						@for ($i = 0; $i < 5; $i++)
 							<?php
 								$name = "partners[{$i}][share]";
 								$partner = $business->partners->get($i);
 								$value = $partner ? $partner->share : '';
-								$init_val =  (int) $i == 5 && ($business->business_entity == 'Sole Trader' || $business->business_entity == '') ? 100 : $value; 
+								$init_val =  (int) $i == 0 && ($business->business_entity == 'Sole Trader' || $business->business_entity == '') ? 100 : $value; 
 							?>
 					
 							<td>
