@@ -36,12 +36,29 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-6 col-sm-5 blob">
-          <h1>The Next Big Thing in the Cloud</h1>
+          <h1>Incorporation PlannerPro</h1>
 	  <br />
-          <p>Incorporation (Inc.) is the forming of a new corporation (a corporation being a legal entity that is effectively recognized as a person under the law). The corporation may be a business, a non-profit organization, sports club, or a government of a new city or town. This article focuses on the process of incorporation; see also corporation.</p>
+          <p>Incorporation PlannerPro enables a PracticePro member to show a client or a prospect the potential tax savings from incorporating their business.</p>
 	<br />
           <p>
-		Goodwill is best described as what a company’s name or reputation is worth if it was sold. You’ve worked hard to gain a good reputation and this is why Goodwill has a value. So if customers were being attracted to a business because of the name then it is generating customers because of the reputation – this is not something that you can see or touch so it’s ‘intangible’. 
+		<b>Key Features:</b>
+		<ul>
+			<li>
+				 Incorporation PlannerPro shows you the potential savings of incorporating a client’s business.
+			</li>
+			<li>
+				It provides an exact figure in a beautifully presented report.
+			</li>
+			<li>
+				A potentially easy sell as incorporating a business has many advantages to a client.
+			</li>
+			<li>
+				 It will show you how to take a salary and dividends out of a limited company and will highlight how the tax is treated on both.
+			</li>
+			<li>
+				The software is extremely easy to use.
+			</li>
+		</ul>
 	</p>
         </div>
         <div class="col-lg-4 pull-right">
