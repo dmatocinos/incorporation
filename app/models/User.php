@@ -61,7 +61,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		return $this->mh2_company_name; 
 	}
 
-	public static function findPracticeProUser($username) {
-		return DB::table('users')->where('username', $username)->first();
+	public static function findPracticeProUser($id) {
+		return User::where('practicepro_user_id', $id)->first();
 	}
 }

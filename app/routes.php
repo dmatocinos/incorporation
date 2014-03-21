@@ -35,6 +35,16 @@ Route::get('install/{key?}',  array('as' => 'install', function($key = null)
        }
 }));
 
+Route::get('install/migrate/{key?}',  array('as' => 'install.migrate', function($key = null)
+{
+	if ($key == "where_are_the_cranberries"){
+                       Artisan::call('migrate', [
+                               '--path'     => "app/database/migrations"
+                               ]);
+                       echo '<br>done with app tables migrations';
+	}
+}));
+			
 
 Route::resource('businesses', 'BusinessesController');
 Route::resource('partners', 'PartnersController');
