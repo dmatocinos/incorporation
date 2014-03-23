@@ -83,25 +83,34 @@ Route::group(["before" => "guest"], function()
 
 Route::group(["before" => "auth"], function()
 {
+	Route::get('subscribe', array('as' => 'subscribe', 'uses' => 'SubscriptionController@subscribe'));
+	Route::get('start_payment', array('as' => 'start_payment', 'uses' => 'SubscriptionController@startPayment'));
+	Route::get('cancel_payment/{user_id}', array('as' => 'cancel_payment', 'uses' => 'SubscriptionController@cancelPayment'));
+	Route::get('complete_payment/{user_id}', array('as' => 'complete_payment', 'uses' => 'SubscriptionController@completePayment'));
+	Route::get('complete_subscription', array('as' => 'complete_subscription', 'uses' => 'SubscriptionController@completeSubscription'));
+
 	Route::any("logout", [
 		"as"   => "logout",
 		"uses" => "AuthController@logout"
 	]);
 	
-	Route::get("/", "BusinessController@index");
-	Route::get('create', 'BusinessController@create_ui');
-	Route::get('update/{business_id}', 'BusinessController@update_ui');
-	Route::get('delete/{business_id}', 'BusinessController@delete');
-	Route::put('save_new', 'BusinessController@save_new');
-	Route::put('save_update/{business_id}', 'BusinessController@save_update');
-	Route::get('results/{business_id}',	'ResultsController@show');
-	Route::get('summary/{business_id}', 'SummaryController@show');
-	Route::get('report', array('uses' => 'ReportController@download', 'as' => 'report.download'));
-	Route::get('report/incorporation/{business_id}', array('uses' => 'ReportController@incorporation', 'as' => 'report.incorporation'));
-	Route::get('goodwill/{business_id}', 'GoodwillController@show');
-	Route::get('goodwill/report/{business_id}', array('uses' => 'GoodwillController@download', 'as' => 'goodwill.report'));
-	Route::any('goodwill/paypal/{business_id}', 'GoodwillController@goodwillPayment');
-	Route::any('goodwill/paypal_return/{business_id}', 'GoodwillController@returnPayment');
-	Route::any('goodwill/paypal_cancel/{business_id}', 'GoodwillController@cancelPayment');
+	Route::group(["before" => "subscribe"], function()
+	{
+		Route::get("/", "BusinessController@index");
+		Route::get('create', 'BusinessController@create_ui');
+		Route::get('update/{business_id}', 'BusinessController@update_ui');
+		Route::get('delete/{business_id}', 'BusinessController@delete');
+		Route::put('save_new', 'BusinessController@save_new');
+		Route::put('save_update/{business_id}', 'BusinessController@save_update');
+		Route::get('results/{business_id}',	'ResultsController@show');
+		Route::get('summary/{business_id}', 'SummaryController@show');
+		Route::get('report', array('uses' => 'ReportController@download', 'as' => 'report.download'));
+		Route::get('report/incorporation/{business_id}', array('uses' => 'ReportController@incorporation', 'as' => 'report.incorporation'));
+		Route::get('goodwill/{business_id}', 'GoodwillController@show');
+		Route::get('goodwill/report/{business_id}', array('uses' => 'GoodwillController@download', 'as' => 'goodwill.report'));
+		Route::any('goodwill/paypal/{business_id}', 'GoodwillController@goodwillPayment');
+		Route::any('goodwill/paypal_return/{business_id}', 'GoodwillController@returnPayment');
+		Route::any('goodwill/paypal_cancel/{business_id}', 'GoodwillController@cancelPayment');
+	});
 });
 

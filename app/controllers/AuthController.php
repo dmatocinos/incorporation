@@ -38,9 +38,11 @@ class AuthController extends Controller {
 					if (!$bizval_user) {
 						// add the user
 						User::create([
-							"username" => $practicepro_user[0]->mh2_id,
-							"password" => Hash::make(PracticeProUser::BIZVAL_PASSWORD),
-							"email"    => $practicepro_user[0]->mh2_email
+							// username is still here for compatibility purposes
+							"username"		=> $practicepro_user[0]->mh2_id,
+							"practicepro_user_id"	=> $practicepro_user[0]->mh2_id,
+							"password"		=> Hash::make(PracticeProUser::BIZVAL_PASSWORD),
+							"email"			=> $practicepro_user[0]->mh2_email
 						]);
 					}
 					else {

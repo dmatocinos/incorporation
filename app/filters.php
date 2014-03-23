@@ -78,3 +78,14 @@ Route::filter('csrf', function()
 		throw new Illuminate\Session\TokenMismatchException;
 	}
 });
+
+Route::filter('subscribe', function()
+{
+	if (Auth::guest()) {
+		return Redirect::guest('login');
+	}
+	else if ( ! Auth::user()->is_subscribed) {
+		return Redirect::route('subscribe');
+	}
+});
+

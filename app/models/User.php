@@ -2,15 +2,9 @@
 
 use Illuminate\Auth\UserInterface;
 use Illuminate\Auth\Reminders\RemindableInterface;
+use Carbon\Carbon;
 
 class User extends Eloquent implements UserInterface, RemindableInterface {
-
-	/**
-	 * The database table used by the model.
-	 *
-	 * @var string
-	 */
-	protected $table = 'users';
 
 	/**
 	 * The attributes excluded from the model's JSON form.
@@ -22,6 +16,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	protected $fillable = [
 		'username',
 		'password',
+		'practicepro_user_id',
 		'email'
 	];
 
@@ -46,6 +41,48 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	}
 
 	/**
+	 * Accessor for valid_until. Use user->valid_until
+	 * 
+	 * @return Carbon
+	 */
+	public function getValidUntilAttribute()
+	{
+		if ( ! $this->attributes['valid_until']) {
+			return NULL;
+		}
+
+		return $this->asDateTime($this->attributes['valid_until']);
+	}
+
+	/**
+	 * Check if user is still subscribed. A user is subscribed if the discounted
+	 * amount is 0 (FREE) or subscription date is still valid
+	 *
+	 * @return bool
+	 */
+	public function getIsSubscribedAttribute()
+	{
+		$is_free = $this->practice_pro_user->pricing->is_free;
+		
+		if ($this->valid_until) {
+			$now = Carbon::now();
+			$is_subscription_valid = $this->valid_until->gte($now);
+		}
+		else {
+			$is_subscription_valid = FALSE;
+		}
+
+		return $is_free || $is_subscription_valid;
+	}
+
+	public function getCompanyNameAttribute()
+ 	{
+		// @todo update import to include mh2_company_name from practicepro
+		return $this->mh2_company_name; 
+ 	}
+
+
+	/**
 	 * Get the e-mail address where password reminders are sent.
 	 *
 	 * @return string
@@ -55,13 +92,18 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		return $this->email;
 	}
 
-	public function getCompanyNameAttribute()
+	/**
+	 * User - PracticeProUser one-to-one relationship
+	 *
+	 */
+	public function practiceProUser()
 	{
-		// @todo update import to include mh2_company_name from practicepro
-		return $this->mh2_company_name; 
+		return $this->belongsTo('PracticeProUser', 'username', 'mh2_id');
 	}
 
+	
 	public static function findPracticeProUser($id) {
 		return User::where('practicepro_user_id', $id)->first();
 	}
+
 }
