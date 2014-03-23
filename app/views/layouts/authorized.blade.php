@@ -49,13 +49,19 @@
 
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				@section('nav')
 				<?php 
-					$menu = array(
-						'update'	=> 'Data Entry',
-						'results'	=> 'Results',
-						'summary'	=> 'Summary',
-					//	'goodwill'	=> 'Goodwill <sup><span class="label label-success"><b>PRO</b></span></sup>'
-				); 
+					if (isset($business)) {
+						$menu = array(
+							'update'	=> 'Data Entry',
+							'results'	=> 'Results',
+							'summary'	=> 'Summary',
+						//	'goodwill'	=> 'Goodwill <sup><span class="label label-success"><b>PRO</b></span></sup>'
+						); 
+					}
+					else {
+						$menu = array();
+					}
 					
 					$active = Request::segment(1);
 				?>
@@ -67,6 +73,7 @@
 						@endforeach
 					@endif
 				</ul>
+				@show
 
 				<ul class="nav navbar-nav navbar-right navbar-user">
 					<li class="dropdown user-dropdown">
