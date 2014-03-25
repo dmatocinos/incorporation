@@ -133,7 +133,7 @@ class BusinessController extends AuthorizedController {
 	 */
 	public function save_new()
 	{
-		$input = array_except(Input::all(), '_method');
+		$input = array_except(Input::all(), array('_token', '_method'));
 		
 		$validation = Validator::make($input, Business::$rules);
 		if ( ! $validation->passes()) {
@@ -181,8 +181,15 @@ class BusinessController extends AuthorizedController {
 				->with('message', 'The total share for all partners should be equal to 100%');
 		}
 
+		$pricing = Auth::user()->practice_pro_user->pricing;
+		if ( ! $pricing->is_free) {
+			return Redirect::route('subscribe')->withInput();
+		}
+
 		$business = new Business;
+
 		unset($input['_token']);
+		unset($input['_mthod']);
 		unset($input['number_of_partners']);
 		unset($input['partners']);
 		$input['user_id'] = Auth::user()->id;
@@ -191,7 +198,6 @@ class BusinessController extends AuthorizedController {
 		$business->save();
 		
 		$business->setPartners($partners);
-
 		return Redirect::to('update/' . $business->id);
 	}
 

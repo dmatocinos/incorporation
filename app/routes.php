@@ -85,8 +85,8 @@ Route::group(["before" => "auth"], function()
 {
 	Route::get('subscribe', array('as' => 'subscribe', 'uses' => 'SubscriptionController@subscribe'));
 	Route::get('start_payment', array('as' => 'start_payment', 'uses' => 'SubscriptionController@startPayment'));
-	Route::get('cancel_payment/{user_id}', array('as' => 'cancel_payment', 'uses' => 'SubscriptionController@cancelPayment'));
-	Route::get('complete_payment/{user_id}', array('as' => 'complete_payment', 'uses' => 'SubscriptionController@completePayment'));
+	Route::get('cancel_payment', array('as' => 'cancel_payment', 'uses' => 'SubscriptionController@cancelPayment'));
+	Route::get('complete_payment', array('as' => 'complete_payment', 'uses' => 'SubscriptionController@completePayment'));
 	Route::get('complete_subscription', array('as' => 'complete_subscription', 'uses' => 'SubscriptionController@completeSubscription'));
 
 	Route::any("logout", [
@@ -96,8 +96,8 @@ Route::group(["before" => "auth"], function()
 	
 	Route::group(["before" => "subscribe"], function()
 	{
-		Route::get("/", "BusinessController@index");
-		Route::get('create', 'BusinessController@create_ui');
+		Route::get("/", array('as' => 'home', 'uses' => "BusinessController@index"));
+		Route::get('create', array('as' => 'create', 'uses' => 'BusinessController@create_ui'));
 		Route::get('update/{business_id}', 'BusinessController@update_ui');
 		Route::get('delete/{business_id}', 'BusinessController@delete');
 		Route::put('save_new', 'BusinessController@save_new');

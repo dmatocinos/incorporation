@@ -32,6 +32,7 @@ class SubscriptionController extends AuthorizedController {
 	protected function getPurchaseData()
 	{
 		$pricing = $this->user->practice_pro_user->pricing;
+
 		/*
 		var_dump(DB::connection('practicepro_users')->getQueryLog());
 		var_dump(DB::connection()->getQueryLog());
@@ -41,11 +42,11 @@ class SubscriptionController extends AuthorizedController {
 			throw new Exception("Unknown membership level: {$this->user->practice_pro_user->membership_level}");
 		}
 
-		$expiration_date = $pricing->getNewSubscriptionExpiration($this->user)->toFormattedDateString();
+		$business_entity = Input::old('business_entity');
 
 		$paypal_data = array(
 			'amount' 	=> $pricing->getDiscountedAmount(),
-			'description'	=> Config::get('paypal.description') . " Payment Until {$expiration_date}",
+			'description'	=> Config::get('paypal.description') . " Payment for {$business_entity}",
 			'returnUrl'	=> route('complete_payment', array($this->user->id)),
 			'cancelUrl'	=> route('cancel_payment', array($this->user->id)),
 			'currency'	=> Config::get('paypal.currency')
@@ -60,12 +61,18 @@ class SubscriptionController extends AuthorizedController {
 	 */
 	public function subscribe()
 	{
+		Session::reflash();
+
 		$pricing    = $this->user->practice_pro_user->pricing;
+		if ($pricing->is_free) {
+			return Redirect::route('complete_subscription');
+		}
+
 		$amount     = $pricing->getAmount();
 		$discount   = $pricing->discount * 100;
 		$discounted = $pricing->getDiscountedAmount();
 		$level      = $this->user->practice_pro_user->membership_level;
-		
+
 		switch ($this->user->practice_pro_user->membership_level) {
 			case 'Tax Club':
 				$msg = "As a Tax Club Member of PracticePro";
@@ -83,24 +90,24 @@ class SubscriptionController extends AuthorizedController {
 				break;
 		}
 		
-		if ($pricing->is_free) {
-			return Redirect::to("/")->withMessage('You have successfully subscribed.');
-		}
-		else if ($discount > 0) {
+		if ($discount > 0) {
 			$msg .= ", we are giving you a special " . $discount . "% discount.  You only have to pay &pound" . number_format(round($discounted, 2), 2) . ". Don't let this offer pass!";
 		}
 		else {
-			$msg = "You can subscribe for only &pound" . number_format(round($amount, 2), 2) . ".";
+			$msg = "You can continue creating this report for only &pound" . number_format(round($amount, 2), 2) . ".";
 		}
 		
 		$data = array(
-			'msg' => $msg
+			'msg'	=> $msg,
 		);
-		
+
 		return View::make("subscription.subscribe", $data);
 	}
 	
-	public function startPayment() {
+	public function startPayment() 
+	{
+		Session::reflash();
+
 		$gateway = $this->getGateway();
 
 		try {
@@ -120,23 +127,48 @@ class SubscriptionController extends AuthorizedController {
 
 	public function cancelPayment()
 	{
-		return Redirect::route("subscribe");
+		Session::reflash();
+
+		return Redirect::route("create");
 	}
 
-	public function completePayment($user_id)
+	public function completePayment()
 	{
-		$user = User::findOrFail($user_id);
+		$user = $this->user;
 
 		$gateway = $this->getGateway();
 
 		try {
 			$response = $gateway->completePurchase($this->getPurchaseData())->send();
 			if ($response->isSuccessful()) {
-				$pricing = $user->practice_pro_user->pricing;
-				$user->valid_until = $pricing->getNewSubscriptionExpiration($user);
-				$user->save();
+				$input = Input::old();
+				$partners = $input['partners'];
+				$business = new Business;
 
-				return Redirect::route("valuations")->withMessage('You have successfully subscribed to BizValuation.');
+				unset($input['_token']);
+				unset($input['_mthod']);
+				unset($input['number_of_partners']);
+				unset($input['partners']);
+				$input['user_id'] = Auth::user()->id;
+				
+				$business->fill($input);
+				$business->save();
+				
+				$business->setPartners($partners);
+
+				$transaction_data = $response->getData();
+				
+				$payment_data = array(
+					'business_id'    => $business->id,
+					'amount'         => $transaction_data['PAYMENTINFO_0_AMT'],
+					'transaction_id' => $transaction_data['PAYMENTINFO_0_TRANSACTIONID'],
+					'order_time'     => $transaction_data['PAYMENTINFO_0_ORDERTIME']
+				);
+				
+				$payment = Payment::create($payment_data);
+				$payment->save();
+
+				return Redirect::to('update/' . $business->id);
 			} 
 			else {
 				throw new Exception($response->getMessage());
@@ -149,7 +181,6 @@ class SubscriptionController extends AuthorizedController {
 
 	public function completeSubscription()
 	{
-		//
 	}
 
 }
