@@ -16,6 +16,7 @@
 
 	{{-- Add custom CSS here --}}
 	<link href="{{ asset('assets/css/sb-admin.css') }}" rel="stylesheet">
+	<link href="{{ asset('assets/css/notify.css') }}" rel="stylesheet">
 	<link rel="stylesheet" href="{{ asset('assets/font-awesome/css/font-awesome.min.css') }}">
 
 	{{-- Additional Stylesheets --}}
@@ -87,6 +88,22 @@
 					</li>
 				</ul>
 			</div><!-- /.navbar-collapse -->
+    <div class='notifications bottom-left'>
+	    <div style="float:left; width: 350px;">
+			<div style="width: 200px;">
+				<a href="http://app.bizvaluation.co.uk" class="thumbnail" title=" Create a professional business valuation in just 15 minutes"><img src="{{ url('../assets/img/app-logos/bizvaluation_logo.png') }}" style="width: 200px; padding: 10px 0;"/></a>
+			</div>
+			<div style="width: 200px;">
+				<a href="http://virtualfdpro.practicepro.co.uk/" class="thumbnail" title="Help your clients achieve their goals"><img src="{{ url('../assets/img/app-logos/virtualfdpro_logo.jpg') }}" style="width: 100%; padding: 5px;"/></a>
+			</div>
+			<div style="width: 200px;">
+				<a href="http://remunerationpro.practicepro.co.uk/" class="thumbnail" title="Maximise your clients' personal income"><img src="{{ url('../assets/img/app-logos/remuneration_logo.png') }}" style="width: 80%;"/></a>
+			</div>
+			<div style="width: 200px;">
+				<a href="http://priceplannerpro.practicepro.co.uk/" class="thumbnail" title="Price professionally and create additional fees"><img src="{{ url('../assets/img/app-logos/priceplannerpro_logo.png') }}" style="width: 100%; padding: 5px;"/></a>
+			</div>
+	    </div>
+    </div>
 		</nav>
 
 		<div id="page-wrapper">
@@ -112,6 +129,7 @@
 		</div><!-- /#page-wrapper -->
 
 	</div><!-- /#wrapper -->
+
 
 	<!-- JavaScript -->
 	<script src="{{ asset('assets/js/jquery-1.10.2.js') }}"></script>
