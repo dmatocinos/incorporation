@@ -67,6 +67,33 @@
 	   </div>
         </div>
       </div>
+	<div class="row" style="height: 230px;">
+		
+	</div>
+	<div class="row">
+		<div class="col-md-8 col-sm-8 blob">
+			<h1>See other services we offer</h1>
+			<br/>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-3 col-sm-3" style="margin-left: 20px; margin-bottom: 0">
+			<div style="width: 280px;">
+				<a href="http://app.bizvaluation.co.uk" class="thumbnail" target="_blank" title=" Create a professional business valuation in just 15 minutes"><img src="{{ asset('assets/img/app-logos/bizvaluation_logo.png') }}" style="width: 100%; padding: 10px 0;"/></a>
+			</div>
+			<div style="width: 280px;">
+				<a href="http://practicepro.co.uk/incorporation/public/" target="_blank" class="thumbnail" title="Price professionally and create additional fees"><img src="{{ asset('assets/img/app-logos/priceplannerpro_logo.png') }}" style="width: 95%;"/></a>
+			</div>
+		</div>
+		<div class="col-md-3 col-sm-3 " style="margin-left: 20px;">
+			<div style="width: 280px;">
+				<a href="http://virtualfdpro.practicepro.co.uk/" target="_blank" class="thumbnail" title="Help your clients achieve their goals"><img src="{{ asset('assets/img/app-logos/virtualfdpro_logo.jpg') }}" style="width: 100%; padding: 5px;"/></a>
+			</div>
+			<div style="width: 280px;">
+				<a href="http://remunerationpro.practicepro.co.uk/" target="_blank" class="thumbnail" title="Maximise your clients' personal income"><img src="{{ asset('assets/img/app-logos/remuneration_logo.png') }}" style="width: 50%;"/></a>
+			</div>
+		</div>
+	</div>
     </div>
     
     
