@@ -3,6 +3,7 @@ Login
 @stop
 
 @section('content')
+	<div class="form-group" style="text-align: center;"><img src="{{ url('assets/img/logo.png') }}" style="width: 80%;"/></div>
 	<legend><h3 class="text-center">Please Log In, or <a href="http://www.practicepro.co.uk/membership/register">Register</a></h3></legend>
 	    {{ Form::open([
 		"route"        => "login",

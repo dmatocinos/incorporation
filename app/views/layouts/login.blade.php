@@ -36,7 +36,7 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-6 col-sm-5 blob">
-          <h1 style="color:#39b3d7;">Incorporation PlannerPro</h1>
+          <h1 style="color:#39b3d7; margin-top: 0px;">Incorporation PlannerPro</h1>
 	  <br />
           <p>Incorporation PlannerPro enables a PracticePro member to show a client or a prospect the potential tax savings from incorporating their business.</p>
 	<br />
@@ -67,30 +67,30 @@
 	   </div>
         </div>
       </div>
-	<div class="row" style="height: 170px;">
+	<div class="row" style="height: 50px;">
 		
 	</div>
 	<div class="row">
 		<div class="col-md-8 col-sm-8 blob">
-			<h1>See other services we offer</h1>
+			<h3>See other services we offer</h3>
 			<br/>
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-md-4 col-sm-4" style="margin-left: 20px; margin-bottom: 0">
+		<div class="col-md-4 col-sm-4" style="margin-left: 0px; margin-bottom: 0">
 			<div>
-				<a href="http://app.bizvaluation.co.uk" class="thumbnail" title=" Create a professional business valuation in just 15 minutes"><img src="{{ url('../assets/img/app-logos/bizvaluation_logo.png') }}" style="width: 100%; padding: 10px 0;"/></a>
+				<a href="http://app.bizvaluation.co.uk" class="thumbnail" title=" Create a professional business valuation in just 15 minutes"><img src="{{ url('assets/img/app-logos/bizval.png') }}" style="width: 80%; padding: 10px 0;"/></a>
 			</div>
 			<div>
-				<a href="http://priceplannerpro.practicepro.co.uk/" class="thumbnail" title="Price professionally and create additional fees"><img src="{{ url('../assets/img/app-logos/priceplannerpro_logo.png') }}" style="width: 100%; padding: 5px;"/></a>
+				<a href="http://priceplannerpro.practicepro.co.uk/" class="thumbnail" title="Price professionally and create additional fees"><img src="{{ url('assets/img/app-logos/priceplan.png') }}" style="width: 80%; padding: 5px;"/></a>
 			</div>
 		</div>
-		<div class="col-md-4 col-sm-4 " style="margin-left: 20px;">
+		<div class="col-md-4 col-sm-4 " style="margin-left: 0px;">
 			<div>
-				<a href="http://virtualfdpro.practicepro.co.uk/" class="thumbnail" title="Help your clients achieve their goals"><img src="{{ url('../assets/img/app-logos/virtualfdpro_logo.jpg') }}" style="width: 100%; padding: 5px;"/></a>
+				<a href="http://virtualfdpro.practicepro.co.uk/" class="thumbnail" title="Help your clients achieve their goals"><img src="{{ url('assets/img/app-logos/vfd.png') }}" style="width: 95%; padding: 5px;"/></a>
 			</div>
 			<div>
-				<a href="http://remunerationpro.practicepro.co.uk/" class="thumbnail" title="Maximise your clients' personal income"><img src="{{ url('../assets/img/app-logos/remuneration_logo.png') }}" style="width: 55%;"/></a>
+				<a href="http://remunerationpro.practicepro.co.uk/" class="thumbnail" title="Maximise your clients' personal income"><img src="{{ url('assets/img/app-logos/remuneration.png') }}" style="width: 45%;"/></a>
 			</div>
 		</div>
 	</div>
