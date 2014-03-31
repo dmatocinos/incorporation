@@ -77,20 +77,20 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-md-4 col-sm-4" style="margin-left: 0px; margin-bottom: 0">
-			<div>
-				<a href="http://app.bizvaluation.co.uk" class="thumbnail" title=" Create a professional business valuation in just 15 minutes"><img src="{{ url('assets/img/app-logos/bizval.png') }}" style="width: 80%; padding: 10px 0;"/></a>
+		<div class="col-md-3 col-sm-3" style="margin-left: 20px; margin-bottom: 0">
+			<div style="width: 280px;">
+				<a href="http://app.bizvaluation.co.uk" class="thumbnail" target="_blank" title=" Create a professional business valuation in just 15 minutes"><img src="{{ asset('assets/img/app-logos/bizval.png') }}" style="width: 80%; padding: 10px 0;"/></a>
 			</div>
-			<div>
-				<a href="http://priceplannerpro.practicepro.co.uk/" class="thumbnail" title="Price professionally and create additional fees"><img src="{{ url('assets/img/app-logos/priceplan.png') }}" style="width: 80%; padding: 5px;"/></a>
+			<div style="width: 280px;">
+				<a href="http://practicepro.co.uk/incorporation/public/" target="_blank" class="thumbnail" title="Price professionally and create additional fees"><img src="{{ asset('assets/img/app-logos/priceplan.png') }}" style="width: 80%; padding: 5px;"/></a>
 			</div>
 		</div>
-		<div class="col-md-4 col-sm-4 " style="margin-left: 0px;">
-			<div>
-				<a href="http://virtualfdpro.practicepro.co.uk/" class="thumbnail" title="Help your clients achieve their goals"><img src="{{ url('assets/img/app-logos/vfd.png') }}" style="width: 95%; padding: 5px;"/></a>
+		<div class="col-md-3 col-sm-3 " style="margin-left: 20px;">
+			<div style="width: 280px;">
+				<a href="http://virtualfdpro.practicepro.co.uk/" target="_blank" class="thumbnail" title="Help your clients achieve their goals"><img src="{{ asset('assets/img/app-logos/vfd.png') }}" style="width: 100%; padding: 6px;"/></a>
 			</div>
-			<div>
-				<a href="http://remunerationpro.practicepro.co.uk/" class="thumbnail" title="Maximise your clients' personal income"><img src="{{ url('assets/img/app-logos/remuneration.png') }}" style="width: 45%;"/></a>
+			<div style="width: 280px;">
+				<a href="http://remunerationpro.practicepro.co.uk/" target="_blank" class="thumbnail" title="Maximise your clients' personal income"><img src="{{ asset('assets/img/app-logos/remuneration.png') }}" style="width: 45%;"/></a>
 			</div>
 		</div>
 	</div>
