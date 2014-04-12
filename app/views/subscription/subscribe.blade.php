@@ -10,6 +10,6 @@ Subscription
 	  <!-- <a class="pull-right" href="#">Forgot password?</a> -->
 	  <label>{{ $msg }} </label>
 	</div>
-	<a href="{{ url('start_payment') }}" class="btn btn-primary btn-lg btn-block">Pay now!</a>
-	<a href="{{ url('cancel_payment') }}" class="btn btn-default btn-block">Cancel</a>
+	<a href="{{ url('start_payment/' . $timestamp) }}" class="btn btn-primary btn-lg btn-block">Pay now!</a>
+	<a href="{{ url('cancel_payment/' . $timestamp) }}" class="btn btn-default btn-block">Cancel</a>
 @stop

@@ -176,5 +176,6 @@ return array(
 		'Paypal'          => 'Omnipay\Common\GatewayFactory',
 
 	),
-
+	
+	'application_key' => 'incorporation',
 );

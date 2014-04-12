@@ -147,8 +147,21 @@ Data Entry
 						@for ($i = 0; $i < 5; $i++)
 							<?php
 								$name = "partners[{$i}][share]";
-								$partner = $business->partners->get($i);
-								$value = $partner ? $partner->share : '';
+								
+								if (is_array($business->partners)) {
+									if (isset($business->partners[$i])) {
+										$partner = $business->partners[$i];
+										$value = $partner ? $partner['share'] : '';
+									}
+									else {
+										$value = '';
+									}
+								}
+								else {
+									$partner = $business->partners->get($i);
+									$value = $partner ? $partner->share : '';
+								}
+								
 								$init_val =  (int) $i == 0 && ($business->business_entity == 'Sole Trader' || $business->business_entity == '') ? 100 : $value; 
 							?>
 					

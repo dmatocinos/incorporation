@@ -29,7 +29,7 @@ class SubscriptionController extends AuthorizedController {
 	}
 
 	// @todo move to service
-	protected function getPurchaseData()
+	protected function getPurchaseData($timestamp)
 	{
 		$pricing = $this->user->practice_pro_user->pricing;
 
@@ -47,8 +47,8 @@ class SubscriptionController extends AuthorizedController {
 		$paypal_data = array(
 			'amount' 	=> $pricing->getDiscountedAmount(),
 			'description'	=> Config::get('paypal.description') . " Payment for {$business_entity}",
-			'returnUrl'	=> route('complete_payment', array($this->user->id)),
-			'cancelUrl'	=> route('cancel_payment', array($this->user->id)),
+			'returnUrl'	=> route('complete_payment', $timestamp),
+			'cancelUrl'	=> route('cancel_payment', $timestamp),
 			'currency'	=> Config::get('paypal.currency')
 		);
 
@@ -61,8 +61,13 @@ class SubscriptionController extends AuthorizedController {
 	 */
 	public function subscribe()
 	{
-		Session::reflash();
-
+		$data = Input::old();
+		
+		unset($data['_method']);
+		unset($data['_token']);
+		
+		$timestamp = BaseController::saveParamsToSession($data);
+		
 		$pricing    = $this->user->practice_pro_user->pricing;
 		if ($pricing->is_free) {
 			return Redirect::route('complete_subscription');
@@ -73,22 +78,7 @@ class SubscriptionController extends AuthorizedController {
 		$discounted = $pricing->getDiscountedAmount();
 		$level      = $this->user->practice_pro_user->membership_level;
 
-		switch ($this->user->practice_pro_user->membership_level) {
-			case 'Tax Club':
-				$msg = "As a Tax Club Member of PracticePro";
-				break;
-				
-			case 'Elite Member':
-				$msg = "As an Elite Member of PracticePro";
-				
-				break;
-			
-			case 'Pay as you go':
-			default:
-				$msg = "As a Pay as you go member of PracticePro";
-				
-				break;
-		}
+		$msg = sprintf("As a %s Member of PracticePro", $this->user->practice_pro_user->membership_level_display);
 		
 		if ($discount > 0) {
 			$msg .= ", we are giving you a special " . $discount . "% discount.  You only have to pay &pound" . number_format(round($discounted, 2), 2) . ". Don't let this offer pass!";
@@ -99,19 +89,20 @@ class SubscriptionController extends AuthorizedController {
 		
 		$data = array(
 			'msg'	=> $msg,
+			'timestamp' => $timestamp
 		);
 
 		return View::make("subscription.subscribe", $data);
 	}
 	
-	public function startPayment() 
+	public function startPayment($timestamp) 
 	{
 		Session::reflash();
 
 		$gateway = $this->getGateway();
 
 		try {
-			$response = $gateway->purchase($this->getPurchaseData())->send();
+			$response = $gateway->purchase($this->getPurchaseData($timestamp))->send();
 			if ($response->isRedirect()) {
 				// it should redirect to PayPal payment page
 				$response->redirect();
@@ -125,23 +116,21 @@ class SubscriptionController extends AuthorizedController {
 		}
 	}
 
-	public function cancelPayment()
+	public function cancelPayment($timestamp)
 	{
-		Session::reflash();
-
-		return Redirect::route("create");
+		return Redirect::to("create?s_timestamp=" . $timestamp);
 	}
 
-	public function completePayment()
+	public function completePayment($timestamp)
 	{
 		$user = $this->user;
 
 		$gateway = $this->getGateway();
 
 		try {
-			$response = $gateway->completePurchase($this->getPurchaseData())->send();
+			$response = $gateway->completePurchase($this->getPurchaseData($timestamp))->send();
 			if ($response->isSuccessful()) {
-				$input = Input::old();
+				$input    = BaseController::getParamsFromSession($timestamp);
 				$partners = $input['partners'];
 				$business = new Business;
 
@@ -167,6 +156,8 @@ class SubscriptionController extends AuthorizedController {
 				
 				$payment = Payment::create($payment_data);
 				$payment->save();
+				
+				BaseController::forgetParams($timestamp);
 
 				return Redirect::to('update/' . $business->id);
 			} 

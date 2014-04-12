@@ -34,8 +34,17 @@ class BusinessController extends AuthorizedController {
 	 */
 	public function create_ui()
 	{
+		$get      = Input::get();
 		$business = new Business();
-		$data = compact('business');
+		
+		if (isset($get['s_timestamp'])) {
+			$timestamp = $get['s_timestamp'];
+			$input = BaseController::getParamsFromSession($timestamp);
+			$business->fill($input);
+			BaseController::forgetParams($timestamp);
+		}
+		
+		$data        = compact('business');
 		$data['url'] = 'save_new';
 		
 		$data['additional_scripts'] = array(
@@ -182,6 +191,7 @@ class BusinessController extends AuthorizedController {
 		}
 
 		$pricing = Auth::user()->practice_pro_user->pricing;
+		
 		if ( ! $pricing->is_free) {
 			return Redirect::route('subscribe')->withInput();
 		}

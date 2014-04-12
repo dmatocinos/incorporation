@@ -62,5 +62,27 @@ class BaseController extends Controller {
 			$this->layout = View::make($this->layout);
 		}
 	}
-
+	
+	public static function saveParamsToSession($data) 
+	{
+		$date = new DateTime();
+		$timestamp = $date->getTimestamp();
+		
+		Session::put('subscription_data_' . $timestamp, base64_encode(http_build_query($data)));
+		
+		return $timestamp;
+	}
+	
+	public static function getParamsFromSession($timestamp) 
+	{
+		$params = base64_decode(Session::get('subscription_data_' . $timestamp));
+		parse_str($params, $data);
+		
+		return $data;
+	}
+	
+	public static function forgetParams($timestamp) 
+	{
+		Session::forget('subscription_data_' . $timestamp);
+	}
 }

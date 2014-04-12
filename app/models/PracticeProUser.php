@@ -84,7 +84,14 @@ class PracticeProUser extends Eloquent implements UserInterface, RemindableInter
 	*/
 	public function getPricingAttribute()
 	{
-		return Pricing::where('membership_level', '=', $this->membership_level)->first();
+		return Pricing::where('membership_level_id', '=', $this->membership_level)
+			->where('application_id', '=', function($query)
+				{
+					$query->select(DB::raw('application_id'))
+                      ->from('applications')
+                      ->where('application_key', '=', Config::get('app.application_key'));
+				})
+			->first();
 	}
 
 	/**
@@ -94,7 +101,17 @@ class PracticeProUser extends Eloquent implements UserInterface, RemindableInter
 	 */
 	public function getMembershipLevelAttribute()
 	{
-		return (empty($this->mh2_membership_level) ? 'Pay as you go' : $this->mh2_membership_level);
+		return $this->mh2_membership_level;
+	}
+	
+	public function getMembershipLevelDisplayAttribute()
+	{
+		$result = DB::connection($this->connection)
+			->select(DB::raw("SELECT display FROM membership_levels WHERE membership_level_id = :membership_level_id LIMIT 1"), array(
+				'membership_level_id' => $this->membership_level
+			));
+		
+		return $result[0]->display;
 	}
 
 	/**
