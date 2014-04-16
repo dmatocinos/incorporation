@@ -91,7 +91,7 @@
     <div class='notifications bottom-left'>
 	    <div style="float:left; width: 350px;">
 			<div style="width: 200px;">
-				<a href="http://app.bizvaluation.co.uk" class="thumbnail" target="_blank" title=" Create a professional business valuation in just 15 minutes"><img src="{{ url('assets/img/app-logos/bizval.png') }}" style="width: 200px; padding: 10px 0;"/></a>
+				<a href="http://bizvaluationpro.practicepro.co.uk" class="thumbnail" target="_blank" title=" Create a professional business valuation in just 15 minutes"><img src="{{ url('assets/img/app-logos/bizval.png') }}" style="width: 200px; padding: 10px 0;"/></a>
 			</div>
 			<div style="width: 200px;">
 				<a href="http://virtualfdpro.practicepro.co.uk/" class="thumbnail" target="_blank" title="Help your clients achieve their goals"><img src="{{ url('assets/img/app-logos/vfd.png') }}" style="width: 100%; padding: 5px;"/></a>

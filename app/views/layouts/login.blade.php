@@ -79,10 +79,10 @@
 	<div class="row">
 		<div class="col-md-3 col-sm-3" style="margin-left: 20px; margin-bottom: 0">
 			<div style="width: 280px;">
-				<a href="http://app.bizvaluation.co.uk" class="thumbnail" target="_blank" title=" Create a professional business valuation in just 15 minutes"><img src="{{ asset('assets/img/app-logos/bizval.png') }}" style="width: 80%; padding: 10px 0;"/></a>
+				<a href="http://bizvaluationpro.practicepro.co.uk" class="thumbnail" target="_blank" title=" Create a professional business valuation in just 15 minutes"><img src="{{ asset('assets/img/app-logos/bizval.png') }}" style="width: 80%; padding: 10px 0;"/></a>
 			</div>
 			<div style="width: 280px;">
-				<a href="http://practicepro.co.uk/incorporation/public/" target="_blank" class="thumbnail" title="Price professionally and create additional fees"><img src="{{ asset('assets/img/app-logos/priceplan.png') }}" style="width: 80%; padding: 5px;"/></a>
+				<a href="http://priceplannerpro.practicepro.co.uk" target="_blank" class="thumbnail" title="Price professionally and create additional fees"><img src="{{ asset('assets/img/app-logos/priceplan.png') }}" style="width: 80%; padding: 5px;"/></a>
 			</div>
 		</div>
 		<div class="col-md-3 col-sm-3 " style="margin-left: 20px;">
