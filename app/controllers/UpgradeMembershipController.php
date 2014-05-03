@@ -54,18 +54,6 @@ class UpgradeMembershipController extends BaseController {
 	 */
 	public function upgrade()
 	{
-$user = $this->user->practice_pro_user;
-					Mail::send('emails.upgrade_success', ['user' => $user], function($message) use ($user)
-					{
-						$from = Config::get('mail.from');
-						$message->to(
-							'dixie.atay@gmail.com', 
-							sprintf("%s %s", $user->mh2_fname, $user->mh2_lname)
-						)->subject('Practice Pro Membership Upgrade');
-						
-						$message->from($from['address'], $from['name']);
-					});
-
 		$msg = sprintf("As a %s Member of PracticePro, ", $this->user->practice_pro_user->membership_level_display);
 		$msg .= "you can only download up to {$this->user->practice_pro_user->getLimit()} reports for Incorporation and Biz Valuation.";
 		
