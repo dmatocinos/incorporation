@@ -46,6 +46,26 @@ Route::get('install/migrate/{key?}',  array('as' => 'install.migrate', function(
 }));
 			
 
+Route::get('pull/{key?}',  array('as' => 'install', function($key = null)
+{
+       if($key == "where_are_the_cranberries"){
+               try {
+                       echo '<br>git pull origin master...';
+		       SSH::run(array(
+			       'cd /kunden/homepages/46/d354086249/htdocs/priceplannerpro-app',
+			       'git pull origin master',
+		       ));
+                       echo '<br>done pulling changes.';
+
+               } catch (Exception $e) {
+		    echo $e->getMessage();
+                    Response::make($e->getMessage(), 500);
+               }
+       }else{
+               App::abort(404);
+       }
+}));
+
 Route::resource('businesses', 'BusinessesController');
 Route::resource('partners', 'PartnersController');
 Route::resource('options', 'OptionsController');

@@ -29,15 +29,24 @@ return array(
 	'connections' => array(
 
 		'production' => array(
-			'host'      => '',
+			'host'      => 'internationalpensionscheme.co.uk',
+			'username'  => 'u61744424',
+			'password'  => 'T_J2359*!!*j',
+			'key'       => '',
+			'keyphrase' => '',
+			'root'      => '/kunden/homepages/46/d354086249/htdocs/priceplannerpro-app',
+		),
+
+		'development' => array(
+			'host'      => 'localhost',
 			'username'  => '',
 			'password'  => '',
 			'key'       => '',
 			'keyphrase' => '',
 			'root'      => '/var/www',
 		),
-
 	),
+
 
 	/*
 	|--------------------------------------------------------------------------
