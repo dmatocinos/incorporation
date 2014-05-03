@@ -15,7 +15,7 @@ return array(
 	|
 	*/
 
-	'driver' => 'smtp',
+	'driver' => 'mail',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -28,7 +28,7 @@ return array(
 	|
 	*/
 
-	'host' => 'smtp.mailgun.org',
+	'host' => '',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -54,7 +54,7 @@ return array(
 	|
 	*/
 
-	'from' => array('address' => null, 'name' => null),
+	'from' => array('address' => 'notifier@practicepro.co.uk', 'name' => 'PracticePro Team'),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -80,7 +80,7 @@ return array(
 	|
 	*/
 
-	'username' => null,
+	'username' => 'notifier@practicepro.co.uk',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -93,7 +93,7 @@ return array(
 	|
 	*/
 
-	'password' => null,
+	'password' => 'SCUGyg7xhVGl',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -120,5 +120,6 @@ return array(
 	*/
 
 	'pretend' => false,
-
+	
+	'admin_email' => array('address' => 'markjoymacaso@gmail.com' /*'admin@practicepro.co.uk'*/, 'name' => 'PracticePro Admin'),
 );

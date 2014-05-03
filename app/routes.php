@@ -109,6 +109,12 @@ Route::group(["before" => "auth"], function()
 	Route::get('complete_payment/{timestamp}', array('as' => 'complete_payment', 'uses' => 'SubscriptionController@completePayment'));
 	Route::get('complete_subscription', array('as' => 'complete_subscription', 'uses' => 'SubscriptionController@completeSubscription'));
 
+	Route::get('upgrade', array('as' => 'upgrade_start', 'uses' => 'UpgradeMembershipController@upgrade'));
+	Route::get('upgrade/start_payment/{level}', array('as' => 'upgrade-start_payment', 'uses' => 'UpgradeMembershipController@startPayment'));
+	Route::get('upgrade/cancel_payment', array('as' => 'upgrade_cancel_payment', 'uses' => 'UpgradeMembershipController@cancelPayment'));
+	Route::get('upgrade/complete_payment/{level}', array('as' => 'upgrade_complete_payment', 'uses' => 'UpgradeMembershipController@completePayment'));
+	Route::get('upgrade/complete_subscription', array('as' => 'upgrade_complete_subscription', 'uses' => 'UpgradeMembershipController@completeUpgradeMembership'));
+
 	Route::any("logout", [
 		"as"   => "logout",
 		"uses" => "AuthController@logout"
@@ -125,9 +131,13 @@ Route::group(["before" => "auth"], function()
 	Route::get('report', array('uses' => 'ReportController@download', 'as' => 'report.download'));
 	Route::get('report/incorporation/{business_id}', array('uses' => 'ReportController@incorporation', 'as' => 'report.incorporation'));
 	Route::get('goodwill/{business_id}', 'GoodwillController@show');
-	Route::get('goodwill/report/{business_id}', array('uses' => 'GoodwillController@download', 'as' => 'goodwill.report'));
 	Route::any('goodwill/paypal/{business_id}', 'GoodwillController@goodwillPayment');
 	Route::any('goodwill/paypal_return/{business_id}', 'GoodwillController@returnPayment');
 	Route::any('goodwill/paypal_cancel/{business_id}', 'GoodwillController@cancelPayment');
+
+	Route::group(["before" => "can_download"], function()
+	{
+		Route::get('report/incorporation/{business_id}', array('uses' => 'ReportController@incorporation', 'as' => 'report.incorporation'));
+	});
 });
 

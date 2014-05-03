@@ -89,3 +89,12 @@ Route::filter('subscribe', function()
 	}
 });
 
+Route::filter('can_download', function($route)
+{
+	$user = Auth::user()->practice_pro_user;
+
+	if ( ! $user->canDownload()) {
+		Session::put('download_business_id', $route->getParameter('business_id'));
+		return Redirect::to('upgrade');
+	}
+});
