@@ -3,14 +3,14 @@ Login
 @stop
 
 @section('content')
-	<div class="form-group" style="text-align: center;"><img src="{{ url('assets/img/logo.png') }}" style="width: 80%;"/></div>
-	<legend><h3 class="text-center">Please Log In, or <a href="http://www.practicepro.co.uk/membership/register">Register</a></h3></legend>
+	<div class="form-group" style="text-align: center;"><img src="{{ asset('assets/img/logo.png') }}" style="width: 80%;"/></div>
+		<legend><h4 class="text-center">Log in with PracticePro Account, <br> or <a href="http://registration.practicepro.co.uk/" target="_blank">Register</a></h4></legend>
 	    {{ Form::open([
 		"route"        => "login",
 		"autocomplete" => "off"
 	    ]) }}
 		<div class="form-group">
-		  <label for="username">Username or email</label>
+		  <label for="username">Email</label>
 		  <input type="text" name="username" class="form-control" id="username">
 		</div>
 		<div class="form-group">
