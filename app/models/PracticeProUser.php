@@ -229,7 +229,7 @@ class PracticeProUser extends Eloquent implements UserInterface, RemindableInter
 			$this->resetDownloadLimit();
 		}
 
-		return ((int) $this->currentUser()->download_count <= $this->getLimit());
+		return ((int) $this->currentUser()->download_count < $this->getLimit());
 	}
 
 	public function resetDownlodLimit()
