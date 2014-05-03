@@ -38,6 +38,7 @@
  *
  * @package Net_SFTP_Stream
  * @author  Jim Wigginton <terrafrost@php.net>
+ * @version 0.3.2
  * @access  public
  */
 class Net_SFTP_Stream

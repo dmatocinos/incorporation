@@ -22,7 +22,6 @@ class ChromePHPHandlerTest extends TestCase
     protected function setUp()
     {
         TestChromePHPHandler::reset();
-        $_SERVER['HTTP_USER_AGENT'] = 'Monolog Test; Chrome/1.0';
     }
 
     public function testHeaders()
@@ -125,7 +124,6 @@ class TestChromePHPHandler extends ChromePHPHandler
     {
         self::$initialized = false;
         self::$overflowed = false;
-        self::$sendHeaders = true;
         self::$json['rows'] = array();
     }
 

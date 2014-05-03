@@ -55,8 +55,6 @@ abstract class AbstractResponse implements ResponseInterface
      *
      * This method is meant to be a helper for simple scenarios. If you want to customize the
      * redirection page, just call the getRedirectUrl() and getRedirectData() methods directly.
-     *
-     * @codeCoverageIgnore
      */
     public function redirect()
     {
@@ -77,8 +75,8 @@ abstract class AbstractResponse implements ResponseInterface
             foreach ($this->getRedirectData() as $key => $value) {
                 $hiddenFields .= sprintf(
                     '<input type="hidden" name="%1$s" value="%2$s" />',
-                    htmlentities($key, ENT_QUOTES, 'UTF-8', false),
-                    htmlentities($value, ENT_QUOTES, 'UTF-8', false)
+                    htmlspecialchars($key, ENT_QUOTES, 'UTF-8'),
+                    htmlspecialchars($value, ENT_QUOTES, 'UTF-8')
                 )."\n";
             }
 
@@ -97,11 +95,7 @@ abstract class AbstractResponse implements ResponseInterface
         </form>
     </body>
 </html>';
-            $output = sprintf(
-                $output,
-                htmlentities($this->getRedirectUrl(), ENT_QUOTES, 'UTF-8', false),
-                $hiddenFields
-            );
+            $output = sprintf($output, htmlspecialchars($this->getRedirectUrl(), ENT_QUOTES, 'UTF-8'), $hiddenFields);
 
             return HttpResponse::create($output);
         }

@@ -96,6 +96,7 @@ define('CRYPT_RC4_DECRYPT', 1);
  *
  * @package Crypt_RC4
  * @author  Jim Wigginton <terrafrost@php.net>
+ * @version 0.1.0
  * @access  public
  */
 class Crypt_RC4 extends Crypt_Base
@@ -130,6 +131,7 @@ class Crypt_RC4 extends Crypt_Base
      * @access private
      */
     var $const_namespace = 'RC4';
+
 
     /**
      * The mcrypt specific name of the cipher
@@ -240,7 +242,7 @@ class Crypt_RC4 extends Crypt_Base
      * Decrypts a message.
      *
      * $this->decrypt($this->encrypt($plaintext)) == $this->encrypt($this->encrypt($plaintext)).
-     * At least if the continuous buffer is disabled.
+     * Atleast if the continuous buffer is disabled.
      *
      * @see Crypt_Base::encrypt()
      * @see Crypt_RC4::_crypt()
@@ -330,3 +332,4 @@ class Crypt_RC4 extends Crypt_Base
         return $text;
     }
 }
+

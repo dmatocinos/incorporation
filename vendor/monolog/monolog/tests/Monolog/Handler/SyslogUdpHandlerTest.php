@@ -2,6 +2,8 @@
 
 namespace Monolog\Handler;
 
+use Monolog\TestCase;
+
 class SyslogUdpHandlerTest extends \PHPUnit_Framework_TestCase
 {
     /**
