@@ -229,7 +229,7 @@ class PracticeProUser extends Eloquent implements UserInterface, RemindableInter
 			$this->resetDownloadLimit();
 		}
 
-		return ((int) $this->currentUser()->download_count < $this->getLimit());
+		return ((int) $this->currentUser()->download_count < $this->getLimit() || $this->currentUser()->is_god);
 	}
 
 	public function resetDownlodLimit()
@@ -269,4 +269,20 @@ class PracticeProUser extends Eloquent implements UserInterface, RemindableInter
 			->update('update practice_pro_login set mh2_membership_level = ? where mh2_id = ?', array($this->getMembershipLevelIdByKey($level), $user->mh2_id));
 
 	}
+
+	public function getRememberToken()
+	{
+
+	}
+
+	public function setRememberToken($value)
+	{
+
+	}
+
+	public function getRememberTokenName()
+	{
+
+	}
+
 }
