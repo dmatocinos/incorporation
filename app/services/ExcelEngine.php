@@ -19,7 +19,7 @@ class ExcelEngine {
 	 * @param  string $worksheet
 	 * @param  string $excel_file
 	 */
-	public function __construct($worksheet, $excel_file = '/files/ig.xlsx')
+	public function __construct($worksheet, $excel_file = '/files/ig1.xlsx')
 	{
 		$this->objPHPExcel = $this->initEngine($excel_file, $worksheet);
 		//PHPExcel_Calculation::getInstance($this->objPHPExcel)->setCalculationCacheEnabled(FALSE);

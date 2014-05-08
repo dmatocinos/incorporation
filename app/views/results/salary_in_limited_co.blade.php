@@ -39,12 +39,14 @@
 				<td> {{ $value }}</td>
 			@endforeach
 		</tr>
+		<!--
 		<tr>
 			@for ($i = 0; $i < $count; $i++)
 				<td></td>
 			@endfor
 			<td>{{ implode('<td></td>', $salary_data["total_tax_ltd_co_sum"]) }}</td>
 		</tr>
+		-->
 		<tr>
 			<td>Net In Pocket</td>
 			@foreach ($salary_data["net_in_pocket"] as $value)

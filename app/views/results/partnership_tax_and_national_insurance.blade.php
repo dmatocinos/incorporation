@@ -13,7 +13,7 @@
 				<td> {{ $value }}</td>
 			@endforeach
 		</tr>
-	@for ($i = 4; $i <= 4; $i++)
+	@for ($i = 1; $i <= 4; $i++)
 		<tr>
 			<td>{{ ($i == 1) ? 'Tax Due' : ''}}</td>
 			@foreach ($partnership_data["tax_due_{$i}"] as $value)

@@ -50,12 +50,6 @@
 			@endforeach
 		</tr>
 		<tr>
-			@for ($i = 0; $i < $count; $i++)
-				<td></td>
-			@endfor
-			<td>{{ implode('', $dividends_data["total_tax_dividends_sum"]) }}</td>
-		</tr>
-		<tr>
 			<td>Net In Pocket</td>
 			@foreach ($dividends_data["net_in_pocket"] as $value)
 				<td> {{ $value }}</td>
