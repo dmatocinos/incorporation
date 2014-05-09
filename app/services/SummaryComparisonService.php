@@ -31,7 +31,8 @@ class SummaryComparisonService extends IncorporationEngine {
 				//$test["{$cell_column}{$cell_row}"] = $this->getFormattedValue("{$cell_column}{$cell_row}");
 			}
 		}
-		
+//	echo '<pre>';	
+//dd($this->getFormattedValue('D16'), $this->getFormattedValue('K17'), $this->getFormattedValue('F17'), $this->getFormattedValue('H32'), $this->getFormattedValue('G25'), $this->getFormattedValue('K3'), $this->getFormattedValue('J3'), $this->getFormattedValue('J4'));
 		//pd($this->getFormattedValue("H14"));
 		//pd($this->data);
 		//dd($test);

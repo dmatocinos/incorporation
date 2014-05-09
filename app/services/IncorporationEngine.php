@@ -9,7 +9,7 @@ abstract class IncorporationEngine extends ExcelEngine {
 
 	public function __construct(Business $business)
 	{
-		parent::__construct('Incorporation');
+		parent::__construct('Incorporation (2)');
 
 		$this->business = $business;
 		$this->data = array();
