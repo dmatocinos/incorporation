@@ -40,7 +40,7 @@
 			<td></td>
 		</tr>
 		<tr class="active">
-			<td>Total Tax (Partnership)</td>
+			<td>Total Tax ({{ $business->business_entity == 'Partnership' ? 'Partnership' : 'Sole Trader' }})</td>
 			@foreach ($partnership_data["total_tax_partnership"] as $value)
 				<td> {{ $value }}</td>
 			@endforeach

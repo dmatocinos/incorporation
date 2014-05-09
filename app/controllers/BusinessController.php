@@ -143,72 +143,7 @@ class BusinessController extends AuthorizedController {
 	public function save_new()
 	{
 		$input = array_except(Input::all(), array('_token', '_method'));
-		
-		$validation = Validator::make($input, Business::$rules);
-		if ( ! $validation->passes()) {
-			return Redirect::to('create')
-				->withInput()
-				->withErrors($validation)
-				->with('message', 'There were validation errors.');
-		}
-
-		$partners = $input['partners'];
-		
-		if ($input['business_entity'] == 'Partnership') {
-			$number_of_partners = $input['number_of_partners'];
-		}
-		else {
-			$number_of_partners = 1;
-		}
-
-		$total = 0;
-		for ($i = 0; $i < $number_of_partners; $i++) {
-			$validation = Validator::make($partners[$i], Partner::$rules);
-			if ( ! $validation->passes()) {
-				return Redirect::to('create')
-					->withInput()
-					->withErrors($validation)
-					->with('message', 'Partner share is required.');
-			}
-
-			$total += (int) $partners[$i]['share'];
-		}
-
-		$messages = array(
-			    'foo' => 'The :attribute should be equal to 100.',
-	 	);
-		
-		Validator::extend('foo', function($attribute, $value, $parameters) {
-		    return $value == 100;
-		});
-
-		$validation = Validator::make(compact('total'), array('total'	=> 'foo'), $messages);
-		if ( ! $validation->passes()) {
-			return Redirect::to('create')
-				->withInput()
-				->withErrors($validation)
-				->with('message', 'The total share for all partners should be equal to 100%');
-		}
-
-		$pricing = Auth::user()->practice_pro_user->pricing;
-		
-		if ( ! $pricing->is_free) {
-			return Redirect::route('subscribe')->withInput();
-		}
-
-		$business = new Business;
-
-		unset($input['_token']);
-		unset($input['_mthod']);
-		unset($input['number_of_partners']);
-		unset($input['partners']);
-		$input['user_id'] = Auth::user()->id;
-		
-		$business->fill($input);
-		$business->save();
-		
-		$business->setPartners($partners);
-		return Redirect::to('update/' . $business->id);
+		return self::saveBusiness(new Business, array_except(Input::all(), '_method'), 'create');
 	}
 
 	/**
@@ -224,11 +159,14 @@ class BusinessController extends AuthorizedController {
 				->with('message', 'You cannot make changes to this business');
 		}
 		
-		$input = array_except(Input::all(), '_method');
-		
-		$validation = Validator::make($input, Business::$rules);
+		return self::saveBusiness($this->business, array_except(Input::all(), '_method'), 'update');
+	}
+    
+    public static function saveBusiness($business, $input, $page_origin) {
+        $validation = Validator::make($input, Business::$rules);
+        
 		if ( ! $validation->passes()) {
-			return Redirect::to('update/' . $id)
+			return Redirect::to($page_origin . ($page_origin == 'update' ? ('/' . $business->id) : ''))
 				->withInput()
 				->withErrors($validation)
 				->with('message', 'There were validation errors.');
@@ -247,7 +185,7 @@ class BusinessController extends AuthorizedController {
 		for ($i = 0; $i < $number_of_partners; $i++) {
 			$validation = Validator::make($partners[$i], Partner::$rules);
 			if ( ! $validation->passes()) {
-				return Redirect::route('update/' . $id)
+				return Redirect::to($page_origin . ($page_origin == 'update' ? ('/' . $business->id) : ''))
 					->withInput()
 					->withErrors($validation)
 					->with('message', 'Partner share is required.');
@@ -259,28 +197,54 @@ class BusinessController extends AuthorizedController {
 		$messages = array(
 			    'foo' => 'The :attribute should be equal to 100.',
 	 	);
+		
 		Validator::extend('foo', function($attribute, $value, $parameters) {
 		    return $value == 100;
 		});
 
 		$validation = Validator::make(compact('total'), array('total'	=> 'foo'), $messages);
 		if ( ! $validation->passes()) {
-			return Redirect::to('update/' . $id)
+			return Redirect::to($page_origin . ($page_origin == 'update' ? ('/' . $business->id) : ''))
 				->withInput()
 				->withErrors($validation)
 				->with('message', 'The total share for all partners should be equal to 100%');
 		}
+           
+        if ($page_origin == 'create') {
+            $pricing = Auth::user()->practice_pro_user->pricing;
+            
+            if ( ! $pricing->is_free) {
+                return Redirect::route('subscribe')->withInput();
+            }
+        }
+        
+		if (isset($input['save_and_next_button'])) {
+            $next_page = 'results';
+        }
+        else {
+            $next_page = 'update';
+        }
 
-		$business = $this->business;
 		unset($input['_token']);
+		unset($input['_mthod']);
 		unset($input['number_of_partners']);
 		unset($input['partners']);
-		$business->update($input);
+        unset($input['save_button']);
+        unset($input['save_and_next_button']);
+		$input['user_id'] = Auth::user()->id;
+		
+        if ($page_origin == 'create') {
+            $business->fill($input);
+            $business->save();
+        }
+        else {
+            $business->update($input);
+        }
 		
 		$business->setPartners($partners);
-
-		return Redirect::to('update/' . $id);
-	}
+        
+        return Redirect::to($next_page . '/' . $business->id);
+    }
 
 	/**
 	 * Remove the specified resource from storage.

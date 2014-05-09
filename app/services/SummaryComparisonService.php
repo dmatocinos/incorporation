@@ -26,7 +26,7 @@ class SummaryComparisonService extends IncorporationEngine {
 		
 		foreach ($rows as $row_key => $cell_row) {
 			foreach ($columns as $column_key => $cell_column) {
-				$this->data[$row_key][$column_key] = $this->getFormattedValue("{$cell_column}{$cell_row}");
+				$this->data[$row_key][$column_key] = $this->formatNumberToDecimalPlaces($this->getFormattedValue("{$cell_column}{$cell_row}"), 2);
 
 				//$test["{$cell_column}{$cell_row}"] = $this->getFormattedValue("{$cell_column}{$cell_row}");
 			}

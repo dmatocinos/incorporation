@@ -131,20 +131,7 @@ class SubscriptionController extends AuthorizedController {
 			$response = $gateway->completePurchase($this->getPurchaseData($timestamp))->send();
 			if ($response->isSuccessful()) {
 				$input    = BaseController::getParamsFromSession($timestamp);
-				$partners = $input['partners'];
-				$business = new Business;
-
-				unset($input['_token']);
-				unset($input['_mthod']);
-				unset($input['number_of_partners']);
-				unset($input['partners']);
-				$input['user_id'] = Auth::user()->id;
 				
-				$business->fill($input);
-				$business->save();
-				
-				$business->setPartners($partners);
-
 				$transaction_data = $response->getData();
 				
 				$payment_data = array(
@@ -158,9 +145,9 @@ class SubscriptionController extends AuthorizedController {
 				$payment->save();
 				
 				BaseController::forgetParams($timestamp);
-
-				return Redirect::to('update/' . $business->id);
-			} 
+                
+                return BusinessController::saveBusiness(new Business, $input, 'create');
+            } 
 			else {
 				throw new Exception($response->getMessage());
 			}

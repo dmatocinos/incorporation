@@ -16,7 +16,16 @@ class SummaryTotalSavingsService extends IncorporationEngine {
 		$cell_column = 'H';
 
 		foreach ($column_rows as $column => $row) {
-			$this->data[$column] = $this->getformattedvalue("{$cell_column}{$row}");
+            if ($column == 'bpk_fee_first_year_only') {
+                $val = $this->getformattedvalue("{$cell_column}{$row}");
+                
+                if ($this->getFloatValFromString($val) <= 0) {
+                    $this->data[$column] = '0';
+                    continue;
+                }
+            }
+            
+			$this->data[$column] = $this->formatNumberToDecimalPlaces($this->getformattedvalue("{$cell_column}{$row}"), 2);
 		}
 	}
 }

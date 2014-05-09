@@ -21,15 +21,15 @@ app.directive('numbersOnly', function() {
 $(document).ready(function () {
 	$("#business_entity").change(function() {
 		if ($(this).val() == 'Partnership') {
-			$("#number_of_partners").removeAttr('disabled');
+			$("#number_partners_container").show();
 			$('#partner_share_5').val('');
+            disablePartners($("#number_of_partners").val());
 		}
 		else {
-			$("#number_of_partners").attr('disabled', 'disabled');
+			$("#number_partners_container").hide();
 			$('#partner_share_5').val('100');
+            disablePartners(1);
 		}
-		
-		disablePartners(1);
 	}).trigger('change');
 	
 	$("#number_of_partners").change(function() {
@@ -37,11 +37,11 @@ $(document).ready(function () {
 	});
 	
 	if ($("#business_entity").val() == 'Partnership') {
+        $("#number_partners_container").show();
 		disablePartners($("#number_of_partners").val());
 	}
 	else {
-		$("#number_of_partners").val(1);
-		$("#number_of_partners").attr('disabled', 'disabled');
+		$("#number_partners_container").hide();
 		disablePartners(1);
 	}
 	

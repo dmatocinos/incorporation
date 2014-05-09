@@ -13,7 +13,7 @@ Results
 @section('content')
 <ul class="nav nav-pills nav-justified">
 	<li class="active"><a href="#salary" data-toggle="tab">Salary in Limited Co</a></li>
-	<li><a href="#partnership" data-toggle="tab">Partnership Tax and National Insurance</a></li>
+	<li><a href="#partnership" data-toggle="tab">{{ $business->business_entity == 'Partnership' ? 'Partnership' : 'Sole Trader' }} Tax and National Insurance</a></li>
 	<li><a href="#dividends" data-toggle="tab">Dividends in Limited Co</a></li>
 </ul>
 <hr>

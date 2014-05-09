@@ -28,7 +28,7 @@ Data Entry
 	<div class="row">
 		<?php
 			$business_entity_types = array('Sole Trader', 'Partnership');
-			$number_of_partners = range(1, 5);
+			$number_of_partners = range(2, 5);
 		?>
 		<div class="col-lg-8">
 			<div class="form-group">
@@ -38,7 +38,7 @@ Data Entry
 					{{ $errors->first('business_entity', '<span class="help-block">:message</span>') }}
 				</div>
 			</div>
-			<div class="form-group">
+			<div class="form-group" id="number_partners_container" style="display: none;">
 				{{ Form::label('number_of_partners', 'Number of partners', array('class' => 'col-lg-3 control-label')) }}
 				<div class="col-lg-5">
 					{{ Form::select('number_of_partners', array_combine($number_of_partners, $number_of_partners), count($business->partners), array('class' => 'form-control')) }}
@@ -204,8 +204,9 @@ Data Entry
 				<span class="input-group-addon">% of tax saved</span>
 			</div>
 		</div>
-		<div class="col-lg-2">
-			<input type="submit" class="btn btn-primary" value="Save"/>
+		<div class="col-lg-4">
+			<input type="submit" class="btn btn-primary" name="save_button" value="Save"/>
+            <input type="submit" class="btn btn-primary" name="save_and_next_button" value="Save & Next"/>
 		</div>
 	</div> {{-- .row --}}
 

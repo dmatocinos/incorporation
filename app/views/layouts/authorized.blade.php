@@ -80,8 +80,8 @@
 					<li class="dropdown user-dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> {{ Auth::user()->email }} <b class="caret"></b></a>
 						<ul class="dropdown-menu">
-							<li><a href="#"><i class="fa fa-user"></i> Profile</a></li>
-							<li><a href="#"><i class="fa fa-gear"></i> Settings</a></li>
+							<!--li><a href="#"><i class="fa fa-user"></i> Profile</a></li>
+							<li><a href="#"><i class="fa fa-gear"></i> Settings</a></li-->
 							<li class="divider"></li>
 							<li><a href="{{ URL::route("logout") }}"><i class="fa fa-power-off"></i> Log Out</a></li>
 						</ul>
@@ -89,7 +89,7 @@
 				</ul>
 			</div><!-- /.navbar-collapse -->
     <div class='notifications bottom-left'>
-	    <div style="float:left; width: 350px;">
+	    <div style="float:left;">
 			<div style="width: 200px;">
 				<a href="http://bizvaluationpro.practicepro.co.uk" class="thumbnail" target="_blank" title=" Create a professional business valuation in just 15 minutes"><img src="{{ asset('assets/img/app-logos/bizval.png') }}" style="width: 200px; padding: 10px 0;"/></a>
 			</div>

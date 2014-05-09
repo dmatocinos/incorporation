@@ -20,13 +20,13 @@ class PartnershipTaxAndNationalInsuranceService extends IncorporationEngine {
 		foreach ($column_rows as $column => $row) {
 			if ($column == 'total_tax_partnership_sum') {
 				$cell_column = 'T';
-				$this->data[$column][$partner->id] = $this->getFormattedValue("{$cell_column}{$row}");
+				$this->data[$column][$partner->id] = $this->formatNumberToDecimalPlaces($this->getFormattedValue("{$cell_column}{$row}"), 2);
 			}
 			else {
 				$cell_column = 'P';
 			
 				foreach ($this->business->partners as $partner) {
-					$this->data[$column][$partner->id] = $this->getFormattedValue("{$cell_column}{$row}");
+					$this->data[$column][$partner->id] = $this->formatNumberToDecimalPlaces($this->getFormattedValue("{$cell_column}{$row}"), 2);
 					$cell_column++;
 				}
 			}

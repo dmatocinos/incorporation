@@ -13,7 +13,7 @@ $(document).ready(function () {
 	
 	 $(window).bind('beforeunload', function() {
 			if (change_listener.isChanged()) {
-				return 'There are unsaved changes on this page. If you leave this page, the changes will be lost.';
+				//return 'There are unsaved changes on this page. If you leave this page, the changes will be lost.';
 			}
     }); 
 });
