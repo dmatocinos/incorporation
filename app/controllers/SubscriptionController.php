@@ -147,7 +147,7 @@ class SubscriptionController extends AuthorizedController {
                 
                 $business->fill($input);
                 $business->save();
-                $business->setPartners($partners
+                $business->setPartners($partners);
 				
 				$payment_data = array(
 					'business_id'    => $business->id,
@@ -159,7 +159,7 @@ class SubscriptionController extends AuthorizedController {
 				$payment = Payment::create($payment_data);
 				$payment->save();
 				
-				BaseController::forgetParams($timestamp););
+				BaseController::forgetParams($timestamp);
                 
                 return Redirect::to($next_page . '/' . $business->id);
             } 
