@@ -7,28 +7,89 @@
 	@endforeach
 	</thead>
 	<tbody>
+    
+    <?php $num_rows = 0; ?>
+    
 	@for ($i = 1; $i <= 5; $i++)
-		<tr>
-			<td>{{ ($i == 1) ? 'Taxable (Tax)' : ''}}</td>
+        <?php $all_zeros = true; ?>
+        @foreach ($salary_data["taxable_tax_{$i}"] as $value)
+            @if ($value != '0')
+                <?php 
+                    $all_zeros = false;
+                    break;
+                ?>
+            @endif
+        @endforeach
+        
+        @if ($all_zeros == true)
+            <?php continue; ?>
+        @endif
+        
+        <?php $num_rows++; ?>
+        
+        <tr>
+			<td>{{ ($num_rows == 1) ? 'Taxable (Tax)' : ''}}</td>
 			@foreach ($salary_data["taxable_tax_{$i}"] as $value)
 				<td> {{ $value }}</td>
 			@endforeach
 		</tr>
 	@endfor
+    
+    @if ($num_rows == 0)
+        <tr>
+            <td>{{ 'Taxable (Tax)' }}</td>
+            <?php $i = 1 ?>
+            @foreach ($salary_data["taxable_tax_{$i}"] as $value)
+                <td> {{ $value }}</td>
+            @endforeach
+        </tr>
+    @endif
+    
 		<tr>
 			<td>Taxable (N.I.)</td>
 			@foreach ($salary_data["taxable_ni"] as $value)
 				<td> {{ $value }}</td>
 			@endforeach
 		</tr>
+    
+    <?php $num_rows = 0; ?>
+    
 	@for ($i = 1; $i <= 2; $i++)
+        <?php $all_zeros = true; ?>
+            
+        @foreach ($salary_data["ni_due_{$i}"] as $value)
+            @if ($value != '0')
+                <?php 
+                    $all_zeros = false;
+                    break;
+                ?>
+            @endif
+        @endforeach
+        
+        @if ($all_zeros == true)
+            <?php continue; ?>
+        @endif
+        
+        <?php $num_rows++; ?>
+        
 		<tr>
-			<td>{{ ($i == 1) ? 'N.I. Due' : ''}}</td>
+			<td>{{ ($num_rows == 1) ? 'N.I. Due' : ''}}</td>
 			@foreach ($salary_data["ni_due_{$i}"] as $value)
 				<td> {{ $value }}</td>
 			@endforeach
 		</tr>
 	@endfor
+    
+    @if ($num_rows == 0)
+        <tr>
+            <td>{{ 'N.I. Due' }}</td>
+            <?php $i = 1 ?>
+            @foreach ($salary_data["ni_due_{$i}"] as $value)
+                <td> {{ $value }}</td>
+            @endforeach
+        </tr>
+    @endif
+    
 		<tr>
 			<td>&nbsp;</td>
 			<td></td>
