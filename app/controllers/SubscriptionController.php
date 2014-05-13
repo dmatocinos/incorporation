@@ -133,7 +133,7 @@ class SubscriptionController extends AuthorizedController {
 				$input    = BaseController::getParamsFromSession($timestamp);
 				$transaction_data = $response->getData();
                 $partners = $input['partners'];
-                $next_page = (isset($input['save_and_next_button'])) ? 'results' : 'update';
+                $next_page = (isset($input['save_and_next_button'])) ? 'summary' : 'update';
                 
                 unset($input['_token']);
                 unset($input['_mthod']);

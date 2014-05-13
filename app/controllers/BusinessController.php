@@ -218,12 +218,7 @@ class BusinessController extends AuthorizedController {
             }
         }
         
-		if (isset($input['save_and_next_button'])) {
-            $next_page = 'results';
-        }
-        else {
-            $next_page = 'update';
-        }
+		$next_page = (isset($input['save_and_next_button'])) ? 'summary' : 'update';
 
 		unset($input['_token']);
 		unset($input['_mthod']);

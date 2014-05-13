@@ -55,7 +55,7 @@
 					if (isset($business)) {
 						$menu = array(
 							'update'	=> 'Data Entry',
-							'results'	=> 'Results',
+						//	'results'	=> 'Results',
 							'summary'	=> 'Summary',
 						//	'goodwill'	=> 'Goodwill <sup><span class="label label-success"><b>PRO</b></span></sup>'
 						); 
