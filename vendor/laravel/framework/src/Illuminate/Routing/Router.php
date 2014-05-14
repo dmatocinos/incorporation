@@ -83,7 +83,7 @@ class Router implements HttpKernelInterface, RouteFiltererInterface {
 	protected $regexFilters = array();
 
 	/**
-	 * The reigstered route value binders.
+	 * The registered route value binders.
 	 *
 	 * @var array
 	 */
@@ -480,23 +480,32 @@ class Router implements HttpKernelInterface, RouteFiltererInterface {
 	{
 		if (isset($options['names'][$method])) return $options['names'][$method];
 
-		if (count($this->groupStack) == 0) return $resource.'.'.$method;
+		// If a global prefix has been assigned to all names for this resource, we will
+		// grab that so we can prepend it onto the name when we create this name for
+		// the resource action. Otherwise we'll just use an empty string for here.
+		$prefix = isset($options['as']) ? $options['as'].'.' : '';
 
-		return $this->getGroupResourceName($resource, $method);
+		if (count($this->groupStack) == 0)
+		{
+			return $prefix.$resource.'.'.$method;
+		}
+
+		return $this->getGroupResourceName($prefix, $resource, $method);
 	}
 
 	/**
 	 * Get the resource name for a grouped resource.
 	 *
+	 * @param  string  $prefix
 	 * @param  string  $resource
 	 * @param  string  $method
 	 * @return string
 	 */
-	protected function getGroupResourceName($resource, $method)
+	protected function getGroupResourceName($prefix, $resource, $method)
 	{
-		$prefix = str_replace('/', '.', $this->getLastGroupPrefix());
+		$group = str_replace('/', '.', $this->getLastGroupPrefix());
 
-		return trim("{$prefix}.{$resource}.{$method}", '.');
+		return trim("{$prefix}{$group}.{$resource}.{$method}", '.');
 	}
 
 	/**
@@ -979,7 +988,7 @@ class Router implements HttpKernelInterface, RouteFiltererInterface {
 	{
 		$route = $this->findRoute($request);
 
-        $this->events->fire('router.matched', array($route, $request));
+		$this->events->fire('router.matched', array($route, $request));
 
 		// Once we have successfully matched the incoming request to a given route we
 		// can call the before filters on that route. This works similar to global
@@ -1111,7 +1120,7 @@ class Router implements HttpKernelInterface, RouteFiltererInterface {
 	 */
 	protected function parseFilter($callback)
 	{
-		if (is_string($callback) and ! str_contains($callback, '@'))
+		if (is_string($callback) && ! str_contains($callback, '@'))
 		{
 			return $callback.'@filter';
 		}
@@ -1387,7 +1396,21 @@ class Router implements HttpKernelInterface, RouteFiltererInterface {
 
 		$data = array_merge(array($route, $request, $response), $parameters);
 
-		return $this->events->until('router.filter: '.$filter, array_filter($data));
+		return $this->events->until('router.filter: '.$filter, $this->cleanFilterParameters($data));
+	}
+
+	/**
+	 * Clean the parameters being passed to a filter callback.
+	 *
+	 * @param  array  $parameters
+	 * @return array
+	 */
+	protected function cleanFilterParameters(array $parameters)
+	{
+		return array_filter($parameters, function($p)
+		{
+			return ! is_null($p) && $p !== '';
+		});
 	}
 
 	/**
