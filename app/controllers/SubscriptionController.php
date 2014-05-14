@@ -132,12 +132,10 @@ class SubscriptionController extends AuthorizedController {
 			if ($response->isSuccessful()) {
 				$input    = BaseController::getParamsFromSession($timestamp);
 				$transaction_data = $response->getData();
-                $partners = $input['partners'];
                 $next_page = (isset($input['save_and_next_button'])) ? 'summary' : 'update';
                 
                 unset($input['_token']);
                 unset($input['_mthod']);
-                unset($input['number_of_partners']);
                 unset($input['partners']);
                 unset($input['save_button']);
                 unset($input['save_and_next_button']);
@@ -147,8 +145,7 @@ class SubscriptionController extends AuthorizedController {
                 
                 $business->fill($input);
                 $business->save();
-                $business->setPartners($partners);
-				
+                
 				$payment_data = array(
 					'business_id'    => $business->id,
 					'amount'         => $transaction_data['PAYMENTINFO_0_AMT'],

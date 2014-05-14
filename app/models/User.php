@@ -105,5 +105,19 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	public static function findPracticeProUser($id) {
 		return User::where('practicepro_user_id', $id)->first();
 	}
+    
+    public function getRememberToken()
+	{
 
+	}
+
+	public function setRememberToken($value)
+	{
+
+	}
+
+	public function getRememberTokenName()
+	{
+
+	}
 }

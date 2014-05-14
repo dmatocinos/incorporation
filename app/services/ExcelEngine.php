@@ -96,5 +96,32 @@ class ExcelEngine {
 	{
 		return $this->objPHPExcel->getActiveSheet()->getCell($cell)->getCalculatedValue(); 
 	}
+    
+    protected function formatNumberToDecimalPlaces($val, $places)
+    {
+        if (trim($val) == '0') {
+            return $val;
+        }
+        
+        $neg = substr($val, 0, 1) == '-' ? true : false;
+        $val = $neg == true ? substr($val, 1) : $val;
+        $val = str_replace(',', '', $val);
+        $val = trim($val);
+        $val = floatval($val);
+        $val = number_format ($val, $places, ".", ",");
+        
+        return $neg ? ('- ' . $val) : $val;
+    }
+    
+    protected function getFloatValFromString($val)
+    {
+        $neg = substr($val, 0, 1) == '-' ? true : false;
+        $val = $neg == true ? substr($val, 1) : $val;
+        $val = str_replace(',', '', $val);
+        $val = trim($val);
+        $val = floatval($val);
+        
+        return $neg ? ($val * -1) : $val;
+    }
 
 }

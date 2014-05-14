@@ -5,7 +5,7 @@
 			<th colspan="2">Total Savings</th>
 		</tr>
 	<tbody>
-        <?php if ($business->business_entity == 'Partnership') : ?>
+        <?php if ($business->isPartnership()) : ?>
 		<tr>
 			<td>Total Tax as a Partnership</td>
 			<td>{{ $total_savings_data["total_tax_as_a_partnership"] }}</td>
@@ -17,20 +17,16 @@
 		</tr>
         <?php endif; ?>
 		<tr>
-			<td>Total Tax with Salary in Ltd Co</td>
-			<td>{{ $total_savings_data["total_tax_with_salary_in_ltd_co"] }}</td>
-		</tr>
-		<tr>
-			<td>Total Tax with Dividends in Ltd Co</td>
-			<td>{{ $total_savings_data["total_tax_with_dividends_in_ltd_co"] }}</td>
+			<td>Total Tax as Incorporated Company</td>
+			<td>{{ $total_savings_data["total_tax_as_incorporated"] }}</td>
 		</tr>
 		<tr>
 			<td>&nbsp;</td>
 			<td></td>
 		</tr>
 		<tr class="success">
-			<td>Total <u>Annual</u> Tax Savings by Incorporating</td>
-			<td>{{ $total_savings_data["total_yearly_tax_savings_by_changing"] }}</td>
+			<td>Total Annual Tax Savings</td>
+			<td>{{ $total_savings_data["total_annual_tax_savings"] }}</td>
 		</tr>
 		<tr>
 			<td>&nbsp;</td>

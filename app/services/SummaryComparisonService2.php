@@ -1,23 +1,21 @@
 <?php
 
-class SummaryComparisonService extends IncorporationEngine {
-
-	protected function init()
+class SummaryComparisonService2 extends IncorporationEngine2 {
+    protected function init()
 	{
 		$rows = array(
-			'corporation_tax'	=> 28,
-			'income_tax'		=> 29,
-			'employer'		    => 32,
-			'employee'		    => 33,
-			'total_to_hmrc'		=> 35,
-			'net_in_pocket'		=> 37,
-			'left_in_company'	=> 38,
-			'amount_retained'	=> 40
+			'corporation_tax'     => 120,
+			'income_tax'          => 121,
+			'employer'            => 124,
+			'employee'            => 125,
+			'total_to_hmrc'	      => 127,
+			'net_in_pocket'	      => 129,
+			'net_in_pocket_total' => 131
 		);
         
         if ($this->business->isPartnership()) {
             $columns = array(
-                'partnership'	=> 'F'
+                'partnership'	=> 'J'
             );
          }
         else {
@@ -25,15 +23,14 @@ class SummaryComparisonService extends IncorporationEngine {
                 'sole_trade'	=> 'D'
             );
         }
-
-		$test = array();
+        
+        $test = array();
 		
 		foreach ($rows as $row_key => $cell_row) {
 			foreach ($columns as $column_key => $cell_column) {
 				$this->data[$row_key][$column_key] = $this->formatNumberToDecimalPlaces($this->getFormattedValue("{$cell_column}{$cell_row}"), 2);
-
-				//$test["{$cell_column}{$cell_row}"] = $this->getFormattedValue("{$cell_column}{$cell_row}");
-			}
+                $this->data[$row_key][$column_key . '_calculated'] = $this->getCalculatedValue("{$cell_column}{$cell_row}");
+            }
 		}
 //	echo '<pre>';	
 //dd($this->getFormattedValue('D16'), $this->getFormattedValue('K17'), $this->getFormattedValue('F17'), $this->getFormattedValue('H32'), $this->getFormattedValue('G25'), $this->getFormattedValue('K3'), $this->getFormattedValue('J3'), $this->getFormattedValue('J4'));

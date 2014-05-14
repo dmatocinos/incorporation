@@ -8,7 +8,7 @@
 		"way/generators": "dev-master",
 		"phpoffice/phpexcel": "dev-master",
 		"omnipay/paypal": "~2.0",
-		"tecnick.com/tcpdf": "dev-master"
+		"rearlabs/tcpdf-rl": "dev-master"
 	},
 	"autoload": {
 		"classmap": [

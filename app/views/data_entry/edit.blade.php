@@ -41,7 +41,7 @@ Data Entry
 			<div class="form-group" id="number_partners_container" style="display: none;">
 				{{ Form::label('number_of_partners', 'Number of partners', array('class' => 'col-lg-3 control-label')) }}
 				<div class="col-lg-5">
-					{{ Form::select('number_of_partners', array_combine($number_of_partners, $number_of_partners), count($business->partners), array('class' => 'form-control')) }}
+					{{ Form::select('number_of_partners', array_combine($number_of_partners, $number_of_partners), $business->number_of_partners, array('class' => 'form-control')) }}
 				</div>
 			</div>
 			<div class="form-group">
@@ -59,7 +59,7 @@ Data Entry
 					{{ $errors->first('net_profit_before_tax', '<span class="help-block">:message</span>') }}
 				</div>
 			</div>
-			<div class="form-group">
+			<!--div class="form-group">
 				{{ Form::label('amount_to_distribute', 'Amount to distribute', array('class' => 'col-lg-3 control-label')) }}
 				<div class="col-lg-5">
 					{{ 
@@ -73,7 +73,25 @@ Data Entry
 					}}
 					{{ $errors->first('amount_to_distribute', '<span class="help-block">:message</span>') }}
 				</div>
-			</div>
+			</div-->
+            <div class="form-group">
+                {{ Form::label('fee_based_on_tax_saved', 'Fee based on', array('class' => 'col-lg-3 control-label')) }}
+                <div class="col-lg-5">
+                    <div class="col-lg-7" style="padding: 0px;">
+                        {{ 
+                            Form::text('fee_based_on_tax_saved', $business->fee_based_on_tax_saved, array(
+                                'class' => 'form-control fee-base-on-tax-saved',
+                                'ng-model' 	=> 'F1', 
+                                'ng-init' 	=> "F1='{$business->fee_based_on_tax_saved}'",
+                                'numbers-only'	=> 'numbers-only',
+                                'required'	=> 'required',
+                                'style' => 'border-radius: 4px 0px 0px 4px;'
+                            )) 
+                        }}
+                    </div>
+                    <span class="input-group-addon" style="height: 34px;">% of tax saved</span>
+                </div>
+            </div>
 		</div> {{-- .col-lg-9 --}}
 	</div>{{-- .row --}}
 
@@ -125,8 +143,7 @@ Data Entry
 		</div>
 	</div> {{-- .row --}}
 -->	
-	<br /><br />
-	<legend>Partners</legend>
+	<!--legend>Partners</legend>
 
 	<div class="row">
 		<div class="col-lg-12">
@@ -185,26 +202,11 @@ Data Entry
 				</tbody>
 			</table>
 		</div>{{-- .col-lg-12 --}}
-	</div>{{-- .row --}}
+	</div-->{{-- .row --}}
 
 	<hr>
-	<div class="row">
-		<div class="col-lg-4">
-			<div class="input-group">
-				<span class="input-group-addon">Fee based on </span>
-				{{ 
-					Form::text('fee_based_on_tax_saved', $business->fee_based_on_tax_saved, array(
-						'class' => 'form-control fee-base-on-tax-saved',
-						'ng-model' 	=> 'F1', 
-						'ng-init' 	=> "F1='{$business->fee_based_on_tax_saved}'",
-						'numbers-only'	=> 'numbers-only',
-						'required'	=> 'required'
-					)) 
-				}}
-				<span class="input-group-addon">% of tax saved</span>
-			</div>
-		</div>
-		<div class="col-lg-4">
+	<div class="row col-lg-8">
+		<div class="col-md-offset-3 col-lg-4">
 			<input type="submit" class="btn btn-primary" name="save_button" value="Save"/>
             <input type="submit" class="btn btn-primary" name="save_and_next_button" value="Save & Next"/>
 		</div>

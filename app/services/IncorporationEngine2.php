@@ -1,6 +1,6 @@
 <?php
 
-abstract class IncorporationEngine extends ExcelEngine {
+abstract class IncorporationEngine2 extends ExcelEngine {
 
 	protected $business;
 	protected $partners;
@@ -9,7 +9,7 @@ abstract class IncorporationEngine extends ExcelEngine {
 
 	public function __construct(Business $business)
 	{
-		parent::__construct('Incorporation (2)');
+		parent::__construct('UK Dividend', '/files/calc2.xlsx');
 
 		$this->business = $business;
 		$this->data = array();
@@ -31,21 +31,19 @@ abstract class IncorporationEngine extends ExcelEngine {
 	protected function setCellValues(Business $business)
 	{
 		$this->setDataEntryValues($business);
-		$this->setPartnersValues($business->number_of_partners);
 	}
 
 	protected function setDataEntryValues(Business $business)
 	{
 		$cell_columns = array(
-			'D12'	=> 'business_entity',
-            'D14'	=> 'number_of_partners',
-			'D16'	=> 'net_profit_before_tax',
-			//'D18'	=> 'amount_to_distribute',
-			'I21'	=> 'fee_based_on_tax_saved'
+			'A2'	=> 'business_entity',
+            'C2'	=> 'number_of_partners',
+			'E2'	=> 'net_profit_before_tax',
+			'I2'	=> 'fee_based_on_tax_saved'
 		);
 
 		foreach ($cell_columns as $cell => $column) {
-			if ($cell == 'I21') {
+			if ($cell == 'I2') {
 				$value = $business->$column / 100;
 			}
 			else {
@@ -121,21 +119,6 @@ abstract class IncorporationEngine extends ExcelEngine {
 				echo 'Evaluation Log:' , PHP_EOL;
 				echo PHP_EOL;
 			}
-		}
-	}
-
-	/**
-	 *
-	 * @param  Illuminate\Database\Eloquent\Collection $partners
-	 */
-	protected function setPartnersValues($number_of_partners)
-	{
-		$columns = array('F', 'G', 'H', 'I', 'J');
-		$row = '14';
-		$count = 0;
-		
-		for ($count = 0; $count < $number_of_partners; $count++) {
-			$this->setValue("{$columns[$count]}{$row}", (100 / $number_of_partners) / 100);
 		}
 	}
 }
