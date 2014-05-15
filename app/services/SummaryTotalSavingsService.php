@@ -44,6 +44,6 @@ class SummaryTotalSavingsService extends IncorporationEngine {
         
         $this->data['total_tax_as_incorporated'] = $this->formatNumberToDecimalPlaces($total_tax_as_incorporated, 2);
         $this->data['total_annual_tax_savings'] = $this->formatNumberToDecimalPlaces($total_annual_tax_savings, 2);
-        $this->data['bpk_fee_first_year_only'] = $this->formatNumberToDecimalPlaces($bpk_fee_first_year_only, 2);
+        $this->data['bpk_fee_first_year_only'] = ($bpk_fee_first_year_only <= 0) ? '0' : $this->formatNumberToDecimalPlaces($bpk_fee_first_year_only, 2);
 	}
 }
