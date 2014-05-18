@@ -61,6 +61,10 @@ class BaseController extends Controller {
 		{
 			$this->layout = View::make($this->layout);
 		}
+
+		if ($notification = Session::get('notification')) {
+			View::share('notification', $notification);
+		}
 	}
 	
 	public static function saveParamsToSession($data) 
@@ -84,5 +88,24 @@ class BaseController extends Controller {
 	public static function forgetParams($timestamp) 
 	{
 		Session::forget('subscription_data_' . $timestamp);
+	}
+
+	public function sendEmailSupport()
+	{
+		$data = Input::all();
+		$user = Auth::user()->practice_pro_user;
+		$subject = $data['subject'];
+		Mail::send('emails.support', ['msg' => $data['msg']], function($message) use ($user, $subject)
+		{
+			$message->to(
+				//'dixie.atay@gmail.com', 
+				'support@practicepro.co.uk', 
+				'Support Team'
+			)->subject('Incorporation Pro - ' . $subject);
+
+			$message->from($user->mh2_email, sprintf("%s %s", $user->mh2_fname, $user->mh2_lname));
+		});
+
+		return Redirect::back()->with('notification', ['type' => 'success', 'text' => 'You have successfully sent your message to support team.']);
 	}
 }

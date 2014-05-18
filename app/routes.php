@@ -139,5 +139,7 @@ Route::group(["before" => "auth"], function()
 	{
 		Route::get('report/incorporation/{business_id}', array('uses' => 'ReportController@incorporation', 'as' => 'report.incorporation'));
 	});
+
+	Route::post('email_support', array('as' => 'email_support', 'uses' => 'BaseController@sendEmailSupport'));
 });
 
