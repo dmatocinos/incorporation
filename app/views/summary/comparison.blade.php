@@ -1,3 +1,5 @@
+<?php $comparison_data_column = $business->isPartnership() ? 'partnership' : 'sole_trade'; ?>
+
 <table class="table">
 <thead>
 	<tr>
@@ -7,8 +9,7 @@
         <?php else : ?>
 		<th>Sole Trader</th>
 		<?php endif; ?>
-		<th>Salary In Ltd</th>
-		<th>Dividends</th>
+		<th>Limited Company</th>
 	</tr>
 </thead>
 <tbody>
@@ -32,6 +33,8 @@
         ?>
         <td>{{ $tax }}</td>
 		@endforeach
+        
+        <td>{{ $comparison_data2['corporation_tax'][$comparison_data_column] }}</td>
 	</tr>
 	<tr>
 		<td>Income Tax</td>
@@ -50,6 +53,8 @@
         ?>
 		<td>{{ $tax }}</td>
 		@endforeach
+        
+        <td>{{ $comparison_data2['income_tax'][$comparison_data_column] }}</td>
 	</tr>
 
 	<tr>
@@ -76,6 +81,8 @@
         ?>
 		<td>{{ $tax }}</td>
 		@endforeach
+        
+        <td>{{ $comparison_data2['employer'][$comparison_data_column] }}</td>
 	</tr>
 	<tr>
 		<td>Employee's</td>
@@ -94,6 +101,8 @@
         ?>
 		<td>{{ $tax }}</td>
 		@endforeach
+        
+        <td>{{ $comparison_data2['employee'][$comparison_data_column] }}</td>
 	</tr>
 
 	<tr>
@@ -117,14 +126,17 @@
         ?>
 		<td>{{ $tax }}</td>
 		@endforeach
+        
+        <td>{{ $comparison_data2['total_to_hmrc'][$comparison_data_column] }}</td>
 	</tr>
 
 	<tr>
 		<td colspan="100%">&nbsp;</td>
 	<tr>
-
-	<tr class="success">
-		<th>Net in Pocket</th>
+    
+    @if ($business->isPartnership())
+    <tr class="success">
+		<th>Net in Pocket (per Partner)</th>
 		@foreach ($comparison_data['net_in_pocket'] as $column => $tax)
         <?php 
             if ($business->business_entity == 'Partnership') {
@@ -138,35 +150,13 @@
                 }
             }
         ?>
-		<td>{{ $tax }}</td>
+        <td>{{ $tax }}</td>
 		@endforeach
+		<td>{{ $comparison_data2['net_in_pocket'][$comparison_data_column] }}</td>
 	</tr>
-	<tr>
-		<th>Left in the Company</th>
-		@foreach ($comparison_data['left_in_company'] as $column => $tax)
-        <?php 
-            if ($business->business_entity == 'Partnership') {
-                if ($column == 'sole_trade') {
-                    continue;
-                }
-            }
-            else {
-                if ($column == 'partnership') {
-                    continue;
-                }
-            }
-        ?>
-		<td>{{ $tax }}</td>
-		@endforeach
-	</tr>
-
-	<tr>
-		<td colspan="100%">&nbsp;</td>
-	<tr>
-
 	<tr class="success">
-		<th>AMOUNT RETAINED</th>
-		@foreach ($comparison_data['amount_retained'] as $column => $tax)
+		<th>Net in Pocket (Total)</th>
+		@foreach ($comparison_data['net_in_pocket_total'] as $column => $tax)
         <?php 
             if ($business->business_entity == 'Partnership') {
                 if ($column == 'sole_trade') {
@@ -181,7 +171,30 @@
         ?>
 		<td>{{ $tax }}</td>
 		@endforeach
+        
+        <td>{{ $comparison_data2['net_in_pocket_total'][$comparison_data_column] }}</td>
 	</tr>
-
+    @else
+    <tr class="success">
+		<th>Net in Pocket</th>
+		@foreach ($comparison_data['net_in_pocket_total'] as $column => $tax)
+        <?php 
+            if ($business->business_entity == 'Partnership') {
+                if ($column == 'sole_trade') {
+                    continue;
+                }
+            }
+            else {
+                if ($column == 'partnership') {
+                    continue;
+                }
+            }
+        ?>
+		<td>{{ $tax }}</td>
+		@endforeach
+        
+        <td>{{ $comparison_data2['net_in_pocket'][$comparison_data_column] }}</td>
+	</tr>
+    @endif
 </tbody>
 </table>

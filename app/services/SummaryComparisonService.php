@@ -14,19 +14,34 @@ class SummaryComparisonService extends IncorporationEngine {
 			'left_in_company'	=> 38,
 			'amount_retained'	=> 40
 		);
-
-		$columns = array(
-			'sole_trade'	=> 'D',
-			'partnership'	=> 'F',
-			'salary_in_ltd'	=> 'H',
-			'dividends'	    => 'J'
-		);
+        
+        if ($this->business->isPartnership()) {
+            $columns = array(
+                'partnership'	=> 'F'
+            );
+         }
+        else {
+            $columns = array(
+                'sole_trade'	=> 'D'
+            );
+        }
 
 		$test = array();
 		
 		foreach ($rows as $row_key => $cell_row) {
 			foreach ($columns as $column_key => $cell_column) {
-				$this->data[$row_key][$column_key] = $this->formatNumberToDecimalPlaces($this->getFormattedValue("{$cell_column}{$cell_row}"), 2);
+                if ($row_key == 'net_in_pocket') {
+                    $val = $this->getFormattedValue("{$cell_column}{$cell_row}");
+                    $this->data['net_in_pocket_total'][$column_key] = $this->formatNumberToDecimalPlaces($val, 2);
+                    
+                    $val = $this->getCalculatedValue("{$cell_column}{$cell_row}");
+                    $val = $val / $this->business->number_of_partners;
+                }
+                else {
+                    $val = $this->getFormattedValue("{$cell_column}{$cell_row}");
+                }
+                
+				$this->data[$row_key][$column_key] = $this->formatNumberToDecimalPlaces($val, 2);
 
 				//$test["{$cell_column}{$cell_row}"] = $this->getFormattedValue("{$cell_column}{$cell_row}");
 			}

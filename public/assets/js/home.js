@@ -1,6 +1,6 @@
 $(document).ready(function () {
 	$("#business-list").dataTable({
-		"aaSorting": [[ 5, "desc" ]],
+		"aaSorting": [[ 4, "desc" ]],
 		"fnRowCallback": function( nRow, aData, iDisplayIndex ) {
             /* Append the grade to the default row class name */
 			//var str = aData[0];
@@ -13,7 +13,7 @@ $(document).ready(function () {
 			}, 
 			{
                 "bSortable": false,
-                "aTargets": [ 0, 6 ]
+                "aTargets": [ 0, 5 ]
 			}
 		]
 	});

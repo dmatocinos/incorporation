@@ -6,7 +6,6 @@ class Business extends Eloquent {
 	public static $rules = array(
 		'business_entity' => 'required',
 		'net_profit_before_tax' => 'required|min:1',
-		'amount_to_distribute' => 'required|numeric|min:1',
 		'fee_based_on_tax_saved' => 'required|numeric|min:1|max:100',
 	//	'has_goodwill' => 'numeric|min:0',
 	//	'goodwill_estimated_value' => 'required|min:1',
@@ -20,16 +19,6 @@ class Business extends Eloquent {
 	}
 
 	/**
-	 * Accessor for number of partners
-	 *
-	 * @return int
-	 */
-	public function getNumberOfPartnersAttribute()
-	{
-		return count($this->partners);
-	}
-
-	/**
 	 * Accessor for Option object from this model
 	 *
 	 * @return Option
@@ -37,37 +26,6 @@ class Business extends Eloquent {
 	public function getOptionAttribute()
 	{
 		return Option::first();
-	}
-	
-	public function setPartners($new_partners) 
-	{
-		$partners = $this->partners()->getResults();
-		$count_current_partners = count($partners);
-		$count = 0;
-		
-		foreach ($new_partners as $partner) {
-			if ($count < $count_current_partners) {
-				$p = $partners->get($count);
-				$p->fill($partner);
-				$p->update();
-			}
-			else {
-				Partner::create(array_merge($partner, array('business_id' => $this->id)));
-			}
-			
-			$count++;
-		}
-		
-		if ($count < $count_current_partners) {
-			for (; $count < $count_current_partners; $count++) {
-				$partners->get($count)->delete();
-			}
-		}
-	}
-	
-	public function deletePartners() 
-	{
-		 Partner::where('business_id', '=', $this->id)->delete();
 	}
 	
 	public static function getAll($user_id = NULL) 
@@ -79,4 +37,9 @@ class Business extends Eloquent {
 			return DB::select("SELECT * FROM businesses");
 		}
 	}
+    
+    public function isPartnership() 
+    {
+        return $this->business_entity == 'Partnership' ? true: false;
+    }
 }

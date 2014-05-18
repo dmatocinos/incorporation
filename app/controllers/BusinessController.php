@@ -172,8 +172,6 @@ class BusinessController extends AuthorizedController {
 				->with('message', 'There were validation errors.');
 		}
 
-		$partners = $input['partners'];
-		
 		if ($input['business_entity'] == 'Partnership') {
 			$number_of_partners = $input['number_of_partners'];
 		}
@@ -181,36 +179,7 @@ class BusinessController extends AuthorizedController {
 			$number_of_partners = 1;
 		}
 
-		$total = 0;
-		for ($i = 0; $i < $number_of_partners; $i++) {
-			$validation = Validator::make($partners[$i], Partner::$rules);
-			if ( ! $validation->passes()) {
-				return Redirect::to($page_origin . ($page_origin == 'update' ? ('/' . $business->id) : ''))
-					->withInput()
-					->withErrors($validation)
-					->with('message', 'Partner share is required.');
-			}
-
-			$total += (int) $partners[$i]['share'];
-		}
-
-		$messages = array(
-			    'foo' => 'The :attribute should be equal to 100.',
-	 	);
-		
-		Validator::extend('foo', function($attribute, $value, $parameters) {
-		    return $value == 100;
-		});
-
-		$validation = Validator::make(compact('total'), array('total'	=> 'foo'), $messages);
-		if ( ! $validation->passes()) {
-			return Redirect::to($page_origin . ($page_origin == 'update' ? ('/' . $business->id) : ''))
-				->withInput()
-				->withErrors($validation)
-				->with('message', 'The total share for all partners should be equal to 100%');
-		}
-           
-        if ($page_origin == 'create') {
+		if ($page_origin == 'create') {
             $pricing = Auth::user()->practice_pro_user->pricing;
             
             if ( ! $pricing->is_free) {
@@ -218,16 +187,10 @@ class BusinessController extends AuthorizedController {
             }
         }
         
-		if (isset($input['save_and_next_button'])) {
-            $next_page = 'results';
-        }
-        else {
-            $next_page = 'update';
-        }
+		$next_page = (isset($input['save_and_next_button'])) ? 'summary' : 'update';
 
 		unset($input['_token']);
 		unset($input['_mthod']);
-		unset($input['number_of_partners']);
 		unset($input['partners']);
         unset($input['save_button']);
         unset($input['save_and_next_button']);
@@ -241,9 +204,7 @@ class BusinessController extends AuthorizedController {
             $business->update($input);
         }
 		
-		$business->setPartners($partners);
-        
-        return Redirect::to($next_page . '/' . $business->id);
+		return Redirect::to($next_page . '/' . $business->id);
     }
 
 	/**

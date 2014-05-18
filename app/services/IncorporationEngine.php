@@ -31,15 +31,16 @@ abstract class IncorporationEngine extends ExcelEngine {
 	protected function setCellValues(Business $business)
 	{
 		$this->setDataEntryValues($business);
-		$this->setPartnersValues($business->partners);
+		$this->setPartnersValues($business->number_of_partners);
 	}
 
 	protected function setDataEntryValues(Business $business)
 	{
 		$cell_columns = array(
 			'D12'	=> 'business_entity',
+            'D14'	=> 'number_of_partners',
 			'D16'	=> 'net_profit_before_tax',
-			'D18'	=> 'amount_to_distribute',
+			//'D18'	=> 'amount_to_distribute',
 			'I21'	=> 'fee_based_on_tax_saved'
 		);
 
@@ -53,8 +54,8 @@ abstract class IncorporationEngine extends ExcelEngine {
 
 			$this->setValue($cell, $value);
 		}
-		
-		$this->setValue('D14', count($business->partners));
+        
+        $this->setValue('D18', 0);
 	}
 
 	protected function test()
@@ -127,42 +128,14 @@ abstract class IncorporationEngine extends ExcelEngine {
 	 *
 	 * @param  Illuminate\Database\Eloquent\Collection $partners
 	 */
-	protected function setPartnersValues($partners)
+	protected function setPartnersValues($number_of_partners)
 	{
 		$columns = array('F', 'G', 'H', 'I', 'J');
 		$row = '14';
 		$count = 0;
-		$total_partners = count($partners);
-
-		for ($count = 0; $count < $total_partners; $count++) {
-			$this->setValue("{$columns[$count]}{$row}", ($partners->get($count)->share / 100));
+		
+		for ($count = 0; $count < $number_of_partners; $count++) {
+			$this->setValue("{$columns[$count]}{$row}", (100 / $number_of_partners) / 100);
 		}
 	}
-    
-    protected function formatNumberToDecimalPlaces($val, $places)
-    {
-        if (trim($val) == '0') {
-            return $val;
-        }
-        
-        $neg = substr($val, 0, 1) == '-' ? true : false;
-        $val = $neg == true ? substr($val, 1) : $val;
-        $val = str_replace(',', '', $val);
-        $val = trim($val);
-        $val = floatval($val);
-        $val = number_format ($val, $places, ".", ",");
-        
-        return $neg ? ('- ' . $val) : $val;
-    }
-    
-    protected function getFloatValFromString($val)
-    {
-        $neg = substr($val, 0, 1) == '-' ? true : false;
-        $val = $neg == true ? substr($val, 1) : $val;
-        $val = str_replace(',', '', $val);
-        $val = trim($val);
-        $val = floatval($val);
-        
-        return $neg ? ($val * -1) : $val;
-    }
 }
