@@ -59,6 +59,8 @@ class AuthController extends Controller {
 
 					if (Auth::attempt($credentials)) {
 						$user = Auth::user();
+						// save user info to the current session
+						Session::put('practicepro_user', $practicepro_user[0]);
 
 						if ($user->practice_pro_user->getMembershipLevelDisplayAttribute() == 'Free Trial') {
 							$date = strtotime($practicepro_user[0]->created_at);
@@ -77,8 +79,6 @@ class AuthController extends Controller {
 							}
 						}
 						else {
-							// save user info to the current session
-							Session::put('practicepro_user', $practicepro_user[0]);
 							
 							Auth::user()->firstname     = $practicepro_user[0]->mh2_fname;
 							Auth::user()->lastname      = $practicepro_user[0]->mh2_lname;
