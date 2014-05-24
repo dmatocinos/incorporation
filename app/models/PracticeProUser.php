@@ -218,6 +218,8 @@ class PracticeProUser extends Eloquent implements UserInterface, RemindableInter
 			case 'Professional':
 				$limit = self::PROFESSIONAL_LIMIT;
 				break;
+			default:
+				$limit = 0;
 		}
 
 		return $limit;

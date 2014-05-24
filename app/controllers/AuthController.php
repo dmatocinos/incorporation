@@ -58,14 +58,34 @@ class AuthController extends Controller {
 					];
 
 					if (Auth::attempt($credentials)) {
-						// save user info to the current session
-						Session::put('practicepro_user', $practicepro_user[0]);
-						
-						Auth::user()->firstname     = $practicepro_user[0]->mh2_fname;
-						Auth::user()->lastname      = $practicepro_user[0]->mh2_lname;
-						
-						// todo: redirect this to the list of business
-						return Redirect::to("");
+						$user = Auth::user();
+
+						if ($user->practice_pro_user->getMembershipLevelDisplayAttribute() == 'Free Trial') {
+							$date = strtotime($practicepro_user[0]->created_at);
+							$date = strtotime("+14 day", $date);
+							
+							if ($date < time()) {
+								$user->businesses()->delete();		
+								Auth::logout();
+								$data["errors"] = new MessageBag([
+										"password" => [
+											"Your free trial membership has now expired. Please upgrade your membership to use the software in its entirety."
+										]
+								]);
+								$this->layout->content = View::make("user.login", $data);
+								return;
+							}
+						}
+						else {
+							// save user info to the current session
+							Session::put('practicepro_user', $practicepro_user[0]);
+							
+							Auth::user()->firstname     = $practicepro_user[0]->mh2_fname;
+							Auth::user()->lastname      = $practicepro_user[0]->mh2_lname;
+							
+							// todo: redirect this to the list of business
+							return Redirect::to("");
+						}
 					}
 				}
 			}

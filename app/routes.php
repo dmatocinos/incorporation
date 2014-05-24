@@ -141,5 +141,6 @@ Route::group(["before" => "auth"], function()
 	});
 
 	Route::post('email_support', array('as' => 'email_support', 'uses' => 'BaseController@sendEmailSupport'));
+	Route::get("restrictdownloads/{valuation_id}", array('as' => 'restrictdownloads', 'uses' => 'SummaryController@restrictDownloads'));
 });
 

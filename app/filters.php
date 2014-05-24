@@ -93,8 +93,12 @@ Route::filter('can_download', function($route)
 {
 	$user = Auth::user()->practice_pro_user;
 
-	if ( ! $user->canDownload()) {
+	if ( ! $user->canDownload() && $user->getMembershipLevelDisplayAttribute() != 'Free Trial') {
 		Session::put('download_business_id', $route->getParameter('business_id'));
 		return Redirect::to('upgrade');
+	}
+
+	if ( $user->getMembershipLevelDisplayAttribute() == 'Free Trial') {
+		return Redirect::to('restrictdownloads/' . $route->getParameter('business_id'));
 	}
 });

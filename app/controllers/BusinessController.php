@@ -180,11 +180,10 @@ class BusinessController extends AuthorizedController {
 		}
 
 		if ($page_origin == 'create') {
-            $pricing = Auth::user()->practice_pro_user->pricing;
-            
-            if ( ! $pricing->is_free) {
-                return Redirect::route('subscribe')->withInput();
-            }
+			$pricing = Auth::user()->practice_pro_user->pricing;
+			if (Auth::user()->practice_pro_user->getMembershipLevelDisplayAttribute() != 'Free Trial' && ! $pricing->is_free) {
+				return Redirect::route('subscribe')->withInput();
+			}
         }
         
 		$next_page = (isset($input['save_and_next_button'])) ? 'summary' : 'update';

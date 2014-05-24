@@ -2,6 +2,7 @@
 
 class Business extends Eloquent {
 	protected $guarded = array();
+	protected $softDelete = true;
 
 	public static $rules = array(
 		'business_entity' => 'required',
@@ -31,7 +32,7 @@ class Business extends Eloquent {
 	public static function getAll($user_id = NULL) 
 	{
 		if ($user_id) {
-			return DB::select("SELECT * FROM businesses WHERE user_id = :user_id", array('user_id' => $user_id));
+			return DB::select("SELECT * FROM businesses WHERE user_id = :user_id AND deleted_at IS NULL", array('user_id' => $user_id));
 		}
 		else {
 			return DB::select("SELECT * FROM businesses");

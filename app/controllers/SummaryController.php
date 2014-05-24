@@ -40,4 +40,10 @@ class SummaryController extends AuthorizedController {
 		return View::make('summary.graphs', compact('data'));
 	}
 
+	public function restrictDownloads($business_id)
+	{
+		return Redirect::to('summary/' . $business_id)
+			->with('message', "Sorry, valuation report is not downloadable for Free Trial membership. You may want to upgrade to other packages to fully use this application.");
+	}
+
 }
