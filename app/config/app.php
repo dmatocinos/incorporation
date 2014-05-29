@@ -178,4 +178,6 @@ return array(
 	),
 	
 	'application_key' => 'incorporation',
+
+	'upgrade_app_site' => 'http://profile.practicepro.co.uk/upgrade/payment?',
 );

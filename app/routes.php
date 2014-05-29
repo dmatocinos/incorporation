@@ -112,8 +112,7 @@ Route::group(["before" => "auth"], function()
 	Route::get('upgrade', array('as' => 'upgrade_start', 'uses' => 'UpgradeMembershipController@upgrade'));
 	Route::get('upgrade/start_payment/{level}', array('as' => 'upgrade-start_payment', 'uses' => 'UpgradeMembershipController@startPayment'));
 	Route::get('upgrade/cancel_payment', array('as' => 'upgrade_cancel_payment', 'uses' => 'UpgradeMembershipController@cancelPayment'));
-	Route::get('upgrade/complete_payment/{level}', array('as' => 'upgrade_complete_payment', 'uses' => 'UpgradeMembershipController@completePayment'));
-	Route::get('upgrade/complete_subscription', array('as' => 'upgrade_complete_subscription', 'uses' => 'UpgradeMembershipController@completeUpgradeMembership'));
+	Route::get('upgrade/complete_payment', array('as' => 'upgrade_complete_payment', 'uses' => 'UpgradeMembershipController@completePayment'));
 
 	Route::any("logout", [
 		"as"   => "logout",

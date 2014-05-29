@@ -47,7 +47,8 @@ return array(
 	'package_pricings' => [
 		'first'	 => '0.00',
 		'second' => '99.00',
-		'third'	 => '499.00'
+		'third'	 => '499.00',
+		'free_trial'	 => '0.00',
 	],
 
 	/*
