@@ -4,6 +4,20 @@ class Business extends Eloquent {
 	protected $guarded = array();
 	protected $softDelete = true;
 
+	protected $fillable = [
+		'business_entity', 
+		'net_profit_before_tax',
+		'amount_to_distribute', 
+		'fee_based_on_tax_saved',
+		'goodwill_estimated_value', 
+		'existing_business_commenced',
+		'goodwill_write_off_years',
+		'has_goodwill',
+		'user_id',
+		'number_of_partners',
+		'client_id'	 
+	];
+
 	public static $rules = array(
 		'business_entity' => 'required',
 		'net_profit_before_tax' => 'required|min:1',

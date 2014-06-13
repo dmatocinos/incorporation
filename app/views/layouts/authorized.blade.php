@@ -67,7 +67,9 @@
 					$active = Request::segment(1);
 				?>
 				<ul class="nav navbar-nav side-nav">
-					<li class="{{ 'create' == $active ? 'active' : '' }}"><a href="{{ url('create') }}">Create</a></li>
+					<li class="{{ 'create' == $active ? 'active' : '' }}">
+						<a href="#" data-toggle="modal" data-target="#clientModal"><i class="fa fa-plus-square-o fa-fw"></i> Create New</a>
+					</li>
 					@if ($active != 'create' && ! is_null($active))
 						@foreach ($menu as $route => $label)
 							<li class="{{ $route == $active ? 'active' : '' }}"><a href="{{ url(sprintf('%s/%s', $route, $business->id)) }}">{{ $label }}</a></li>
@@ -180,8 +182,65 @@
   </div>
 </div>
 
+<!-- Client Select Modal -->
+<div class="modal fade" id="clientModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      {{ Form::open(array('route' => 'add_client')) }}
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Add Client Details</h4>
+      </div>
+      <div class="modal-body">
+	<div class="row">
+		<div class="col-lg-12" style="padding: 15px;">
+		<fieldset>
+			{{ Form::token() }}
+			  <div class="form-group">
+				    <label for="" class="col-lg-12 control-label">Add client details for the new incorporation. Choose which one you prefer to retrieve client details.</label>
+				    <div class="col-lg-12">
+					<div class="radio">
+					  <label>
+					    <input type="radio" name="select_by" id="existing" value="existing" checked>
+						From Existing Clients		
+						{{ 
+							Form::select(
+								'client_id', $current_clients, 
+								null,
+								array(
+									'class' => 'form-control', 
+							)) 
+						}}
+					  </label>
+					</div>
+				    </div>
+				    <br>
+				    <div class="col-lg-12">
+					<div class="radio">
+					  <label>
+					    <input type="radio" name="select_by" id="new_client" value="new_client">
+						Add New Client
+					  </label>
+					</div>
+				    </div>
+			  </div>
+		</fieldset>
+		</div>
+	</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <button class="btn btn-success" type="submit">Submit</button>
+      </div>
+      {{ Form::close() }}
+    </div>
+  </div>
+</div>
+<!-- Modal -->
+
 	<!-- JavaScript -->
 	<script src="{{ asset('assets/js/jquery-1.10.2.js') }}"></script>
+	<script src="{{ asset('assets/plugins/datepicker/js/bootstrap-datepicker.js') }}"></script>
 	<script src="{{ asset('assets/js/bootstrap.js') }}"></script>
 	
 	@if (isset($additional_scripts))

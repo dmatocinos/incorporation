@@ -21,71 +21,173 @@ class BusinessController extends AuthorizedController {
 			'assets/js/home.js'
 		);
 		
-		// add the change listener
-		// Asset::container('footer')->add('change-listener-js', 'js/base/change_listener.js');
-		
 		return View::make('businesses.home', $data);
 	}
-	
-	/**
-	 * Show the form for creating a new resource.
-	 *
-	 * @return Response
-	 */
-	public function create_ui()
+
+	public function addClient()
 	{
-		$get      = Input::get();
-		$business = new Business();
-		
-		if (isset($get['s_timestamp'])) {
+		$input = Input::all();
+		if ($input['select_by'] == 'existing') {
+			return Redirect::to('client_details/existing/' . $input['client_id']);
+		}
+		else {
+			return Redirect::to('client_details/new');
+		}
+	}
+
+	
+	private function setupData($data)
+	{
+		if (isset($data['s_timestamp'])) {
 			$timestamp = $get['s_timestamp'];
 			$input = BaseController::getParamsFromSession($timestamp);
 			$business->fill($input);
 			BaseController::forgetParams($timestamp);
 		}
 		
-		$data        = compact('business');
-		$data['url'] = 'save_new';
-		
 		$data['additional_scripts'] = array(
 			'assets/js/change_listener.js',
 			'assets/js/angular.min.js',
-			'assets/js/data.js'
+			'assets/js/data.js',
+			'assets/js/index.js'
 		);
 		
-		return View::make('data_entry.edit', $data);
+		
+		$db = DB::connection('practicepro_users');
+		$data['currencies'] = $db->table('currencies')->lists('name', 'id');
+		$data['counties']   = ['' => ''] + $db->table('counties')->lists('county', 'county');
+		$data['countries']  = ['' => ''] + $db->table('countries')->lists('country_name', 'country_name');
+
+		return View::make('data_entry.index', $data);
+
 	}
 
-	/**
-	 * Display a listing of the resource.
-	 *
-	 * @return Response
-	 */
-	public function update_ui()
+	public function update($business_id)
 	{
-		if (!$this->isBusinessOwned($this->business)) {
-			return Redirect::to('')
-				->with('message', 'You cannot make changes to this business');
+		$client = Client::find($this->business->client_id);
+
+		$data = [
+			'client_data' => $client->getAttributes(),
+			'business'    => $this->business
+		];
+		return $this->setupData($data);
+	}
+
+	public function newClient()
+	{
+		$client = new Client;
+		$data = [
+			'client_data' => array_fill_keys($client->getFillable(), null),
+			'business'    => new Business
+		];
+		return $this->setupData($data);
+	}
+
+	public function existingClient($client_id)
+	{
+		$client = Client::on('practicepro_users')->find($client_id);
+		$data = [
+			'client_data' => $client->getAttributes(),
+			'business'    => new Business
+		];
+		return $this->setupData($data);
+	}
+
+
+	public function createClient() 
+	{
+		$input = Input::all();
+		$validator = Validator::make($input, Client::$rules);
+		if ($validator->passes()) {
+			$input['business_type'] = $input['business_entity'];
+			$input['period_start_date'] = date('Y-m-d H:i:a', strtotime($input['period_start_date']));
+			$input['period_end_date'] = date('Y-m-d H:i:a', strtotime($input['period_end_date']));
+
+			$client = Client::create($input);	
+
+			$data = [
+				'business_entity' 	 => $input['business_entity'],
+				'net_profit_before_tax'  => $input['net_profit_before_tax'],
+				'number_of_partners' 	 => $input['number_of_partners'],
+				'fee_based_on_tax_saved' => $input['fee_based_on_tax_saved'],
+				'client_id'		 => $client->id,
+			];
+
+			return $this->save($data, $client->id);
+
+		}
+		else {
+			return Redirect::to('client_details/existing' . $input['id'])
+				->withInput()
+				->withErrors($validator)
+				->with('message', 'There were validation errors.');
+		}
+	}
+
+	public function updateClient() 
+	{
+		$input = Input::all();
+
+		$validator = Validator::make($input, Client::$rules);
+		if ($validator->passes()) {
+			$input['business_type'] = $input['business_entity'];
+			$input['period_start_date'] = date('Y-m-d H:i:a', strtotime($input['period_start_date']));
+			$input['period_end_date'] = date('Y-m-d H:i:a', strtotime($input['period_end_date']));
+
+			$client = Client::find($input['id']);
+			$client->update($input);
+
+			$data = [
+				'business_entity' 	 => $input['business_entity'],
+				'net_profit_before_tax'  => $input['net_profit_before_tax'],
+				'number_of_partners' 	 => $input['number_of_partners'],
+				'fee_based_on_tax_saved' => $input['fee_based_on_tax_saved'],
+				'client_id'		 => $client->id,
+			];
+
+			return $this->save($data, $client->id);
+
+		}
+		else {
+			return Redirect::to('client_details/existing' . $input['id'])
+				->withInput()
+				->withErrors($validator)
+				->with('message', 'There were validation errors.');
 		}
 		
-		$business = $this->business;
-		$data = compact('business');
-		$data['url'] = 'save_update/' . $business->id;
-		
-		$data['additional_scripts'] = array(
-			'assets/js/change_listener.js',
-			'assets/js/angular.min.js',
-			'assets/js/data.js'
-		);
-		
-		return View::make('data_entry.edit', $data);
 	}
-	
-	/**
-	 * Display a listing of the resource.
-	 *
-	 * @return Response
-	 */
+
+	private function save($data, $client_id)
+	{
+		$data['number_of_partners'] = $data['business_entity'] == 'Partnership' ? $data['number_of_partners'] : 1;
+		$data['user_id'] = Auth::user()->id;
+
+		if (! $this->business) {
+			$pricing = Auth::user()->practice_pro_user->pricing;
+			if (Auth::user()->practice_pro_user->getMembershipLevelDisplayAttribute() != 'Free Trial' && ! $pricing->is_free) {
+				return Redirect::to('subscribe/' . $client_id)->withInput(Input::all());
+			}
+
+			$business = Business::create($data);	
+			$id = $business->id;
+		}
+		else {
+			if (!$this->isBusinessOwned($this->business)) {
+				return Redirect::to('update/' . $this->business->id)
+					->with('message', 'You cannot make changes to this business');
+			}
+
+			$this->business->update($data);
+			$id = $this->business->id;
+		}
+
+		$route = (isset($input['save_and_next_button'])) ? 'summary' : 'update';
+
+		return Redirect::to($route . '/' . $id)
+			->with('message', 'Successfully saved.');
+		
+	}
+
 	public function delete()
 	{
 		if (!$this->isBusinessOwned($this->business)) {
@@ -100,123 +202,8 @@ class BusinessController extends AuthorizedController {
 				->with('message', 'You have successfully deleted a business');
 	}
 
-	/**
-	 * Store a newly created resource in storage.
-	 *
-	 * @return Response
-	 */
-	public function store()
+	protected function isBusinessOwned ($business) 
 	{
-		$input = Input::all();
-		$validation = Validator::make($input, Business::$rules);
-
-		if ($validation->passes())
-		{
-			$this->business->create($input);
-
-			return Redirect::route('data_entries.index');
-		}
-
-		return Redirect::route('data_entries.create')
-			->withInput()
-			->withErrors($validation)
-			->with('message', 'There were validation errors.');
-	}
-
-	/**
-	 * Display the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	public function show($id)
-	{
-		App::abort(404);
-	}
-	 */
-	 
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function save_new()
-	{
-		$input = array_except(Input::all(), array('_token', '_method'));
-		return self::saveBusiness(new Business, array_except(Input::all(), '_method'), 'create');
-	}
-
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function save_update($id)
-	{
-		if (!$this->isBusinessOwned($this->business)) {
-			return Redirect::to('')
-				->with('message', 'You cannot make changes to this business');
-		}
-		
-		return self::saveBusiness($this->business, array_except(Input::all(), '_method'), 'update');
-	}
-    
-    public static function saveBusiness($business, $input, $page_origin) {
-        $validation = Validator::make($input, Business::$rules);
-        
-		if ( ! $validation->passes()) {
-			return Redirect::to($page_origin . ($page_origin == 'update' ? ('/' . $business->id) : ''))
-				->withInput()
-				->withErrors($validation)
-				->with('message', 'There were validation errors.');
-		}
-
-		if ($input['business_entity'] == 'Partnership') {
-			$number_of_partners = $input['number_of_partners'];
-		}
-		else {
-			$number_of_partners = 1;
-		}
-
-		if ($page_origin == 'create') {
-			$pricing = Auth::user()->practice_pro_user->pricing;
-			if (Auth::user()->practice_pro_user->getMembershipLevelDisplayAttribute() != 'Free Trial' && ! $pricing->is_free) {
-				return Redirect::route('subscribe')->withInput();
-			}
-        }
-        
-		$next_page = (isset($input['save_and_next_button'])) ? 'summary' : 'update';
-
-		unset($input['_token']);
-		unset($input['_mthod']);
-		unset($input['partners']);
-        unset($input['save_button']);
-        unset($input['save_and_next_button']);
-		$input['user_id'] = Auth::user()->id;
-		
-        if ($page_origin == 'create') {
-            $business->fill($input);
-            $business->save();
-        }
-        else {
-            $business->update($input);
-        }
-		
-		return Redirect::to($next_page . '/' . $business->id);
-    }
-
-	/**
-	 * Remove the specified resource from storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	public function destroy($id)
-	{
-	}
-	 */
-	 
-	protected function isBusinessOwned ($business) {
 		return ($business->user_id == Auth::user()->id) ? true : false;
 	}
 

@@ -65,6 +65,11 @@ class BaseController extends Controller {
 		if ($notification = Session::get('notification')) {
 			View::share('notification', $notification);
 		}
+
+		if (Auth::check()) {
+			View::share('current_clients', Client::getAllCurrentClients());
+		}
+
 	}
 	
 	public static function saveParamsToSession($data) 
