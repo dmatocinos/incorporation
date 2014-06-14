@@ -21,6 +21,9 @@ class BusinessController extends AuthorizedController {
 			'assets/js/home.js'
 		);
 		
+		// add the change listener
+		// Asset::container('footer')->add('change-listener-js', 'js/base/change_listener.js');
+		
 		return View::make('businesses.home', $data);
 	}
 
@@ -117,7 +120,7 @@ class BusinessController extends AuthorizedController {
 
 		}
 		else {
-			return Redirect::to('client_details/existing' . $input['id'])
+			return Redirect::to('client_details/new');
 				->withInput()
 				->withErrors($validator)
 				->with('message', 'There were validation errors.');
@@ -149,7 +152,7 @@ class BusinessController extends AuthorizedController {
 
 		}
 		else {
-			return Redirect::to('client_details/existing' . $input['id'])
+			return Redirect::to('client_details/new');
 				->withInput()
 				->withErrors($validator)
 				->with('message', 'There were validation errors.');
@@ -162,10 +165,12 @@ class BusinessController extends AuthorizedController {
 		$data['number_of_partners'] = $data['business_entity'] == 'Partnership' ? $data['number_of_partners'] : 1;
 		$data['user_id'] = Auth::user()->id;
 
+		$route = (isset($input['save_and_next_button'])) ? 'summary' : 'update/update';
+
 		if (! $this->business) {
 			$pricing = Auth::user()->practice_pro_user->pricing;
 			if (Auth::user()->practice_pro_user->getMembershipLevelDisplayAttribute() != 'Free Trial' && ! $pricing->is_free) {
-				return Redirect::to('subscribe/' . $client_id)->withInput(Input::all());
+				return Redirect::route('subscribe')->withInput();
 			}
 
 			$business = Business::create($data);	
