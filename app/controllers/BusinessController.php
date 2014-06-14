@@ -152,7 +152,7 @@ class BusinessController extends AuthorizedController {
 
 		}
 		else {
-			return Redirect::to('client_details/new');
+			return Redirect::to('client_details/existing/' . $input['client_id']);
 				->withInput()
 				->withErrors($validator)
 				->with('message', 'There were validation errors.');
