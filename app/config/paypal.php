@@ -105,6 +105,6 @@ return array(
         */
 
         /*'test_mode' => 'true'*/
-        'test_mode' => false
+        'test_mode' => 'false'
 );
 
