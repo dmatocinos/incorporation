@@ -61,6 +61,7 @@ class AuthController extends Controller {
 						$user = Auth::user();
 						// save user info to the current session
 						Session::put('practicepro_user', $practicepro_user[0]);
+						$this->logAccess($user->practicepro_user_id);
 
 						if ($user->practice_pro_user->getMembershipLevelDisplayAttribute() == 'Free Trial') {
 							$date = strtotime($practicepro_user[0]->created_at);
@@ -108,5 +109,18 @@ class AuthController extends Controller {
 	{
 		Auth::logout();
 		return Redirect::route("login");
+	}
+
+	protected function logAccess($user_id)
+	{
+		$ch = curl_init();
+
+		curl_setopt($ch, CURLOPT_URL, Config::get('app.portal_url') . '/log/' . $user_id . '/' . Config::get('app.application_key'));
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($ch, CURLOPT_HEADER, 0);
+		 
+		$output = curl_exec($ch);
+		 
+		curl_close($ch);
 	}
 }

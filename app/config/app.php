@@ -180,4 +180,6 @@ return array(
 	'application_key' => 'incorporation',
 
 	'upgrade_app_site' => 'http://profile.practicepro.co.uk/upgrade/payment?',
+
+	'portal_url' => 'localhost/practicepro_regis/public/index.php/',
 );
