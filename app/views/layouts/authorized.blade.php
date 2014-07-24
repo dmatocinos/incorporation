@@ -54,7 +54,7 @@
 				<?php 
 					if (isset($business)) {
 						$menu = array(
-							'update'	=> 'Data Entry',
+							'business'	=> 'Data Entry',
 						//	'results'	=> 'Results',
 							'summary'	=> 'Summary',
 						//	'goodwill'	=> 'Goodwill <sup><span class="label label-success"><b>PRO</b></span></sup>'
@@ -72,7 +72,11 @@
 					</li>
 					@if ($active != 'create' && ! is_null($active))
 						@foreach ($menu as $route => $label)
-							<li class="{{ $route == $active ? 'active' : '' }}"><a href="{{ url(sprintf('%s/%s', $route, $business->id)) }}">{{ $label }}</a></li>
+                            @if ($business->id || $route == 'business')
+                                <li class="{{ $route == $active ? 'active' : '' }}">
+                                    <a href="{{ $route == $active ? '#' : url(sprintf('%s/%s', $route, $business->id)) }}">{{ $label }}</a>
+                                </li>
+                            @endif
 						@endforeach
 					@endif
 				</ul>
@@ -186,7 +190,7 @@
 <div class="modal fade" id="clientModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
-      {{ Form::open(array('route' => 'add_client')) }}
+      {{ Form::open(array('route' => 'business_create')) }}
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
         <h4 class="modal-title" id="myModalLabel">Add Client Details</h4>

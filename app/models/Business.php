@@ -57,4 +57,38 @@ class Business extends Eloquent {
     {
         return $this->business_entity == 'Partnership' ? true: false;
     }
+    
+    public static function saveBusiness($data)
+    {
+        // business user id
+        $data['user_id'] = Auth::user()->id;
+				
+        if (isset($data['business_id']) && is_numeric($data['business_id'])) {
+            $business = Business::find($data['business_id']);
+            $business->fill($data);
+            $business->save();
+        }
+        else {
+            $business = Business::create($data);
+        }
+        
+        // client user id
+        $data['user_id'] = Auth::user()->practicepro_user_id;
+        
+        $data['period_start_date'] =  date('Y-m-d', strtotime($data['period_start_date']));
+		$data['period_end_date'] =  date('Y-m-d', strtotime($data['period_end_date']));
+        
+        if ($business->client_id){
+            $client = Client::find($business->client_id);
+            $client->fill($data);
+            $client->save();
+        }
+        else {
+            $client = Client::create($data);
+            $business->client_id = $client->id;
+            $business->save();
+        }
+        
+        return $business;
+    }
 }

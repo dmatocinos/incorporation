@@ -24,8 +24,7 @@ class Client extends Eloquent {
 		'business_status',
 		'business_type',
 		'industry_sector',
-		'currency',
-		'client_id',
+		'currency'
 	];
 
 	public static $rules = [

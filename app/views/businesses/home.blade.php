@@ -27,7 +27,7 @@ Home
 						<tbody>
 							@foreach ($businesses as $business)
 								<tr style="">
-									<td class="center"><a class="btn btn-primary btn-sm" href="{{ url('/update/' . $business->id) }}"><i class="fa fa-edit"></i></a></td>
+									<td class="center"><a class="btn btn-primary btn-sm" href="{{ url('/business/' . $business->id) }}"><i class="fa fa-edit"></i></a></td>
 									<td>{{ $business->business_entity }}</td>
 									<td>{{ $business->net_profit_before_tax }}</td>
 									<td>{{ $business->fee_based_on_tax_saved }}</td>

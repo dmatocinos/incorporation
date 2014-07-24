@@ -29,7 +29,7 @@ class SubscriptionController extends AuthorizedController {
 	}
 
 	// @todo move to service
-	protected function getPurchaseData($timestamp, $client_id = null)
+	protected function getPurchaseData($timestamp)
 	{
 		$pricing = $this->user->practice_pro_user->pricing;
 
@@ -42,8 +42,8 @@ class SubscriptionController extends AuthorizedController {
 		$paypal_data = array(
 			'amount' 	=> $pricing->getDiscountedAmount(),
 			'description'	=> Config::get('paypal.description') . " Payment for {$business_entity}",
-			'returnUrl'	=> url('complete_payment', array($timestamp, $client_id)),
-			'cancelUrl'	=> url('cancel_payment', array($timestamp, $client_id)),
+			'returnUrl'	=> url('complete_payment', array($timestamp)),
+			'cancelUrl'	=> url('cancel_payment', array($timestamp)),
 			'currency'	=> Config::get('paypal.currency')
 		);
 
@@ -54,7 +54,7 @@ class SubscriptionController extends AuthorizedController {
 	 * Show the PayPal payment screen
 	 *
 	 */
-	public function subscribe($client_id)
+	public function subscribe()
 	{
 		$data = Input::old();
 		
@@ -91,21 +91,20 @@ class SubscriptionController extends AuthorizedController {
 		
 		$data = array(
 			'msg'	=> $msg,
-			'timestamp' => $timestamp,
-			'client_id' => $client_id
+			'timestamp' => $timestamp
 		);
 
 		return View::make("subscription.subscribe", $data);
 	}
 	
-	public function startPayment($timestamp, $client_id) 
+	public function startPayment($timestamp) 
 	{
 		Session::reflash();
 
 		$gateway = $this->getGateway();
 
 		try {
-			$response = $gateway->purchase($this->getPurchaseData($timestamp, $client_id))->send();
+			$response = $gateway->purchase($this->getPurchaseData($timestamp))->send();
 			if ($response->isRedirect()) {
 				// it should redirect to PayPal payment page
 				$response->redirect();
@@ -119,42 +118,39 @@ class SubscriptionController extends AuthorizedController {
 		}
 	}
 
-	public function cancelPayment($timestamp, $client_id)
+	public function cancelPayment($timestamp)
 	{
-		return Redirect::to("client_details/existing/{$client_id}?s_timestamp=" . $timestamp)->withInput();
+		return Redirect::to("business/new?s_timestamp=" . $timestamp)->withInput();
 	}
 
-	public function completePayment($timestamp, $client_id)
+	public function completePayment($timestamp)
 	{
 		$user = $this->user;
 
 		$gateway = $this->getGateway();
 
 		try {
-			$response = $gateway->completePurchase($this->getPurchaseData($timestamp, $client_id))->send();
+			$response = $gateway->completePurchase($this->getPurchaseData($timestamp))->send();
 			if ($response->isSuccessful()) {
 				$input    = BaseController::getParamsFromSession($timestamp);
 				$transaction_data = $response->getData();
-				$next_page = (isset($input['save_and_next_button'])) ? 'summary' : 'update';
+				$next_page = (isset($input['save_next_page'])) ? 'summary' : 'business';
 
-				$input['user_id'] = Auth::user()->id;
-				$input['client_id'] = $client_id;
-
-				$business = Business::create($input);	
+				$business = Business::saveBusiness($input);
 
 				$payment_data = array(
-						'business_id'    => $business->id,
-						'amount'         => $transaction_data['PAYMENTINFO_0_AMT'],
-						'transaction_id' => $transaction_data['PAYMENTINFO_0_TRANSACTIONID'],
-						'order_time'     => $transaction_data['PAYMENTINFO_0_ORDERTIME']
-						);
+                    'business_id'    => $business->id,
+                    'amount'         => $transaction_data['PAYMENTINFO_0_AMT'],
+                    'transaction_id' => $transaction_data['PAYMENTINFO_0_TRANSACTIONID'],
+                    'order_time'     => $transaction_data['PAYMENTINFO_0_ORDERTIME']
+				);
 
 				$payment = Payment::create($payment_data);
 				$payment->save();
 
 				BaseController::forgetParams($timestamp);
 
-				return Redirect::to($next_page . '/' . $business->id);
+				return Redirect::to($next_page . '/' . $business->id)->with('message', 'Successfully saved changes.');
 			} 
 			else {
 				throw new Exception($response->getMessage());

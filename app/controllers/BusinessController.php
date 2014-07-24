@@ -26,28 +26,61 @@ class BusinessController extends AuthorizedController {
 		
 		return View::make('businesses.home', $data);
 	}
-
-	public function addClient()
-	{
-		$input = Input::all();
-		if ($input['select_by'] == 'existing') {
-			return Redirect::to('client_details/existing/' . $input['client_id']);
+    
+    public function business($business_id)
+    {
+        $client = new Client;
+        
+        if (is_numeric($business_id)) {
+            $business = Business::find($business_id);
+            
+            if (!$this->isBusinessOwned($business)) {
+                return Redirect::to('')
+                    ->with('message', 'You cannot edit this business');
+            }
+            
+            if ($business->client_id) {
+                $client = Client::find($business->client_id);
+            }
+        }
+        else {
+            $business = new Business;
+            
+            // new business, check if from existing client
+            
+            if ($client_id = Input::get('client_id')) {
+                $client = Client::find($client_id);
+            }
+        }
+        
+        if ($timestamp = Input::get('s_timestamp')) {
+        	$input = BaseController::getParamsFromSession($timestamp);
+            
+            BaseController::forgetParams($timestamp);
 		}
-		else {
-			return Redirect::to('client_details/new');
-		}
-	}
+        else {
+            $input = Input::old();
+        }
+        
+        if (! empty($input)) {
+            if (isset($input['client_id'])) {
+                $client = Client::find($input['client_id']);
+            }
+            
+            $business->fill($input);
+            $client->fill($input);
+        }
+        
+        $data = [
+			'client'   => $client,
+			'business' => $business
+		];
+        
+        return $this->setupData($data);
+    }
 
-	
 	private function setupData($data)
 	{
-		if (isset($data['s_timestamp'])) {
-			$timestamp = $get['s_timestamp'];
-			$input = BaseController::getParamsFromSession($timestamp);
-			$business->fill($input);
-			BaseController::forgetParams($timestamp);
-		}
-		
 		$data['additional_scripts'] = array(
 			'assets/js/change_listener.js',
 			'assets/js/angular.min.js',
@@ -65,131 +98,65 @@ class BusinessController extends AuthorizedController {
 
 	}
 
-	public function update($business_id)
+	public function create()
 	{
-		$client = Client::find($this->business->client_id);
-
-		$data = [
-			'client_data' => $client->getAttributes(),
-			'business'    => $this->business
-		];
-		return $this->setupData($data);
-	}
-
-	public function newClient()
-	{
-		$client = new Client;
-		$data = [
-			'client_data' => array_fill_keys($client->getFillable(), null),
-			'business'    => new Business
-		];
-		return $this->setupData($data);
+        $input = Input::all();
+        
+        if ($input['select_by'] == 'new_client'){
+            return Redirect::to('business/new');
+        }
+        else {
+            return Redirect::to('business/new?client_id=' . $input['client_id']);
+        }
 	}
 
 	public function existingClient($client_id)
 	{
-		$client = Client::on('practicepro_users')->find($client_id);
-		$data = [
-			'client_data' => $client->getAttributes(),
-			'business'    => new Business
-		];
-		return $this->setupData($data);
+        return Redirect::to('business/new?client_id='. $client_id);
 	}
 
-
-	public function createClient() 
+	public function save()
 	{
-		$input = Input::all();
-		$validator = Validator::make($input, Client::$rules);
-		if ($validator->passes()) {
-			$input['business_type'] = $input['business_entity'];
-			$input['period_start_date'] = date('Y-m-d H:i:a', strtotime($input['period_start_date']));
-			$input['period_end_date'] = date('Y-m-d H:i:a', strtotime($input['period_end_date']));
-
-			$client = Client::create($input);	
-
-			$data = [
-				'business_entity' 	 => $input['business_entity'],
-				'net_profit_before_tax'  => $input['net_profit_before_tax'],
-				'number_of_partners' 	 => $input['number_of_partners'],
-				'fee_based_on_tax_saved' => $input['fee_based_on_tax_saved'],
-				'client_id'		 => $client->id,
-			];
-
-			return $this->save($data, $client->id);
-
-		}
-		else {
-			return Redirect::to('client_details/new')
+        $data = Input::all();
+        
+        $validator = Validator::make($data, Client::$rules);
+        
+		if (! $validator->passes()) {
+            $business_id = (isset($data['business_id']) && is_numeric($data['business_id'])) ? $data['business_id'] : 'new';
+            //$params      = ($business_id == 'new' && isset($data['client_id']) && is_numeric($data['client_id'])) ? ('?client_id=' . $data['client_id']
+            
+            return Redirect::back()
 				->withInput()
 				->withErrors($validator)
-				->with('message', 'There were validation errors.');
-		}
-	}
-
-	public function updateClient() 
-	{
-		$input = Input::all();
-
-		$validator = Validator::make($input, Client::$rules);
-		if ($validator->passes()) {
-			$input['business_type'] = $input['business_entity'];
-			$input['period_start_date'] = date('Y-m-d H:i:a', strtotime($input['period_start_date']));
-			$input['period_end_date'] = date('Y-m-d H:i:a', strtotime($input['period_end_date']));
-
-			$client = Client::find($input['id']);
-			$client->update($input);
-
-			$data = [
-				'business_entity' 	 => $input['business_entity'],
-				'net_profit_before_tax'  => $input['net_profit_before_tax'],
-				'number_of_partners' 	 => $input['number_of_partners'],
-				'fee_based_on_tax_saved' => $input['fee_based_on_tax_saved'],
-				'client_id'		 => $client->id,
-			];
-
-			return $this->save($data, $client->id);
-
-		}
-		else {
-			return Redirect::to('client_details/existing/' . $input['client_id'])
-				->withInput()
-				->withErrors($validator)
-				->with('message', 'There were validation errors.');
-		}
-		
-	}
-
-	private function save($data, $client_id)
-	{
+				->with('message', 'Please correct the field(s) below marked in red');
+        }
+        
 		$data['number_of_partners'] = $data['business_entity'] == 'Partnership' ? $data['number_of_partners'] : 1;
 		$data['user_id'] = Auth::user()->id;
 
-		$route = (isset($input['save_and_next_button'])) ? 'summary' : 'update/update';
-
-		if (! $this->business) {
+		if (! (isset($data['business_id']) && is_numeric($data['business_id']))) {
 			$pricing = Auth::user()->practice_pro_user->pricing;
+            
 			if (Auth::user()->practice_pro_user->getMembershipLevelDisplayAttribute() != 'Free Trial' && ! $pricing->is_free) {
 				return Redirect::route('subscribe')->withInput();
 			}
-
-			$business = Business::create($data);	
-			$id = $business->id;
-		}
+        }
 		else {
-			if (!$this->isBusinessOwned($this->business)) {
-				return Redirect::to('update/' . $this->business->id)
+            $business = Business::find($data['business_id']);
+            
+			if (!$this->isBusinessOwned($business)) {
+				return Redirect::to('')
 					->with('message', 'You cannot make changes to this business');
 			}
+        }
+        
+        $business = Business::saveBusiness($data);
+		$id = $business->id;
 
-			$this->business->update($data);
-			$id = $this->business->id;
-		}
-
-		$route = (isset($input['save_and_next_button'])) ? 'summary' : 'update';
-
+		$route = (isset($data['save_next_page'])) ? 'summary' : 'business';
+        
 		return Redirect::to($route . '/' . $id)
-			->with('message', 'Successfully saved.');
+			->with('message', 'Successfully saved changes.');
 		
 	}
 

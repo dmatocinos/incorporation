@@ -103,10 +103,10 @@ Route::group(["before" => "guest"], function()
 
 Route::group(["before" => "auth"], function()
 {
-	Route::get('subscribe/{client_id}', array('as' => 'subscribe', 'uses' => 'SubscriptionController@subscribe'));
-	Route::get('start_payment/{timestamp}/{client_id}', array('as' => 'start_payment', 'uses' => 'SubscriptionController@startPayment'));
-	Route::get('cancel_payment/{timestamp}/{client_id}', array('as' => 'cancel_payment', 'uses' => 'SubscriptionController@cancelPayment'));
-	Route::get('complete_payment/{timestamp}/{client_id}', array('as' => 'complete_payment', 'uses' => 'SubscriptionController@completePayment'));
+	Route::get('subscribe', array('as' => 'subscribe', 'uses' => 'SubscriptionController@subscribe'));
+	Route::get('start_payment/{timestamp}', array('as' => 'start_payment', 'uses' => 'SubscriptionController@startPayment'));
+	Route::get('cancel_payment/{timestamp}', array('as' => 'cancel_payment', 'uses' => 'SubscriptionController@cancelPayment'));
+	Route::get('complete_payment/{timestamp}', array('as' => 'complete_payment', 'uses' => 'SubscriptionController@completePayment'));
 	Route::get('complete_subscription', array('as' => 'complete_subscription', 'uses' => 'SubscriptionController@completeSubscription'));
 
 	Route::get('upgrade', array('as' => 'upgrade_start', 'uses' => 'UpgradeMembershipController@upgrade'));
@@ -120,8 +120,9 @@ Route::group(["before" => "auth"], function()
 	]);
 	
 	Route::get("/", array('as' => 'home', 'uses' => "BusinessController@index"));
-	Route::get('create', array('as' => 'create', 'uses' => 'BusinessController@create'));
-	Route::get('update/{business_id}', 'BusinessController@update');
+    Route::get('business/{business_id}', array('as' => 'business', 'uses' => 'BusinessController@business'));
+    Route::any('business_save', array('as' => 'business_save', 'uses' => 'BusinessController@save'));
+    Route::any('business_create', array('as' => 'business_create', 'uses' => 'BusinessController@create'));
 	Route::get('delete/{business_id}', 'BusinessController@delete');
 	Route::get('results/{business_id}',	'ResultsController@show');
 	Route::get('summary/{business_id}', 'SummaryController@show');
@@ -139,12 +140,5 @@ Route::group(["before" => "auth"], function()
 
 	Route::post('email_support', array('as' => 'email_support', 'uses' => 'BaseController@sendEmailSupport'));
 	Route::get("restrictdownloads/{valuation_id}", array('as' => 'restrictdownloads', 'uses' => 'SummaryController@restrictDownloads'));
-
-	Route::get('client_details/new', 'BusinessController@newClient');
-	Route::get('client_details/existing/{client_id}', 'BusinessController@existingClient');
-	Route::post('client_details/add', array('as' => 'add_client', 'uses' => 'BusinessController@addClient'));
-	Route::put('client_details/create', array('as' => 'create_client', 'uses' => 'BusinessController@createClient'));
-	Route::put('client_details/update', array('as' => 'update_client', 'uses' => 'BusinessController@updateClient'));
-	
 });
 
