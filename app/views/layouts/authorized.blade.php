@@ -149,6 +149,38 @@
 
 	</div><!-- /#wrapper -->
 
+<!-- Product Recommendation -->
+@if(Session::get('has_recommendation'))
+<div class="modal fade" id="product_recommendation_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="product_recommendation">Did you know...</h4>
+      </div>
+      <div class="modal-body">
+		<div class="row">
+			<div class="span12" style="padding: 15px;">
+				<h4>
+					This client is suitable for the Darwin Corporation Tax mitigation structure.
+					<b>You can earn {{ Auth::user()->practicepro_user->getProductCommission() * 100 }}% commission</b> for successfully referring this client whilst
+					helping them minimise their Corporation Tax exposure.
+				</h4>
+				<br>
+				<h4>
+					Click <a href="http://www.contractorspro.co.uk/about-us">here</a> to learn more about Darwin and how both you and your client benefit
+				</h4>
+			</div>
+		</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+@endif
+
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">

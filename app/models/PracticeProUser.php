@@ -144,6 +144,16 @@ class PracticeProUser extends Eloquent implements UserInterface, RemindableInter
 		return $result[0]->display;
 	}
 
+	public function getMembershipLevelKeyAttribute()
+	{
+		$result = DB::connection($this->connection)
+			->select(DB::raw("SELECT membership_level_key FROM membership_levels WHERE membership_level_id = :membership_level_id LIMIT 1"), array(
+				'membership_level_id' => $this->membership_level
+			));
+		
+		return $result[0]->membership_level_key;
+	}
+
 	/**
 	 * Get the unique identifier for the user.
 	 *
@@ -285,6 +295,18 @@ class PracticeProUser extends Eloquent implements UserInterface, RemindableInter
 	public function getRememberTokenName()
 	{
 		return 'remember_token';
+	}
+		
+	// TODO : move this when admin definition is already implemented
+	public function getProductCommission()
+	{
+		$commission = [
+			'first'  => 0.15,
+			'second' => 0.20,
+			'third'	 => 0.25
+		];			
+		
+		return $commission[$this->membership_level_key];
 	}
 
 }

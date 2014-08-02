@@ -155,8 +155,16 @@ class BusinessController extends AuthorizedController {
 
 		$route = (isset($data['save_next_page'])) ? 'summary' : 'business';
 
-		return Redirect::to($route . '/' . $id)
-			->with('message', 'Successfully saved changes.');
+		$redirect = Redirect::to($route . '/' . $id);
+		$redirect->with('message', 'Successfully saved changes.');
+		
+		if ($data['net_profit_before_tax'] >= '100000') {
+			$product_recommendation = new ProductRecommendation();
+			$product_recommendation->recommend($business, Auth::user()->practice_pro_user);
+			$redirect->with('has_recommendation', true);
+		}
+
+		return $redirect;
 
 	}
 

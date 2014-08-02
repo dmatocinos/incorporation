@@ -45,6 +45,8 @@ $(document).ready(function () {
 		disablePartners(1);
 	}
 	
+
+	$('#product_recommendation_modal').modal('show');
 });
 
 function disablePartners(i) {
