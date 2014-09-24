@@ -27,8 +27,6 @@ return array(
 	*/
 
 	'default' => 'mysql',
-	//'default' => 'mysql_dixie',
-	//'default' => 'mysql_mark',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -47,7 +45,6 @@ return array(
 	*/
 
 	'connections' => array(
-
 		'mysql' => array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
@@ -68,7 +65,8 @@ return array(
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',
-        ),
+        	),
+		
 	),
 
 	/*
