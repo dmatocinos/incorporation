@@ -19,10 +19,6 @@ $(document).ready(function () {
 	});
 	
 	$("a.delete-business").click(function () {
-		if (confirm('Are you sure you want to delete this business?')) {
-			return true;
-		}
-		
-		return false;
+		return confirm('Are you sure you want to delete this business?');
 	});
 });

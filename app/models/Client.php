@@ -32,7 +32,7 @@ class Client extends Eloquent {
 		'contact_name'		=> 'required|Max:80',
 		'address_1'  		=> 'required|Max:80',
 		'country' 		=> 'required|Max:80',
-		'phone_number'		=> 'required|numeric',
+		'phone_number'		=> 'required',
 		'logo_filename'		=> 'image',
 		'email'			=> 'required|email',
 	];

@@ -175,7 +175,6 @@ class BusinessController extends AuthorizedController {
 				->with('message', 'You cannot delete this business');
 		}
 
-		$this->business->deletePartners();
 		$this->business->delete();
 
 		return Redirect::to('')
