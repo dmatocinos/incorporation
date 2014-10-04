@@ -1,12 +1,17 @@
-Copy the files in this directory to the following location:
+1. Copy the files in this directory to the following location:
 database.php - app/config/
+mail.php     - app/config
 paypal.php   - app/config/
 .htaccess    - public
 
-Changes the values of the following in database.php to the correct ones:
-1. host
-2. database
-3. username
-4. password
+2. Use correct values in the following files:
+i. app/config/app.php
+ii. app/config/database.php
+iii. app/config/mail.php
+
+3. Create directory:
+public/cache
+
+4. run database migrations
 
 DO NOT COMMIT THESE CHANGES!!!!
