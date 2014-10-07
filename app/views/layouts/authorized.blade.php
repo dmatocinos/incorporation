@@ -68,7 +68,11 @@
 				?>
 				<ul class="nav navbar-nav side-nav">
 					<li class="{{ 'create' == $active ? 'active' : '' }}">
-						<a href="#" data-toggle="modal" data-target="#clientModal"><i class="fa fa-plus-square-o fa-fw"></i> Create New</a>
+                        @if (empty($current_clients))
+                            <a href="{{ url('business/new') }}"><i class="fa fa-plus-square-o fa-fw"></i> Create New</a>
+                        @else
+						    <a href="#" data-toggle="modal" data-target="#clientModal"><i class="fa fa-plus-square-o fa-fw"></i> Create New</a>
+                        @endif
 					</li>
 					@if ($active != 'create' && ! is_null($active))
 						@foreach ($menu as $route => $label)
