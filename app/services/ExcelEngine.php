@@ -45,7 +45,13 @@ class ExcelEngine {
 
 		$objReader = PHPExcel_IOFactory::createReader($excel_format); 
 		$objReader->setIncludeCharts(TRUE);
-		$objReader->setLoadSheetsOnly($worksheet);
+
+        if ($worksheet) {
+    		$objReader->setLoadSheetsOnly($worksheet);
+        }
+        else {
+            $objReader->setLoadAllSheets();
+        }
 
 		//PHPExcel_Calculation::getInstance()->writeDebugLog = true;
 

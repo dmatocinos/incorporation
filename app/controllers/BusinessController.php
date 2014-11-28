@@ -131,6 +131,20 @@ class BusinessController extends AuthorizedController {
 				->with('message', 'Please correct the field(s) below marked in red');
 		}
 
+        $start_date = $data['period_start_date'];
+        $end_date   = $data['period_end_date'];
+
+        if (! empty($start_date)) {
+            $start_date = date('Y-m-d H:i:s', strtotime(str_replace('/', '-', $start_date)));
+        }
+        
+        if (! empty($end_date)) {
+            $end_date = date('Y-m-d H:i:s', strtotime(str_replace('/', '-', $end_date)));
+        }
+
+        $data['period_start_date'] = $start_date;
+        $data['period_end_date']   = $end_date;
+
 		$data['number_of_partners'] = $data['business_entity'] == 'Partnership' ? $data['number_of_partners'] : 1;
 		$data['user_id'] = Auth::user()->id;
 

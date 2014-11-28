@@ -34,8 +34,8 @@ Client Details
 		$number_of_partners = range(2, 5);
 
 		if ($client->id) {
-			$client->period_start_date =  date('m/d/Y', strtotime($client->period_start_date));
-			$client->period_end_date =  date('m/d/Y', strtotime($client->period_end_date));
+			$client->period_start_date =  date('d/m/Y', strtotime($client->period_start_date));
+			$client->period_end_date =  date('d/m/Y', strtotime($client->period_end_date));
 		}
 		else {
 			$client->country = 'United Kingdom';
@@ -59,20 +59,20 @@ Client Details
 				    <fieldset>
 						<div class="form-group">
 							{{ Form::label('business_entity', 'Current entity of the business', array('class' => 'col-lg-2 control-label')) }}
-							<div class="col-lg-4">
+							<div class="col-sm-6">
 								{{ Form::select('business_entity', array_combine($business_entity_types, $business_entity_types), $business->business_entity, array('class' => 'form-control')) }}
 								{{ $errors->first('business_entity', '<span class="help-block">:message</span>') }}
 							</div>
 						</div>
 						<div class="form-group" id="number_partners_container" style="display: none;">
 							{{ Form::label('number_of_partners', 'Number of partners', array('class' => 'col-lg-2 control-label')) }}
-							<div class="col-lg-4">
+							<div class="col-sm-6">
 								{{ Form::select('number_of_partners', array_combine($number_of_partners, $number_of_partners), $business->number_of_partners, array('class' => 'form-control')) }}
 							</div>
 						</div>
 						<div class="form-group">
 							{{ Form::label('net_profit_before_tax', 'Net profit before tax', array('class' => 'col-lg-2 control-label')) }}
-							<div class="col-lg-4">
+							<div class="col-sm-6">
 								{{ 
 									Form::text('net_profit_before_tax', $business->net_profit_before_tax, array(
 										'class' => 'form-control', 
@@ -85,9 +85,9 @@ Client Details
 								{{ $errors->first('net_profit_before_tax', '<span class="help-block">:message</span>') }}
 							</div>
 						</div>
-					        <div class="form-group">
+					    <div class="form-group">
 							{{ Form::label('fee_based_on_tax_saved', 'Fee based on', array('class' => 'col-lg-2 control-label')) }}
-							<div class="col-lg-4">
+							<div class="col-sm-6">
 						 	   <div class="col-lg-7" style="padding: 0px;">
 								{{ 
 								    Form::text('fee_based_on_tax_saved', $business->fee_based_on_tax_saved, array(
@@ -102,8 +102,22 @@ Client Details
 							    </div>
 							    <span class="input-group-addon" style="height: 34px;">% of tax saved</span>
 							</div>
-						 </div>
-
+						</div>
+                        <div class="form-group">
+							{{ Form::label('directors_salary_per_individual', 'Directors Salary per Individual', array('class' => 'col-lg-2 control-label')) }}
+							<div class="col-sm-6">
+								{{ 
+									Form::text('directors_salary_per_individual', $business->directors_salary_per_individual, array(
+										'class' => 'form-control', 
+										'ng-model' 	=> 'C14', 
+										'ng-init' 	=> "C14='{$business->directors_salary_per_individual}'",
+										'numbers-only'	=> 'numbers-only',
+										'required'	=> 'required'
+									)) 
+								}}
+								{{ $errors->first('net_profit_before_tax', '<span class="help-block">:message</span>') }}
+							</div>
+						</div>
 					</fieldset>
 				   </div>
 			     </div>
@@ -125,7 +139,7 @@ Client Details
 					<input type="hidden" name="client_id" value="{{ $client->id }}">
 					@endif
 				    	<label for="business_name" class="col-sm-2 control-label">Business Name</label>
-					<div class="col-sm-4">
+					<div class="col-sm-6">
 						{{ 
 							Form::text('business_name', $client->business_name, array(
 								'class' => 'form-control',
@@ -142,7 +156,7 @@ Client Details
 
 				    <div class="form-group">
 				    	<label for="contact_name" class="col-sm-2 control-label">Contact Name</label>
-					<div class="col-sm-4">
+					<div class="col-sm-6">
 						{{ 
 							Form::text('contact_name', $client->contact_name, array(
 								'class' => 'form-control',
@@ -159,29 +173,29 @@ Client Details
 
 				    <div class="form-group">
 				    	<label for="contact_name" class="col-sm-2 control-label">Accounting Period</label>
-					<div class="col-sm-7">
+					<div class="col-sm-6">
 					    <div class="row">
-						<span class="col-sm-4">
-							{{ 
-								Form::text('period_start_date', $client->period_start_date, array(
-									'class' => 'form-control', 
-									'id' => 'period_start_date',
-									'placeholder' => 'Period Start'
-								)) 
-							}}
-						</span>
-						<span class="col-md-1">
-							<b>&nbsp;_</b>
-						</span>
-						<span class="col-sm-4">
-							{{ 
-								Form::text('period_end_date', $client->period_end_date, array(
-									'class' => 'form-control', 
-									'id' => 'period_end_date',
-									'placeholder' => 'Period End'
-								)) 
-							}}
-						</span>
+                            <span class="col-sm-6">
+                                {{ 
+                                    Form::text('period_start_date', $client->period_start_date, array(
+                                        'class' => 'form-control', 
+                                        'id' => 'period_start_date',
+                                        'placeholder' => 'Period Start'
+                                    )) 
+                                }}
+                            </span>
+                            <span style="position: absolute;">
+                                <b>_</b>
+                            </span>
+                            <span class="col-sm-6">
+                                {{ 
+                                    Form::text('period_end_date', $client->period_end_date, array(
+                                        'class' => 'form-control', 
+                                        'id' => 'period_end_date',
+                                        'placeholder' => 'Period End'
+                                    )) 
+                                }}
+                            </span>
 					    </div>
 				    	</div>
 				    </div>
@@ -205,7 +219,7 @@ Client Details
 
 				  <div class="form-group">
 				    	<label for="year_end" class="col-sm-2 control-label">Year End</label>
-					<div class="col-sm-4">
+					<div class="col-sm-6">
 						{{ 
 							Form::text('year_end', $client->year_end, array(
 								'class' => 'form-control input-sm', 
@@ -223,7 +237,7 @@ Client Details
 
 				  <div class="form-group">
 				    	<label for="business_status" class="col-sm-2 control-label">Business Status</label>
-					<div class="col-sm-4">
+					<div class="col-sm-6">
 						{{ 
 							Form::select(
 								'business_status', ['' => '', 'Trading' => 'Trading', 'Investment' => 'Investment'], 
@@ -242,7 +256,7 @@ Client Details
 
 				  <div class="form-group">
 				    	<label for="industry_sector" class="col-sm-2 control-label">Industry Sector</label>
-					<div class="col-sm-4">
+					<div class="col-sm-6">
 						{{ 
 							Form::select(
 								'industry_sector', 
@@ -285,7 +299,7 @@ Client Details
 
 				  <div class="form-group">
 				    	<label for="currency" class="col-sm-2 control-label">Currency</label>
-					<div class="col-sm-4">
+					<div class="col-sm-6">
 						{{ 
 							Form::select(
 								'currency', $currencies, 
@@ -322,7 +336,7 @@ Client Details
 
 				    <div class="form-group">
 				    	<label for="address_1" class="col-sm-2 control-label">Street Address</label>
-					<div class="col-sm-4">
+					<div class="col-sm-6">
 						{{ 
 							Form::text('address_1', $client->address_1, array(
 								'class' => 'form-control',
@@ -339,7 +353,7 @@ Client Details
 
 				    <div class="form-group">
 				    	<label for="city" class="col-sm-2 control-label">Town/City</label>
-					<div class="col-sm-4">
+					<div class="col-sm-6">
 						{{ 
 							Form::text('city', $client->city,
 								array(
@@ -356,7 +370,7 @@ Client Details
 
 				    <div class="form-group">
 				    	<label for="countty" class="col-sm-2 control-label">County</label>
-					<div class="col-sm-4">
+					<div class="col-sm-6">
 						{{ 
 							Form::select('county', $counties,
 								$client->county,
@@ -374,7 +388,7 @@ Client Details
 
 				    <div class="form-group">
 				    	<label for="country" class="col-sm-2 control-label">Country</label>
-					<div class="col-sm-4">
+					<div class="col-sm-6">
 						{{ 
 							Form::select('country', $countries,
 								$client->country,
@@ -392,7 +406,7 @@ Client Details
 
 				    <div class="form-group">
 				    	<label for="postcode" class="col-sm-2 control-label">Postcode</label>
-					<div class="col-sm-4">
+					<div class="col-sm-6">
 						{{ 
 							Form::text('postcode', $client->postcode, array(
 								'class' => 'form-control',
@@ -408,7 +422,7 @@ Client Details
 
 				    <div class="form-group">
 				    	<label for="phone_number" class="col-sm-2 control-label">Phone Number</label>
-					<div class="col-sm-4">
+					<div class="col-sm-6">
 						{{ 
 							Form::text('phone_number', $client->phone_number, array(
 								'class' => 'form-control',
@@ -425,7 +439,7 @@ Client Details
 
 				    <div class="form-group">
 				    	<label for="mobile_number" class="col-sm-2 control-label">Mobile Number</label>
-					<div class="col-sm-4">
+					<div class="col-sm-6">
 						{{ 
 							Form::text('mobile_number', $client->mobile_number, array(
 								'class' => 'form-control',
@@ -441,7 +455,7 @@ Client Details
 
 				    <div class="form-group">
 				    	<label for="email" class="col-sm-2 control-label">Email</label>
-					<div class="col-sm-4">
+					<div class="col-sm-6">
 						{{ 
 							Form::text('email', $client->email, array(
 								'class' => 'form-control',
@@ -458,7 +472,7 @@ Client Details
 
 				    <div class="form-group">
 				    	<label for="website" class="col-sm-2 control-label">Website</label>
-					<div class="col-sm-4">
+					<div class="col-sm-6">
 						{{ 
 							Form::text('website', $client->website, array(
 								'class' => 'form-control',

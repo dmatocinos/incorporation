@@ -155,13 +155,17 @@ class IncorporationReport extends TCPDF {
 	{
 		$data = array();
         
-        $service2 = new SummaryComparisonService2($this->business);
-		$comparison_data2 = $service2->getData();
-        $service = new SummaryTotalSavingsService($this->business, $comparison_data2);
-		$data['total_savings_data'] = $service->getData();
+        $service         = new SummaryComparisonServiceProRebuild($this->business);
+        $comparison_data = $service->getData();
+        unset($service);
+        
+        $service = new SummaryTotalSavingsService($this->business, $comparison_data['limited_company']);
+        $data['total_savings_data'] = $service->getData();
+        unset($service);
 
 		$service = new SummaryGraphService($this->business);
 		$data['graphs_data'] = $service->getData();
+        unset($service);
 
 		$data['user'] = $this->user;
         $data['business'] = $this->business;
