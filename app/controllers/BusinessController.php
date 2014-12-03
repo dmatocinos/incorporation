@@ -149,9 +149,11 @@ class BusinessController extends AuthorizedController {
 		$data['user_id'] = Auth::user()->id;
 
 		if (! (isset($data['business_id']) && is_numeric($data['business_id']))) {
-			$pricing = Auth::user()->practice_pro_user->pricing;
+			$pricing          = Auth::user()->practice_pro_user->pricing;
+            $membership_level = Auth::user()->practice_pro_user->getMembershipLevelKeyAttribute();
+            $free_levels      = ['trial', 'demo'];
 
-			if (Auth::user()->practice_pro_user->getMembershipLevelDisplayAttribute() != 'Free Trial' && ! $pricing->is_free) {
+			if (! (in_array($membership_level, $free_levels) || $pricing->is_free)) {
 				return Redirect::route('subscribe')->withInput();
 			}
 		}
