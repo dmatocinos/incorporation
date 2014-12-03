@@ -133,10 +133,10 @@ Route::group(["before" => "auth"], function()
 	Route::any('goodwill/paypal_return/{business_id}', 'GoodwillController@returnPayment');
 	Route::any('goodwill/paypal_cancel/{business_id}', 'GoodwillController@cancelPayment');
 
-//	Route::group(["before" => "can_download"], function()
-//	{
+	Route::group(["before" => "can_download"], function()
+	{
 		Route::get('report/incorporation/{business_id}', array('uses' => 'ReportController@incorporation', 'as' => 'report.incorporation'));
-//	});
+	});
 
 	Route::post('email_support', array('as' => 'email_support', 'uses' => 'BaseController@sendEmailSupport'));
 	Route::get("restrictdownloads/{valuation_id}", array('as' => 'restrictdownloads', 'uses' => 'SummaryController@restrictDownloads'));

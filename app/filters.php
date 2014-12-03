@@ -91,14 +91,16 @@ Route::filter('subscribe', function()
 
 Route::filter('can_download', function($route)
 {
-	$user = Auth::user()->practice_pro_user;
+	$user             = Auth::user()->practice_pro_user;
+    $membership_level = $user->getMembershipLevelKeyAttribute();
+    $free_levels      = ['trial', 'demo'];
 
-	if ( ! $user->canDownload() && $user->getMembershipLevelDisplayAttribute() != 'Free Trial') {
-		Session::put('download_business_id', $route->getParameter('business_id'));
+    if (! $user->canDownload() && ! in_array($membership_level, $free_levels)) {
+        Session::put('download_business_id', $route->getParameter('business_id'));
 		return Redirect::to('upgrade');
-	}
+    }
 
-	if ( $user->getMembershipLevelDisplayAttribute() == 'Free Trial') {
-		return Redirect::to('restrictdownloads/' . $route->getParameter('business_id'));
-	}
+    if ( $membership_level == 'trial') {
+        return Redirect::to('restrictdownloads/' . $route->getParameter('business_id'));
+    }
 });
