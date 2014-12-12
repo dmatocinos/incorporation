@@ -38,7 +38,7 @@ abstract class IncorporationEngine extends ExcelEngine {
 	{
 		$cell_columns = array(
 			'D12'	=> 'business_entity',
-            'D14'	=> 'number_of_partners',
+            		'D14'	=> 'number_of_partners',
 			'D16'	=> 'net_profit_before_tax',
 			//'D18'	=> 'amount_to_distribute',
 			'I21'	=> 'fee_based_on_tax_saved'

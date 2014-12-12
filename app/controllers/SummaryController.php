@@ -5,19 +5,19 @@ class SummaryController extends AuthorizedController {
 	{
 		$business        = $this->business;
 		$user            = $this->user;
-        $service         = new SummaryComparisonServiceProRebuild($this->business);
-        $comparison_data = $service->getData();
-        unset($service);
-        
-        $service = new SummaryTotalSavingsService($this->business, $comparison_data['limited_company']);
+		$service         = new SummaryComparisonServiceProRebuild($this->business);
+		$comparison_data = $service->getData();
+		unset($service);
+		
+		$service = new SummaryTotalSavingsService($this->business, $comparison_data['limited_company']);
 		$total_savings_data = $service->getData();
-        unset($service);
+		unset($service);
 
 		$service = new SummaryGraphService($this->business);
 		$graphs_data = $service->getData();
-        unset($service);
+		unset($service);
 
-        $data = compact('user', 'business', 'comparison_data', 'total_savings_data', 'graphs_data');
+		$data = compact('user', 'business', 'comparison_data', 'total_savings_data', 'graphs_data');
 
 		return View::make('summary.show', $data);
 	}
