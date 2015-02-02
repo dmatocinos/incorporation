@@ -5,10 +5,12 @@
 	"license": "MIT",
 	"require": {
 		"laravel/framework": "4.1.*",
-		"way/generators": "dev-master",
 		"phpoffice/phpexcel": "dev-master",
 		"omnipay/paypal": "~2.0",
 		"rearlabs/tcpdf-rl": "dev-master"
+	},
+	"require-dev": {
+	     "way/generators": "~2.0"
 	},
 	"autoload": {
 		"classmap": [
