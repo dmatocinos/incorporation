@@ -27,8 +27,6 @@ return array(
 	*/
 
 	'default' => 'mysql',
-	//'default' => 'mysql_dixie',
-	//'default' => 'mysql_mark',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -48,18 +46,12 @@ return array(
 
 	'connections' => array(
 
-		'sqlite' => array(
-			'driver'   => 'sqlite',
-			'database' => __DIR__.'/../database/production.sqlite',
-			'prefix'   => '',
-		),
-
 		'mysql' => array(
 			'driver'    => 'mysql',
-			'host'      => 'db515894223.db.1and1.com',
-			'database'  => 'db515894223',
-			'username'  => 'dbo515894223',
-			'password'  => 'rftS<.[~S}Y>e35',
+            'host'      => 'localhost',
+			'database'  => 'incorporation',
+			'username'  => 'root',
+			'password'  => '*******4321',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',
@@ -67,35 +59,14 @@ return array(
 		
 		'practicepro_users' => array(
 			'driver'    => 'mysql',
-			'host'      => 'db466545735.db.1and1.com',
-			'database'  => 'db466545735',
-			'username'  => 'dbo466545735',
-			'password'  => '@11_11L95zRT',
+            'host'      => 'localhost',
+			'database'  => 'practicepro_users',
+			'username'  => 'root',
+			'password'  => '******4321',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',
-        	),
-		
-		'pgsql' => array(
-			'driver'   => 'pgsql',
-			'host'     => 'localhost',
-			'database' => 'database',
-			'username' => 'root',
-			'password' => '',
-			'charset'  => 'utf8',
-			'prefix'   => '',
-			'schema'   => 'public',
-		),
-
-		'sqlsrv' => array(
-			'driver'   => 'sqlsrv',
-			'host'     => 'localhost',
-			'database' => 'database',
-			'username' => 'root',
-			'password' => '',
-			'prefix'   => '',
-		),
-
+      	),
 	),
 
 	/*
