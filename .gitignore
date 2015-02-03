@@ -5,3 +5,4 @@ composer.lock
 Thumbs.db
 /vendor
 /app/config/database.php
+/public/cache
