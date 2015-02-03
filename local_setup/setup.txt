@@ -4,6 +4,8 @@ mail.php     - app/config
 paypal.php   - app/config/
 .htaccess    - public
 
+composer install
+
 2. Use correct values in the following files:
 i. app/config/app.php
 ii. app/config/database.php

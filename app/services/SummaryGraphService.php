@@ -5,7 +5,7 @@ class SummaryGraphService extends IncorporationEngine {
 	protected function init()
 	{
 		$rendererName = PHPExcel_Settings::CHART_RENDERER_JPGRAPH;
-		$rendererLibraryPath = app_path() . '/../vendor/jpgraph';
+		$rendererLibraryPath = app_path() . '/../libraries/jpgraph/';
 
 		if ( ! PHPExcel_Settings::setChartRenderer(
 			$rendererName,
