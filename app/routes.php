@@ -104,10 +104,8 @@ Route::group(["before" => "guest"], function()
 Route::group(["before" => "auth"], function()
 {
 	Route::get('subscribe', array('as' => 'subscribe', 'uses' => 'SubscriptionController@subscribe'));
-	Route::get('start_payment/{timestamp}', array('as' => 'start_payment', 'uses' => 'SubscriptionController@startPayment'));
 	Route::get('cancel_payment/{timestamp}', array('as' => 'cancel_payment', 'uses' => 'SubscriptionController@cancelPayment'));
-	Route::get('complete_payment/{timestamp}', array('as' => 'complete_payment', 'uses' => 'SubscriptionController@completePayment'));
-	Route::get('complete_subscription', array('as' => 'complete_subscription', 'uses' => 'SubscriptionController@completeSubscription'));
+	Route::post('subscribe', 'SubscriptionController@completePayment');
 
 	Route::get('upgrade', array('as' => 'upgrade_start', 'uses' => 'UpgradeMembershipController@upgrade'));
 	Route::get('upgrade/start_payment/{level}', array('as' => 'upgrade-start_payment', 'uses' => 'UpgradeMembershipController@startPayment'));

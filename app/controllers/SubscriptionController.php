@@ -1,8 +1,5 @@
 <?php
 
-use \Omnipay\Common\GatewayFactory;
-use \Carbon\Carbon;
-
 class SubscriptionController extends AuthorizedController {
 
 	protected $user;
@@ -12,42 +9,6 @@ class SubscriptionController extends AuthorizedController {
 		parent::__construct();
 
 		$this->user = Auth::user();
-	}
-
-	// @todo move to service
-	protected function getGateway()
-	{
-		$gateway = new GatewayFactory();
-		$gateway = $gateway->create(Config::get('paypal.gateway'));
-
-		$gateway->setUsername(Config::get('paypal.username'));
-		$gateway->setPassword(Config::get('paypal.password')); 
-		$gateway->setSignature(Config::get('paypal.signature'));
-		$gateway->setTestMode(Config::get('paypal.test_mode'));
-
-		return $gateway;
-	}
-
-	// @todo move to service
-	protected function getPurchaseData($timestamp)
-	{
-		$pricing = $this->user->practice_pro_user->pricing;
-
-		if ( ! $pricing) {
-			throw new Exception("Unknown membership level: {$this->user->practice_pro_user->membership_level}");
-		}
-
-		$business_entity = Input::old('business_entity');
-
-		$paypal_data = array(
-			'amount' 	=> $pricing->getDiscountedAmount(),
-			'description'	=> Config::get('paypal.description') . " Payment for {$business_entity}",
-			'returnUrl'	=> url('complete_payment', array($timestamp)),
-			'cancelUrl'	=> url('cancel_payment', array($timestamp)),
-			'currency'	=> Config::get('paypal.currency')
-		);
-
-		return $paypal_data;
 	}
 
 	/**
@@ -86,83 +47,54 @@ class SubscriptionController extends AuthorizedController {
 			$msg .= " you are required to pay an amount of &pound" . number_format(round($amount, 2), 2) . " to fully manage the report.";
 
 			$upgrade_link = link_to('http://www.practicepro.co.uk/package-comparison/', 'here');
-			$msg .= "<br><br> You can receive more incentive with Incorporation by upgrading your subscription. <br> Click {$upgrade_link} to learn more about the benefits of upgrading.”";
+			$msg .= "<br><br> You can receive more incentive with Incorporation by upgrading your subscription. <br> Click {$upgrade_link} to learn more about the benefits of upgrading.";
 		}
 		
 		$data = array(
-			'msg'	=> $msg,
-			'timestamp' => $timestamp
+			'msg'	    => $msg,
+			'timestamp' => $timestamp,
+            'email'     => $data['email']
 		);
+        
+        Asset::container('footer')->add('jquery-js', 'assets/js/jquery-1.10.2.js');
+        Asset::container('footer')->add('payment-js', 'assets/js/payment/stripe.js');
 
-		return View::make("subscription.subscribe", $data);
+		return View::make("payment.index", $data);
 	}
 	
-	public function startPayment($timestamp) 
-	{
-		Session::reflash();
-
-		$gateway = $this->getGateway();
-
-		try {
-			$response = $gateway->purchase($this->getPurchaseData($timestamp))->send();
-			if ($response->isRedirect()) {
-				// it should redirect to PayPal payment page
-				$response->redirect();
-			} 
-			else {
-				throw new Exception($response->getMessage());
-			}
-		} 
-		catch (Exception $e) {
-			throw $e;
-		}
-	}
-
 	public function cancelPayment($timestamp)
 	{
 		return Redirect::to("business/new?s_timestamp=" . $timestamp)->withInput();
 	}
 
-	public function completePayment($timestamp)
+	public function completePayment()
 	{
 		$user = $this->user;
 
-		$gateway = $this->getGateway();
+        App::bind('Payment\Payment\PaymentInterface', 'Payment\Payment\StripePayment');
 
-		try {
-			$response = $gateway->completePurchase($this->getPurchaseData($timestamp))->send();
-			if ($response->isSuccessful()) {
-				$input    = BaseController::getParamsFromSession($timestamp);
-				$transaction_data = $response->getData();
-				$next_page = (isset($input['save_next_page'])) ? 'summary' : 'business';
+        $payment    = App::make('Payment\Payment\PaymentInterface');
+        $pricing    = $this->user->practice_pro_user->pricing;
+        $discounted = $pricing->getDiscountedAmount();
+        $data       = ['token'  => Input::get('stripe-token'), 'amount' => $discounted, 'email' => Input::get('email')];
+        $token      = $payment->charge($data);
+        $timestamp  = Input::get('timestamp');
+        $input      = BaseController::getParamsFromSession($timestamp);
+		$next_page  = (isset($input['save_next_page'])) ? 'summary' : 'business';
+		$business   = Business::saveBusiness($input);
 
-				$business = Business::saveBusiness($input);
+        $payment_data = array(
+            'business_id'    => $business->id,
+            'amount'         => $discounted,
+            'transaction_id' => $token->id,
+            'order_time'     => date('Y-m-d H:i:a')
+        );
 
-				$payment_data = array(
-                    'business_id'    => $business->id,
-                    'amount'         => $transaction_data['PAYMENTINFO_0_AMT'],
-                    'transaction_id' => $transaction_data['PAYMENTINFO_0_TRANSACTIONID'],
-                    'order_time'     => $transaction_data['PAYMENTINFO_0_ORDERTIME']
-				);
+		$payment = Payment::create($payment_data);
+		$payment->save();
 
-				$payment = Payment::create($payment_data);
-				$payment->save();
+		BaseController::forgetParams($timestamp);
 
-				BaseController::forgetParams($timestamp);
-
-				return Redirect::to($next_page . '/' . $business->id)->with('message', 'Successfully saved changes.');
-			} 
-			else {
-				throw new Exception($response->getMessage());
-			}
-		} 
-		catch (Exception $e) {
-			throw $e;
-		}
+ 	    return Redirect::to($next_page . '/' . $business->id)->with('message', 'Successfully saved changes.');
 	}
-
-	public function completeSubscription()
-	{
-	}
-
 }

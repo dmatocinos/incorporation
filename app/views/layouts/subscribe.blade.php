@@ -4,7 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="author" content="Mark Joy Macaso">
+    <meta name="publishable-key" content="{{ Config::get('stripe.publishable_key') }}">
 
     <title>Incorporation Pro</title>
 
@@ -19,11 +20,6 @@
 	{{-- Additional Stylesheets --}}
 	@section('styles')
 	
-	@if (isset($additional_styles))
-		@foreach ($additional_styles as $style)
-			<link href="{{ asset($style) }}" rel="stylesheet">
-		@endforeach
-	@endif
   </head>
 
   <body>
@@ -39,6 +35,9 @@
     
     
     <!-- JavaScript -->
+    <script src="https://js.stripe.com/v2/"></script>
+    <!-- JavaScript -->
+    {{ Asset::container('footer')->scripts() }}
 
   </body>
 

@@ -6,8 +6,9 @@
 	"require": {
 		"laravel/framework": "4.1.*",
 		"phpoffice/phpexcel": "dev-master",
-		"omnipay/paypal": "~2.0",
-		"rearlabs/tcpdf-rl": "dev-master"
+		"dragonfire1119/asset": "dev-master",
+		"rearlabs/tcpdf-rl": "dev-master",
+		"stripe/stripe-php": "1.17.1"
 	},
 	"require-dev": {
 	     "way/generators": "~2.0"
@@ -23,7 +24,7 @@
 			"app/tests/TestCase.php"
 		],
 		"psr-0": {
-			"Incorporation": "app"
+			"Payment" : "app/"
 		}
 	},
 	"scripts": {
