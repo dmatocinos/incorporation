@@ -84,7 +84,7 @@ class IncorporationReport extends TCPDF {
 		//pagebreak off to expand images
 		$this->SetAutoPageBreak(false,0);
 		
-		$this->Image('assets/img/pdf/cover-bg2.jpg', 0, 0, 215.9,279.4, 'JPEG',null ,null ,2);
+		$this->Image('assets/img/pdf/cover-bg-use.jpg', 0, 0, 215.9,279.4, 'JPEG',null ,null ,2);
 	
 		// Set some content to print
 		$this->SetFont('rockb', '', 26, '', true);
