@@ -12,12 +12,12 @@ class BusinessController extends AuthorizedController {
 		$data['businesses'] = Business::getAll(Auth::user()->id);
 		
 		$data['additional_styles'] = array(
-			'packages/datatable/media/css/demo_table.css',
-			'packages/datatable/media/css/custom_datatable.css'
+			'assets/plugins/datatable/media/css/demo_table.css',
+			'assets/plugins/datatable/media/css/custom_datatable.css'
 		);
 		
 		$data['additional_scripts'] = array(
-			'packages/datatable/media/js/jquery.dataTables.js',
+			'assets/plugins/datatable/media/js/jquery.dataTables.js',
 			'assets/js/home.js'
 		);
 		

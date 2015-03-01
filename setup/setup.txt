@@ -1,0 +1,19 @@
+1. Copy the files in this directory to the following location:
+database.php - main/app/config/
+mail.php     - main/app/config
+paypal.php   - main/app/config/
+.htaccess    - ./
+
+composer install
+
+2. Use correct values in the following files:
+i.   main/app/config/app.php
+ii.  main/app/config/database.php
+iii. main/app/config/mail.php
+
+3. Create directory:
+cache
+
+4. run database migrations
+
+DO NOT COMMIT THESE CHANGES!!!!

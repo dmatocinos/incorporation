@@ -15,7 +15,7 @@
 	{{-- Add custom CSS here --}}
 	<link href="{{ asset('assets/css/sb-admin.css') }}" rel="stylesheet">
 	<link href="{{ asset('assets/css/the_big_picture.css') }}" rel="stylesheet">
-	<link rel="stylesheet" href="{{ asset('assets/font-awesome/css/font-awesome.min.css') }}">
+	<link rel="stylesheet" href="{{ asset('assets/plugins/font-awesome/css/font-awesome.min.css') }}">
 
 	{{-- Additional Stylesheets --}}
 	@section('styles')

@@ -1,8 +1,8 @@
-/bootstrap/compiled.php
-composer.phar
-composer.lock
-.DS_Store
+/main/bootstrap/compiled.php
+/main/composer.phar
+/main/composer.lock
+/main/.DS_Store
 Thumbs.db
-/vendor
-/app/config/database.php
-/public/cache
+/main/vendor
+/main/app/config/database.php
+/cache

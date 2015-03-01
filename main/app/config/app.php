@@ -26,7 +26,7 @@ return array(
 	|
 	*/
 
-	'url' => 'http://localhost',
+	'url' => 'http://www.practicepro.co.uk/incorporation',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -180,7 +180,7 @@ return array(
 	
 	'application_key' => 'incorporation',
 
-	'upgrade_app_site' => 'http://profile.practicepro.co.uk/upgrade/payment?',
+	'upgrade_app_site' => 'http://www.practicepro.co.uk/profile/upgrade/payment?',
 
-	'portal_url' => 'localhost/practicepro_regis/public/index.php/',
+	'portal_url' => 'http://www.practicepro.co.uk/profile',
 );

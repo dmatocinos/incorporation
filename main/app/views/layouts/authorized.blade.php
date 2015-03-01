@@ -17,7 +17,7 @@
 	{{-- Add custom CSS here --}}
 	<link href="{{ asset('assets/css/sb-admin.css') }}" rel="stylesheet">
 	<link href="{{ asset('assets/css/notify.css') }}" rel="stylesheet">
-	<link rel="stylesheet" href="{{ asset('assets/font-awesome/css/font-awesome.min.css') }}">
+	<link rel="stylesheet" href="{{ asset('assets/plugins/font-awesome/css/font-awesome.min.css') }}">
 
 	{{-- Additional Stylesheets --}}
 	@section('styles')
@@ -106,16 +106,16 @@
     <div class='notifications bottom-left'>
 	    <div style="float:left;">
 			<div style="width: 200px;">
-				<a href="http://bizvaluationpro.practicepro.co.uk" class="thumbnail" target="_blank" title=" Create a professional business valuation in just 15 minutes"><img src="{{ asset('assets/img/app-logos/bizval.png') }}" style="width: 200px; padding: 10px 0;"/></a>
+				<a href="http://www.practicepro.co.uk/bizvaluation" class="thumbnail" target="_blank" title=" Create a professional business valuation in just 15 minutes"><img src="{{ asset('assets/img/app-logos/bizval.png') }}" style="width: 200px; padding: 10px 0;"/></a>
 			</div>
 			<div style="width: 200px;">
-				<a href="http://virtualfdpro.practicepro.co.uk/" class="thumbnail" target="_blank" title="Help your clients achieve their goals"><img src="{{ asset('assets/img/app-logos/vfd.png') }}" style="width: 100%; padding: 5px;"/></a>
+				<a href="http://www.practicepro.co.uk/virtualfd" class="thumbnail" target="_blank" title="Help your clients achieve their goals"><img src="{{ asset('assets/img/app-logos/vfd.png') }}" style="width: 100%; padding: 5px;"/></a>
 			</div>
 			<div style="width: 200px;">
-				<a href="http://remunerationpro.practicepro.co.uk/" class="thumbnail" target="_blank" title="Maximise your clients' personal income"><img src="{{ asset('assets/img/app-logos/remuneration.png') }}" style="width: 80%;"/></a>
+				<a href="http://www.practicepro.co.uk/remuneration" class="thumbnail" target="_blank" title="Maximise your clients' personal income"><img src="{{ asset('assets/img/app-logos/remuneration.png') }}" style="width: 80%;"/></a>
 			</div>
 			<div style="width: 200px;">
-				<a href="http://priceplannerpro.practicepro.co.uk/" class="thumbnail" target="_blank" title="Price professionally and create additional fees"><img src="{{ asset('assets/img/app-logos/priceplan.png') }}" style="width: 100%; padding: 5px;"/></a>
+				<a href="http://www.practicepro.co.uk/priceplanner" class="thumbnail" target="_blank" title="Price professionally and create additional fees"><img src="{{ asset('assets/img/app-logos/priceplan.png') }}" style="width: 100%; padding: 5px;"/></a>
 			</div>
 	    </div>
     </div>
