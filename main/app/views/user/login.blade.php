@@ -4,7 +4,7 @@ Login
 
 @section('content')
 	<div class="form-group" style="text-align: center;"><img src="{{ asset('assets/img/logo.png') }}" style="width: 80%;"/></div>
-		<legend><h4 class="text-center">Log in with PracticePro Account, <br> or <a href="http://registration.practicepro.co.uk/" target="_blank">Register</a></h4></legend>
+		<legend><h4 class="text-center">Log in with PracticePro Account, <br> or <a href="http://www.practicepro.co.uk/profile/registration" target="_blank">Register</a></h4></legend>
 	    {{ Form::open([
 		"route"        => "login",
 		"autocomplete" => "off"
