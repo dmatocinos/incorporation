@@ -5,6 +5,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="description" content="Incorportation Tax Planner">
 	<meta name="author" content="Leonel Tomes">
+	<meta name="author" content="Dixie Philamerah J. Atay">
 
 	<title>
 		@section('title') 
